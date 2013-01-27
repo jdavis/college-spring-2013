@@ -6,6 +6,7 @@
 void help();
 
 int main(int argc, const char *argv[]) {
+    int success;
     const char *flag;
     struct utsname *info = malloc(sizeof(struct utsname));
 
@@ -18,8 +19,12 @@ int main(int argc, const char *argv[]) {
     }
 
     flag = argv[1];
-    uname(info);
+    success = uname(info);
 
+    if (success != 0) {
+        printf("Error in executing uname system call. Add fairy dust and try again.\n");
+        return 1;
+    }
 
     if (strcmp(flag, "--machine") == 0) {
         printf("%s\n", info->machine);
