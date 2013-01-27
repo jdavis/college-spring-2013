@@ -41,3 +41,14 @@ int main(int argc, const char *argv[]) {
     
     return 0;
 }
+
+void help() {
+    printf("faked_uname\n\n");
+    printf("Usage: faked_uname [OPTION]\n");
+    printf("Print some basic system information using a system call.\n\n");
+    printf("Options:\n");
+    printf("  --help\t\tShow this screen.\n");
+    printf("  --machine\t\tShow the hardware identifer.\n");
+    printf("  --operating-system\tShow the OS name.\n");
+    printf("  --kernel-release\tShow the OS kernel version.\n");
+}
