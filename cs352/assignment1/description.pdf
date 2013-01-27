@@ -1,0 +1,51 @@
+
+
+Assignment 1 (Due: Thursday, Jan 24, 11:59pm)
+
+1. (20pts) Where (initilized data segment, stack, or heap) are variables 
+a, b, *b, and c defined in the following code are stored, respectively?  
+
+	int a;
+	main()
+	{
+		char *b;
+		char c;
+		b=(char *)malloc(10);
+	}
+
+
+2. (50pts) Suppose there are two jobs, each of which is composed of three 
+steps as described in the following and are submitted simultaneously 
+to a computer with a single CPU:
+
+Job 1 is composed of: 
+step 1 -- a computation needing 45 seconds of CPU time, 
+step 2 -- an I/O operation needing 45 seconds of I/O operation time, 
+and step 3 -- a computation needing 45 seconds of CPU time.
+
+Job 2 is composed of: 
+step 1 -- a computation needing 54 seconds of CPU time, 
+step 2 -- an I/O operation needing 54 seconds of I/O operation time, 
+and step 3 -- a computation needing 54 seconds.
+
+Question:
+What is the total time needed to complete these two jobs when the computer 
+executes the jobs with (i) the mono-programming approach, and (ii) 
+the multi-programming approach, respectively? 
+
+Assumptions:
+-The time for the CPU to process any interrupt is 0, and the time for job 
+scheduling (i.e., the time for swapping out the job currently run by 
+the CPU and loading in another job for the CPU to run) is also 0.
+-I/O operations are performed on different I/O devices; hence, multiple 
+I/O operations can be performed in parallel.
+-Interrupted programs will be resumed in the same order as they have
+been interrupted. 
+
+3. (30pts) Briefly describe how the following types of resources should 
+be protected?
+	-I/O devices
+	-Memory
+	-CPU 
+
+ 
