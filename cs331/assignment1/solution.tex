@@ -225,14 +225,37 @@
         If \(M \models \Delta\) then \(M(p)\) must be equal to 1, therefore
         \(M(p)\) is also equal to 1.
 
-        \textbf{Induction Step} Given the positive propositional formula \(\Delta\) and
-        two truth assignments, \(M\) and \(M'\) such that \(M \leq M'\).
+        \textbf{Induction Step} Given the positive propositional formula \(\Delta_0\) and
+        two truth assignments, \(M\) and \(M'\) such that \(M \leq M'\). We will show
+        that for any positive propositional formula, \(M \models M'\).
 
-        We will show that for any positive propositional formula, \(M \models M'\).
-
-        Taking \(\Delta\), we can do one of two things to extend the propositional
+        Taking \(\Delta_0\), we can do one of two things to extend the propositional
         formula becuase it is positive. We can conjoin or disjoin it with any other
         propositional variable.
+
+        \textbf{Case 1} Let \(\Delta\) be the conjunction of the propositional
+        variable \(p\) to it, \(\Delta = \Delta_0 \wedge p\).
+
+        By assuming the induction hypothesis, we can assume that \(M \leq M'\) for
+        \(\Delta_0\).
+
+        \textbf{Case 1} Let \(\Delta\) be the disjunction of the propositional
+        variable \(p\) to it, \(\Delta = \Delta_0 \vee p\).
+
+        By assuming the induction hypothesis, we can assume that \(M \leq M'\) for
+        \(\Delta_0\).
+
+        \begin{displaymath}
+            \begin{array}{|c|c}
+                M(p)
+                & M'(p)
+                \hline
+                0 & 0 \\
+                0 & 1 \\
+                1 & 1 \\
+                \hline
+            \end{array}
+        \end{displaymath}
 
         Thus we have shown what we wanted to prove.
     \end{proof}
