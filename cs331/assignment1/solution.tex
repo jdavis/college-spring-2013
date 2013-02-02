@@ -29,7 +29,6 @@
 \rhead{\firstxmark} % Top right header
 \lfoot{\lastxmark} % Bottom left footer
 \cfoot{} % Bottom center footer
-\rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}} % Bottom right footer
 \renewcommand\headrulewidth{0.4pt} % Size of the header rule
 \renewcommand\footrulewidth{0.4pt} % Size of the footer rule
 
@@ -174,7 +173,8 @@
         \\\\
         
         \textbf{Induction Step} We will prove that for every \(n \geq 0\) a perfect binary tree of height \(n + 1\) has \(2^{(n+1) + 1} - 1 \) nodes.
-        \\
+        \\\\
+
         Consider a tree, \(T\) with height \(h\). To create
         a perfect binary tree of height \(h + 1\), we can take two of \(T\) and connect
         it to a single root node. Thus
@@ -199,73 +199,110 @@
         Thus we have concluded our proof by showing that a perfect binary tree of height \(n + 1\) has \(2^{(n+1) + 1} - 1 \) nodes.
     \end{proof}
 \end{homeworkProblem}
-    \begin{proof}
-        We will use proof by induction to show that for any truth assignment \(M\) and \(M'\)
-        such that \(M \leq M'\) and any positive propositional formula \(\Delta\), if
-        \(M \models \Delta\), then \(M' \models \Delta\).
 
-        \textbf{Base} For the base case, we will consier the propositional formula \(\Delta\)
-        with just one variable, \(p\), and two truth assignments, \(M\) and \(M'\) such
-        that \(M \leq M'\).
-        \\
-        We know that \(M(p) \leq M'(p)\), therefore we have the following possibilities:
-
-        \begin{displaymath}
-            \begin{array}{|c|c}
-                M(p)
-                & M'(p)
-                \hline
-                0 & 0 \\
-                0 & 1 \\
-                1 & 1 \\
-                \hline
-            \end{array}
-        \end{displaymath}
-
-        If \(M \models \Delta\) then \(M(p)\) must be equal to 1, therefore
-        \(M(p)\) is also equal to 1.
-
-        \textbf{Induction Step} Given the positive propositional formula \(\Delta_0\) and
-        two truth assignments, \(M\) and \(M'\) such that \(M \leq M'\). We will show
-        that for any positive propositional formula, \(M \models M'\).
-
-        Taking \(\Delta_0\), we can do one of two things to extend the propositional
-        formula becuase it is positive. We can conjoin or disjoin it with any other
-        propositional variable.
-
-        \textbf{Case 1} Let \(\Delta\) be the conjunction of the propositional
-        variable \(p\) to it, \(\Delta = \Delta_0 \wedge p\).
-
-        By assuming the induction hypothesis, we can assume that \(M \leq M'\) for
-        \(\Delta_0\).
-
-        \textbf{Case 1} Let \(\Delta\) be the disjunction of the propositional
-        variable \(p\) to it, \(\Delta = \Delta_0 \vee p\).
-
-        By assuming the induction hypothesis, we can assume that \(M \leq M'\) for
-        \(\Delta_0\).
-
-        \begin{displaymath}
-            \begin{array}{|c|c}
-                M(p)
-                & M'(p)
-                \hline
-                0 & 0 \\
-                0 & 1 \\
-                1 & 1 \\
-                \hline
-            \end{array}
-        \end{displaymath}
-
-        Thus we have shown what we wanted to prove.
-    \end{proof}
 \pagebreak
 
 \begin{homeworkProblem}
-    
-\end{homeworkProblem}
+    \begin{proof}
+        We will use proof by induction to show that for any truth assignment \(M\) and \(M'\)
+        such that \(M \leq M'\) and any positive propositional formula \(\varphi\), if
+        \(M \models \varphi\), then \(M' \models \varphi\).
+        \\
 
-\pagebreak
+        \textbf{Base} For the base case, we will consier the propositional formula \(\varphi\)
+        with just one variable, \(\varphi = p\), and two truth assignments, \(M\) and \(M'\) such
+        that \(M \leq M'\).
+        \\\\
+
+        We know that \(M(p) \leq M'(p)\), therefore we have the following possibilities:
+
+        \begin{table}[ht]
+            \centering
+            \begin{tabular}{c c}
+                \(M(p)\) & \(M'(p)\) \\
+                \hline\hline
+                0 & 0 \\
+                0 & 1 \\
+                1 & 1 \\
+                \hline
+            \end{tabular}
+        \end{table}
+
+        If \(M \models \varphi\), then \(M(p)\) must be equal to 1, which according to the
+        truth table, \(M'(p)\) is also equal to 1. Therefore \(M' \models \varphi\). This
+        concludes the base step.
+        \\
+
+        \textbf{Induction Step} Given the positive propositional formula \(\varphi_0\) and
+        two truth assignments, \(M\) and \(M'\) such that \(M \leq M'\). We will show
+        that for any positive propositional formula \(\varphi\), if \(M \models \varphi\), then
+        \(M' \models \varphi\).
+        \\
+
+        Taking \(\varphi_0\), we can do one of two things to extend the propositional
+        formula becuase it is positive. We can conjunct or disjunct it with any other
+        propositional variable.
+        \\
+
+        \textbf{Case 1} Let \(\varphi\) be the conjunction of the propositional
+        variable \(p\) to it, \(\varphi = (\varphi_0 \wedge p)\).
+        \\
+
+        By assuming the induction hypothesis, we can assume that \(M \models \varphi_0\).
+        Then we know that \(M\) is true under \(\varphi_0\) making it equal to 1.
+        \\
+
+        Since \(M \leq M'\), we have three values to represent like the table in the base step.
+        We can represent it like so:
+
+        \begin{table}[ht]
+            \centering
+            \begin{tabular}{c c c c c}
+                \(\varphi_0\) & \(M(p)\) & \(M'(p)\) & \(\varphi_0 \wedge M(p)\) & \(\varphi_0 \wedge M'(p)\) \\
+                \hline\hline
+                1 & 0 & 0 & 0 & 0 \\
+                1 & 0 & 1 & 0 & 0 \\
+                1 & 1 & 1 & 1 & 1 \\
+                \hline
+            \end{tabular}
+        \end{table}
+
+        We can see that the only time \(M\) is true over \(\varphi\) (\(M \models \varphi\)) is also when
+        \(M'\) is true over \(\varphi\) (\(M' \models \varphi\)). Therefore we have proven that for
+        conjunction, \(M' \models \varphi\).
+
+        \pagebreak
+
+        \textbf{Case 2} Let \(\varphi\) be the disjunction of the propositional
+        variable \(p\) to it, \(\varphi = (\varphi_0 \vee p)\).
+        \\
+
+        By assuming the induction hypothesis, we can assume that \(M \models \varphi_0\).
+        Then we know that \(M\) is true under \(\varphi_0\) making it equal to 1.
+        \\
+
+        Since \(M \leq M'\), we have three values to represent like the table in the base step.
+        We can represent it like so:
+
+        \begin{table}[ht]
+            \centering
+            \begin{tabular}{c c c c c}
+                \(\varphi_0\) & \(M(p)\) & \(M'(p)\) & \(\varphi_0 \vee M(p)\) & \(\varphi_0 \vee M'(p)\) \\
+                \hline\hline
+                1 & 0 & 0 & 1 & 1 \\
+                1 & 0 & 1 & 1 & 1 \\
+                1 & 1 & 1 & 1 & 1 \\
+                \hline
+            \end{tabular}
+        \end{table}
+
+        We can see that the disjunction of any value with \(\varphi_0\) will result in the truth assignment being true over \(\varphi\).
+        Therefore we have proven that for disjunction, \(M' \models \varphi\).
+        \\
+
+        We have concluded both cases therefore our proof is finished.
+    \end{proof}
+\end{homeworkProblem}
 
 \begin{homeworkProblem}
     Let \(\Sigma = \{0, 1\}\). What language is defined by the following regular expression? Define
@@ -282,41 +319,83 @@
     \end{enumerate}
 \end{homeworkProblem}
 
-\pagebreak
-
 \begin{homeworkProblem}
-        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-            \node[state,initial] (q_0)   {$q_0$}; 
-            \node[state] (q_1) [right=of q_0] {$q_1$}; 
-            \node[state] (q_2) [right=of q_1] {$q_2$}; 
-            \node[state] (q_3) [right=of q_2] {$q_3$}; 
-            \node[state, accepting] (q_4) [right=of q_3] {$q_4$}; 
-            \path[->] 
-                (q_0)
-                    edge [bend right=-30] node {0, 1} (q_1)
-                    edge [loop above] node {e, E, +, -} ()
-                (q_1)
-                    edge [bend right=-30] node {e, E} (q_2)
-                    edge node {+, -} (q_0)
-                    edge [loop above] node {0, 1} ()
-                (q_2)
-                    edge [bend right=-30] node {+, -} (q_3)
-                    edge node {0, 1} (q_1)
-                    edge [bend left=30] node {e, E} (q_0)
-                (q_3)
-                    edge [bend right=-30] node {0, 1} (q_4)
-                    edge [bend left=50] node {+, -, e, E} (q_0)
-                (q_4)
-                    edge [loop above] node {0, 1} ()
-                    edge [bend left=50] node {e, E} (q_2)
-                    edge [bend left=70] node {+, -} (q_0);
-        \end{tikzpicture}
+    \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+        \node[state,initial] (q_0)   {$q_0$}; 
+        \node[state] (q_1) [right=of q_0] {$q_1$}; 
+        \node[state] (q_2) [right=of q_1] {$q_2$}; 
+        \node[state] (q_3) [right=of q_2] {$q_3$}; 
+        \node[state, accepting] (q_4) [right=of q_3] {$q_4$}; 
+        \path[->] 
+            (q_0)
+                edge [bend right=-30] node {0, 1} (q_1)
+                edge [loop above] node {e, E, +, -} ()
+            (q_1)
+                edge [bend right=-30] node {e, E} (q_2)
+                edge node {+, -} (q_0)
+                edge [loop above] node {0, 1} ()
+            (q_2)
+                edge [bend right=-30] node {+, -} (q_3)
+                edge node {0, 1} (q_1)
+                edge [bend left=30] node {e, E} (q_0)
+            (q_3)
+                edge [bend right=-30] node {0, 1} (q_4)
+                edge [bend left=50] node {+, -, e, E} (q_0)
+            (q_4)
+                edge [loop above] node {0, 1} ()
+                edge [bend left=50] node {e, E} (q_2)
+                edge [bend left=70] node {+, -} (q_0);
+    \end{tikzpicture}
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
+    Let \(A = \langle Q, \Sigma, \delta, q_0, F\rangle\) and \(B = \langle Q, \Sigma, q_0, F'\rangle\) be two
+    nondeterministic finite automata such that \(F' = Q \setminus F\).
 
+    Prove or disprove: The language of \(L(B)\) is the complement of the language
+    \(L(A)\).
+
+    \begin{figure}[here]
+        \centering
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state, initial] (q_0)   {$q_0$}; 
+            \node[state, accepting] (q_1) [right=of q_0] {$q_1$}; 
+            \path[->] 
+                (q_0)
+                    edge node {1} (q_1)
+                    edge [loop above] node {0, 1} ();
+        \end{tikzpicture}
+        \caption{Automata \(A\)}
+        \label{fig:automataA}
+    \end{figure}
+
+    \begin{figure}[here]
+        \centering
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state, accepting, initial] (q_0)   {$q_0$}; 
+            \node[state] (q_1) [right=of q_0] {$q_1$}; 
+            \path[->] 
+                (q_0)
+                    edge node {1} (q_1)
+                    edge [loop above] node {0, 1} ();
+        \end{tikzpicture}
+        \caption{Automata \(B\)}
+        \label{fig:automataB}
+    \end{figure}
+
+    As a counterexample, consider the automata \(A\) and \(B\) pictured in Figure ~\ref{fig:automataA}
+    and Figure ~\ref{fig:automataB} respectively.
+    \\
+
+    The only difference between the two automata is that the final state set of \(B\), \(F'\) is just \(F' = Q \setminus F\)
+    where \(Q\) is the set of states in \(A\) and \(F\) is the set of final states in \(A\).
+    \\
+
+    This is a counterexample because the word \(\omega = 1\) is accepted by both automata.
+    Thus \(\omega \in L(A)\) and \(\omega \in L(B)\) therefore \(L(A)\) is not the complement
+    of \(L(B)\).
 \end{homeworkProblem}
 
 \end{document}
