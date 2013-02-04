@@ -37,3 +37,6 @@ Due: Thurs, Feb 7 at midnight
 6. F: value = 2
 
 ## Problem 3 (30pts)
+
+               This is the child process 1.
+               This is the child process 2.
