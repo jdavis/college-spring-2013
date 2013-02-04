@@ -29,4 +29,11 @@ Due: Thurs, Feb 7 at midnight
 
 ## Problem 2 (30pts)
 
+1. A: pid = 0
+2. B: pid1 = 5000
+3. C: value = 1
+4. D: pid = 5000
+5. E: pid1 = 3000
+6. F: value = 2
+
 ## Problem 3 (30pts)
