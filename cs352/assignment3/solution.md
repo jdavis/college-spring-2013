@@ -2,6 +2,7 @@ Homework 3
 ==========
 
 By Josh Davis
+
 Due: Thurs, Feb 7 at midnight
 
 ## Problem 1 (40pts)
