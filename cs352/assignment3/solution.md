@@ -38,5 +38,7 @@ Due: Thurs, Feb 7 at midnight
 
 ## Problem 3 (30pts)
 
-               This is the child process 1.
                This is the child process 2.
+               This is the child process 1.
+               This is parent process.
+               
