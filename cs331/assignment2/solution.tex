@@ -161,7 +161,122 @@
 \pagebreak
 
 \begin{homeworkProblem}
+    Let \(w = \sigma_1 \cdots \sigma_n\) be a word on an alphabet \(\Sigma\). By \(w^R\)
+    we mean the word is the reverse of w.
+    \\
+    Define \(L^R\) such that
+    \[
+        L^R = \{ w \in \Sigma^* | w^R \in L \}.
+    \]
+    \begin{proof}
+        We will show that if \(L\) is regular, then so is \(L^R\).
+        \\
 
+        Suppose \(L\) is regular. Since \(L\) is regular, that means we can
+        create a NFA for it. Let this NFA, A, be like so:
+
+        \begin{figure}[here]
+            \centering
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+                \node[state, initial] (q_1) [right=of q_0] {$q_1$}; 
+                \node[state] (q_2) [right=of q_1] {$q_2$}; 
+                \node[state] (q_dots) [right=of q_2] {$\cdots$}; 
+                \node[state] (q_3) [right=of q_dots] {$q_3$}; 
+                \node[state, accepting] (q_4) [right=of q_3] {$q_4$}; 
+                \path[->] 
+                    (q_1)
+                        edge node {\sigma_1} (q_2)
+                    (q_2)
+                        edge node {\sigma_2} (q_dots)
+                    (q_dots)
+                        edge node {\sigma_{n-1}} (q_3)
+                    (q_3)
+                        edge node {\sigma_n} (q_4);
+            \end{tikzpicture}
+            \caption{NFA, \(A\)}
+            \label{fig:automataA}
+        \end{figure}
+
+        Now taking this NFA, we can keep the same alphabet \(\Sigma\), states \(Q\),
+        but just reverse it to arrive at this NFA, B:
+
+        \begin{figure}[here]
+            \centering
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+                \node[state, accepting] (q_1) [right=of q_0] {$q_1$}; 
+                \node[state] (q_2) [right=of q_1] {$q_2$}; 
+                \node[state] (q_dots) [right=of q_2] {$\cdots$}; 
+                \node[state] (q_3) [right=of q_dots] {$q_3$}; 
+                \node[state, initial] (q_4) [right=of q_3] {$q_4$}; 
+                \path[->] 
+                    (q_2)
+                        edge node {\sigma_1} (q_1)
+                    (q_dots)
+                        edge node {\sigma_2} (q_2)
+                    (q_3)
+                        edge node {\sigma_{n-1}} (q_dots)
+                    (q_4)
+                        edge node {\sigma_n} (q_3);
+            \end{tikzpicture}
+            \caption{NFA, \(B\)}
+            \label{fig:automataB}
+        \end{figure}
+
+        Since this is a valid NFA, it is exactly the same as Automata \(A\) except
+        it has its edges reversed. It only accepts words such that \(w \in L\) and \(w\)
+        is reversed.
+        \\
+
+        Therefore if \(L\) is regular (it can be represented by a NFA) then
+        \(L^R\) is also regular.
+    \end{proof}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Let \(\Sigma = \{0, 1\}\). Construct a DFA that recognizes the following:
+    \[
+        \{w \in \Sigma^* | {\left|| w \right||}_01 = {\left|| w \right||}_10\}.
+    \]
+
+    \begin{figure}[here]
+        \centering
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state, initial, accepting] (q_0) {$q_0$}; 
+            \node[state, accepting] (q_1) [above right=of q_0] {$q_1$}; 
+            \node[state, accepting] (q_2) [below right=of q_0] {$q_2$}; 
+            \node[state] (q_3) [right=of q_1] {$q_3$}; 
+            \node[state] (q_4) [right=of q_2] {$q_4$}; 
+            \path[->] 
+                (q_0)
+                    edge node {0} (q_1)
+                    edge node {1} (q_2)
+                (q_1)
+                    edge [loop above] node {0}
+                    edge node [bend right=-30] {0} (q_3)
+                (q_2)
+                    edge [loop above] node {1}
+                    edge node [bend right=-30] {0} (q_4)
+                (q_3)
+                    edge [loop right] node {1}
+                    edge node [bend left] {0} (q_1)
+                (q_4)
+                    edge [loop right] node {0}
+                    edge node [bend left] {0} (q_2);
+        \end{tikzpicture}
+        \caption{NFA, \(B\)}
+        \label{fig:automataB}
+    \end{figure}
+
+    This can also be shown with the pumping lemma.
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
 \end{homeworkProblem}
 
 \end{document}
