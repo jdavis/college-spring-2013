@@ -125,8 +125,8 @@
                     edge node {0} (q_3)
                     edge [loop below] node {1} (q_4);
         \end{tikzpicture}
-        \caption{DFA, \(A\)}
-        \label{fig:automataA}
+        \caption{DFA, \(A\), this is really beautiful, ya know?}
+        \label{fig:multiple5}
     \end{figure}
 
     \textbf{Justification}
@@ -154,7 +154,7 @@
 
     Therefore on state \(q_0\) or (\(x \mod 5 = 0\)), a transition line should go
     to state \(q_0\) for the input 0 and a line should go to state \(q_1\) for
-    input 1. Continuing this gives us the Figure ~\ref{fig:automataA}.
+    input 1. Continuing this gives us the Figure~\ref{fig:multiple5}.
 
 \end{homeworkProblem}
 
@@ -166,7 +166,7 @@
     \\
     Define \(L^R\) such that
     \[
-        L^R = \{ w \in \Sigma^* | w^R \in L \}.
+        L^R = \{ w \in \Sigma^* : w^R \in L \}.
     \]
     \begin{proof}
         We will show that if \(L\) is regular, then so is \(L^R\).
@@ -181,17 +181,17 @@
                 \node[state, initial] (q_1) [right=of q_0] {$q_1$}; 
                 \node[state] (q_2) [right=of q_1] {$q_2$}; 
                 \node[state] (q_dots) [right=of q_2] {$\cdots$}; 
-                \node[state] (q_3) [right=of q_dots] {$q_3$}; 
-                \node[state, accepting] (q_4) [right=of q_3] {$q_4$}; 
+                \node[state] (q_{n-1}) [right=of q_dots] {$q_{n-1}$}; 
+                \node[state, accepting] (q_n) [right=of q_{n-1}] {$q_n$}; 
                 \path[->] 
                     (q_1)
-                        edge node {\sigma_1} (q_2)
+                        edge node {$\sigma_1$} (q_2)
                     (q_2)
-                        edge node {\sigma_2} (q_dots)
+                        edge node {$\sigma_2$} (q_dots)
                     (q_dots)
-                        edge node {\sigma_{n-1}} (q_3)
-                    (q_3)
-                        edge node {\sigma_n} (q_4);
+                        edge node {$\sigma_{n-1}$} (q_{n-1})
+                    (q_{n-1})
+                        edge node {$\sigma_n$} (q_n);
             \end{tikzpicture}
             \caption{NFA, \(A\)}
             \label{fig:automataA}
@@ -206,17 +206,17 @@
                 \node[state, accepting] (q_1) [right=of q_0] {$q_1$}; 
                 \node[state] (q_2) [right=of q_1] {$q_2$}; 
                 \node[state] (q_dots) [right=of q_2] {$\cdots$}; 
-                \node[state] (q_3) [right=of q_dots] {$q_3$}; 
-                \node[state, initial] (q_4) [right=of q_3] {$q_4$}; 
+                \node[state] (q_{n-1}) [right=of q_dots] {$q_{n-1}$}; 
+                \node[state, initial right] (q_n) [right=of q_{n-1}] {$q_n$}; 
                 \path[->] 
                     (q_2)
-                        edge node {\sigma_1} (q_1)
+                        edge node {$\sigma_1$} (q_1)
                     (q_dots)
-                        edge node {\sigma_2} (q_2)
-                    (q_3)
-                        edge node {\sigma_{n-1}} (q_dots)
-                    (q_4)
-                        edge node {\sigma_n} (q_3);
+                        edge node {$\sigma_2$} (q_2)
+                    (q_{n-1})
+                        edge node {$\sigma_{n-1}$} (q_dots)
+                    (q_n)
+                        edge node {$\sigma_n$} (q_{n-1});
             \end{tikzpicture}
             \caption{NFA, \(B\)}
             \label{fig:automataB}
@@ -232,12 +232,10 @@
     \end{proof}
 \end{homeworkProblem}
 
-\pagebreak
-
 \begin{homeworkProblem}
     Let \(\Sigma = \{0, 1\}\). Construct a DFA that recognizes the following:
     \[
-        \{w \in \Sigma^* | {\left|| w \right||}_01 = {\left|| w \right||}_10\}.
+        \{w \in \Sigma^* : {\left| w \right|}_{01} = {\left| w \right|}_{10}\}.
     \]
 
     \begin{figure}[here]
@@ -253,30 +251,160 @@
                     edge node {0} (q_1)
                     edge node {1} (q_2)
                 (q_1)
-                    edge [loop above] node {0}
-                    edge node [bend right=-30] {0} (q_3)
+                    edge [loop above] node {0} ()
+                    edge [bend right=-30] node {1} (q_3)
                 (q_2)
-                    edge [loop above] node {1}
-                    edge node [bend right=-30] {0} (q_4)
+                    edge [loop above] node {1} ()
+                    edge [bend right=-30] node {0} (q_4)
                 (q_3)
-                    edge [loop right] node {1}
-                    edge node [bend left] {0} (q_1)
+                    edge [loop right] node {1} ()
+                    edge [bend left] node {0} (q_1)
                 (q_4)
-                    edge [loop right] node {0}
-                    edge node [bend left] {0} (q_2);
+                    edge [loop right] node {0} ()
+                    edge [bend left] node {1} (q_2);
         \end{tikzpicture}
         \caption{NFA, \(B\)}
         \label{fig:automataB}
     \end{figure}
 
-    This can also be shown with the pumping lemma.
+    This DFA can be shown to be true by using the pumping lemma.
 
 \end{homeworkProblem}
 
 \begin{homeworkProblem}
+    Prove that the class of regular languages is closed under imperfect shuffle.
+
+    \begin{proof}
+        Consider two regular languages, \(L_A\) and \(L_B\). To show that these
+        two languages are closed under the imperfect shuffle, we will construct
+        a NFA that can handle these two languages because doing so with a DFA is
+        too complicated (similar to how the book uses an NFA to show closure
+        under union and concatenation).
+        \\
+
+        \textbf{Note:} One thing to note is that this can be shown using a proof
+        by induction but NFAs are more fun ;)
+        \\
+
+        Consider the two NFAs, \(N_A\) and \(N_B\) such that:
+        \[
+            \begin{split}
+                N_A = (Q_A, \Sigma, \delta_A, q_{A}, F_A)
+                \\
+                N_B = (Q_B, \Sigma, \delta_B, q_{B}, F_B)
+            \end{split}
+        \]
+
+        \(N_A\) and \(N_B\) describe two regular languages,
+        \(L_A\) and \(L_B\) respectively.
+        \\
+
+        The new automata that will show that the two languages are closed
+        under the imperfect shuffle can be defined as follows:
+        \[
+            N = (Q, \Sigma, \delta, q, F)
+        \]
+        where
+        \begin{enumerate}
+            \item Two extra states to differentiate
+                between which input to expect next \(Q = Q_1 \times Q_2 \times \{A, B\}\) 
+            \item The alphabet is the same, \(\Sigma = \Sigma\)
+            \item The start is in the start state for \(N_A\) and \(N_B\) and we
+            expect an input from \(A\), \(q = (q_A, q_B, A)\).
+            \item The final states include both sets and ends with input last from
+            \(B\), \(F = F_A \times F_B
+            \times \{A\}\)
+            \item Define \(\delta\) so that
+            \[
+                \delta((q_1, q_2, S), a) = \left\{
+                    \begin{array}{ll}
+                        Q_1 \times Q_2 \times \{B\} \to \mathcal P \left({Q}\right) & \quad S = A \\
+                        Q_1 \times Q_2 \times \{A\} \to \mathcal P \left({Q}\right) & \quad S = B
+                    \end{array}
+                \right.
+            \]
+        \end{enumerate}
+    \end{proof}
 \end{homeworkProblem}
 
+\pagebreak
+
 \begin{homeworkProblem}
+    Co-determinism.
+
+    \begin{proof}
+        \textbf{Show that every CDFA is a DFA.}
+        \\
+
+        To do this, we will look at what the differences are between a DFA and
+        NFA. A NFA has the following differences:
+        \begin{enumerate}
+            \item Alphabet = \(\Sigma_{\epsilon}\), allows epsilon transitions
+            \item Can have 0 or more transitions for any given input and state
+        \end{enumerate}
+
+        A CDFA has already been defined for us. Therefore it has these
+        differences from a NFA:
+        \begin{enumerate}
+            \item Allows only input from \(\Sigma\), no epsilon
+            \item Cannot have multiple transitions with the same input going
+            into the same state, or \(\delta(q, a) \cap \delta(q', a) =
+            \emptyset\)
+        \end{enumerate}
+
+        It can be seen that a CDFA and NFA do not share the same properties.
+        Therefore a CDFA is just a more specific DFA.
+    \end{proof}
+
+    \textbf{Show that every DFA is a CDFA.}
+    \\
+
+    \textbf{Counterexample} To show that this is not true, we can take the given
+    DFA:
+    \begin{figure}[here]
+        \centering
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state, initial] (q_0) {$q_0$}; 
+            \node[state] (q_1) [above right=of q_0] {$q_1$}; 
+            \node[state] (q_2) [below right=of q_0] {$q_2$}; 
+            \node[state, accepting] (q_3) [above right=of q_2] {$q_3$}; 
+            \path[->] 
+                (q_0)
+                    edge node {0} (q_1)
+                    edge node {1} (q_2)
+                (q_1)
+                    edge [loop above] node {1} ()
+                    edge node {0} (q_3)
+                (q_2)
+                    edge [loop above] node {1} ()
+                    edge node {0} (q_3)
+                (q_3)
+                    edge [loop right] node {0, 1} ();
+        \end{tikzpicture}
+        \caption{NFA, \(B\)}
+        \label{fig:counterexample1}
+    \end{figure}
+
+    The Figure~\ref{fig:counterexample1} is a counterexample because it has
+    a state, \(q_3\), that has two incoming arrows for state 0. Thus it violates
+    the definition of co-determinism.
+
+    \begin{proof}
+        \textbf{Show that every NFA can be converted into an equivalent CDFA.}
+        \\\\
+        Using the theorem 1.39 out of Sipser's book, it is proven that every NFA
+        can be converted into an equivalent DFA.
+        \\
+
+        Taking that same DFA, one could add more states to (maximizing) it and
+        it would be possible to reduce all same input transisitions to a single
+        state down to none such that
+        \(\delta(q, a) \cap \delta(q', a) = \emptyset\).
+        \\
+
+        Once this has been achieved, the state machine would then be
+        co-deterministic.
+    \end{proof}
 \end{homeworkProblem}
 
 \end{document}
