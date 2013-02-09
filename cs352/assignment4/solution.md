@@ -44,3 +44,47 @@ seemingly instantly. This would be very hard to do with just one thread.
                         i > 0 == false
 
 Using the diagram thingy from above there are three user level threads created.
+
+## Problem 3 (40pts)
+
+### Unforked main() threads
+ 1. Fork()
+ 2. do\_1 (with VM) (because var == 1)
+ 3. do\_2
+
+### Forked main() threads
+ 4. do\_1 {forked} (with nothing)
+ 5. do\_2 {forked}
+
+Following the execution we can get this:
+
+    main()
+        pid > 0: var = 1
+        one printf: var = 1
+    do_1() (with VM):
+        var = 1
+        var = 1 * 2 = 2
+    do_2() (no VM):
+        var = 1
+        var (for thread) = 1 * 3 = 3
+        one printf: Thread 2: var=3
+    main() forked:
+        var = 5
+        one printf: var = 5
+    do_1() {forked} (no VM:
+        var = 5 (from fork)
+        var (for thread) = 5 * 2 = 10
+    do_2() {forked}:
+        var = 5 (from fork)
+        var (for thread) = 5 * 3 = 15
+        one printf: Thread 2: var=15
+
+
+Which will make the input:
+
+    var = 1
+    var = 5
+    Thread 2: var=3
+    Thread 2: var=15
+
+There's money in the banana stand.
