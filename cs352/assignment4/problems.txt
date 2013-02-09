@@ -1,0 +1,90 @@
+
+Assignment 4 ComS 352 2013 Spring
+
+Due: Thursday 11:59pm, February 14, 2013
+
+
+1. (30pts) 
+Under what circumstances does a multithreaded solution using multiple kernel threads provide better performance than a single-threaded solution, on a single-processor system? Describe an example to support your answer.
+
+2. (30pts) How many user-level threads will be constructed with the "pthread_create" API when the program below is run? Explain how you get your answer.
+
+#include <pthread.h>
+
+int i;
+
+void *th_code(void *x)
+{
+    pthread_t tid;
+    i = i - 1;
+    if(i>0){
+        pthread_create(&tid, NULL, th_code, NULL);
+        pthread_join(tid, NULL);
+    }
+}
+
+int main()
+{
+    pthread_t tid;
+    i=3;
+    pthread_create(&tid, NULL, th_code, NULL);
+    pthread_join(tid, NULL);
+}
+
+3. (40pts) Read the following code and answer questions.
+
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <sched.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
+
+int var;
+
+int do_1(void *);
+int do_2(void *);
+
+int main( )
+{
+    void *child_stack_1;
+    void *child_stack_2;
+    int pid;
+    var = 5;
+
+    pid=fork();
+    if (pid > 0) var=1;
+    child_stack_1 = (void *) malloc(1001);
+    child_stack_2 = (void *) malloc(1001);
+    child_stack_1 += 1000;
+    child_stack_2 += 1000;
+    printf("var = %d\n", var);
+
+    if(var = = 1)
+        clone(do_1, child_stack_1, CLONE_VM, NULL);
+    else
+        clone(do_1, child_stack_1, 0, NULL);
+
+    clone(do_2, child_stack_2, 0, NULL);
+};
+
+int do_1(void *x)
+{
+    var = var*2;
+    exit(0);
+};
+
+int do_2(void *x)
+{
+    var = var*3;
+    printf("Thread %d: var=%d \n", 2, var);
+    exit(0);
+};
+
+Questions: What are the outputs of the above program? 
+
+Here we assume the CPU scheduler uses the FCFS scheduling algorithm to schedule the running of threads [Note: fork() creates a process, which is actually the first (and the only if the no more thread is created in the process) thread of the process; hence, the CPU scheduler actually schedules threads].
+
+Explain how you get your answers.
+
+
