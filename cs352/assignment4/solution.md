@@ -6,6 +6,7 @@ By Josh Davis
 Due: Thurs, Feb 14 at midnight
 
 ## Problem 1 (30pts)
+
 There are various situations in which a multithreaded solution might provide
 better performance than a single threaded solution on a single processor system.
 
