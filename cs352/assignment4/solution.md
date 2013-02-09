@@ -24,3 +24,23 @@ between things. Like as I write this answer in Vim it is doing various
 computations in the background (syntax highlighting for Markdown, dynamic
 algorithms for word wrapping, etc.) and yet it responds to every keystroke
 seemingly instantly. This would be very hard to do with just one thread.
+
+## Problem 2 (30pts)
+
+    main():
+        i = 3
+        call pthread_create with th_code
+    th_code():
+        nThreads = 1
+        i = 2
+        i > 0:
+            th_code():
+                nThreads = 2
+                i = 1
+                i > 0:
+                    th_code():
+                        nThreads = 3
+                        i = 0
+                        i > 0 == false
+
+Using the diagram thingy from above there are three user level threads created.
