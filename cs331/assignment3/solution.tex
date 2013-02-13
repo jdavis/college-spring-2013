@@ -127,24 +127,22 @@
         where
 
         \begin{enumerate}
-            \item Two extra states to differentiate
-                between which input to expect next \(Q = Q_1 \times Q_2 \times \{A, B\}\) 
+            \item \(Q = Q_A \times Q_B\) 
             \item The alphabet is the same, \(\Sigma = \Sigma\)
-            \item The start is in the start state for \(N_A\) and \(N_B\) and we
-            expect an input from \(A\), \(q = (q_A, q_B, A)\).
-            \item The final states include both sets and ends with input last from
-            \(B\), \(F = F_A \times F_B
-            \times \{A\}\)
+            \item The start is in the start state for \(A\) and the ending
+            state of \(B\), \(q = (q_A, F_B)\).
+            \item The final is when we are at the end of \(A\) but the start of
+            \(B\), \(F = (F_A, q_B)\)
             \item Define \(\delta\) so that
             \[
-                \delta((q_1, q_2, S), a) = \left\{
-                    \begin{array}{ll}
-                        Q_1 \times Q_2 \times \{B\} \to \mathcal P \left({Q}\right) & \quad S = A \\
-                        Q_1 \times Q_2 \times \{A\} \to \mathcal P \left({Q}\right) & \quad S = B
-                    \end{array}
-                \right.
+                \delta((q_1, q_2), a) = (\delta_A(a), \delta_B(a))
             \]
         \end{enumerate}
+
+        The reason this works is because we just create an automata that is the
+        cross product of both of their states. Therefore we create a grid of states. Then
+        if we just start at the beginning of \(A\) and the end of \(B\) then only
+        accept it when we reach the end of both strings, then it is a valid automata.
 
     \end{proof}
 
