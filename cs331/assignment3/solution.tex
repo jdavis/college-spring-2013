@@ -135,14 +135,22 @@
             \(B\), \(F = (F_A, q_B)\)
             \item Define \(\delta\) so that
             \[
-                \delta((q_1, q_2), a) = (\delta_A(a), \delta_B(a))
+                \delta((q_1, q_2), a) = \left\{
+                    \begin{array}{ll}
+                        (\delta_A(a), q_2) & \quad a \in w \\
+                        (q_1, \delta_B(a)) & \quad a \in w'
+                    \end{array}
+                \right.
             \]
+            where \(w \in L\) such that \(\left|w\right| = \left|w'\right|\) and \(ww' \in L\).
         \end{enumerate}
 
         The reason this works is because we just create an automata that is the
-        cross product of both of their states. Therefore we create a grid of states. Then
-        if we just start at the beginning of \(A\) and the end of \(B\) then only
-        accept it when we reach the end of both strings, then it is a valid automata.
+        cross product of both of their states. Therefore we create a grid of
+        states such that \(q_1 \in Q_A\) and \(q_2 \in Q_B\). Then if we just
+        start at the beginning of \(A\) and the end of \(B\) then only
+        accept it when we reach the end of both strings, then it is a valid automata
+        that satisfies the condition.
 
     \end{proof}
 
