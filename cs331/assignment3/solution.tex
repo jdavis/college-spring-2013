@@ -159,7 +159,57 @@
 \pagebreak
 
 \begin{homeworkProblem}
+    Prove that UFAs recognize the class of regular languages or a language
+    \(L\) is recognized by a UFA \(A\) where \(A = (Q, \Sigma, Q_0, \delta,
+    F)\) if and only if \(L\) is regular.
+
+    \begin{proof}
+        To prove this, we will consider the complement of \(L\), or \(L'\).
+        This is the language such that \(L'(A)\), or an NFA that accepts a word
+        if no run ends in F, or there does not exist a run that ends in F. This
+        automata, \(B\) can be defined like so:
+
+        \[
+            B = (Q, \Sigma, \delta, Q_0, F_B)
+        \]
+        
+        where \(F_B = \overline{F}\).
+        \\
+
+        Now to prove this, we must prove the if and only if which means to show
+        that each side implies the other.
+        \\
+
+        Let our NFA that that we will show equals the UFA be \(N\), \(N = (Q,
+        \Sigma, \delta, Q_0, F_N)\), where \(L(N)\) is the language that it
+        accepts.
+        \\
+
+        For the first side, \(w \in L(N) \rightarrow w \in L(B)\) we can see that
+        if a word is in an NFA, then
+        it will be accepted if there exists a run that ends in \(F_N\). We
+        can trivially see that this is true for our
+        new automata \(B\) as well. Since we've defined the final state,
+        \(F_B\), such that it is the complement of \(F\), we can see that in
+        order for \(B\) to accept it, there must not exist a run that ends in
+        \(F\). Thus there must be a run that ends in \(F_B\) which shows that
+        \(w \in L(N) \rightarrow w \in L(B))\).
+        \\
+
+        For the second side, \(w \in L(B) \rightarrow w \in L(N)\) we can see
+        that if a word is in \(B\) then there exists a run that ends in
+        \(F_B\). In order for this to be accepted by \(N\), there must also be
+        a run that ends in the final state of \(F_N\). We can see that this is
+        true just by the definition of an NFA. A word is only accepted if there
+        exists a run that ends in its final states. Thus there must be a run
+        that ends in \(F_N\) which shows that \(w \in L(B) \rightarrow w \in
+        L(N)\) and this concludes our proof. Happy, happy, joy, joy.
+
+    \end{proof}
+
 \end{homeworkProblem}
+
+\pagebreak
 
 \begin{homeworkProblem}
     Prove that the language \(L\) such that "w is not a palindrome" is not regular.
@@ -233,10 +283,56 @@
 
         As we can see, there will be one starting state, \(k-2\) additional
         states, and then one dead state. Therefore there are \(1 + (k-2) + 1 = k\) states.
+    \end{proof}
 
+    \begin{proof}
         \textbf{Part 2}
         \\
+        
+        We will prove by contradiction that \(L_k\) cannot be recognized by any DFA with
+        \(k-1\) states.
+        \\
 
+        Assume that there is a DFA \(A\) with \(k-1\) states that accepts \(L_k\).
+        \\
+        
+        Let \(w = a^{k-1}\) and therefore \(\left|w\right| = k - 1\). According to the definition, \(w \in L_k\). Let
+        the run of \(A\) over \(w\) be \(\rho\). Thus:
+        \[
+            \begin{split}
+                \left|\rho\right| &= \left|w\right| + 1
+                \\
+                &= k - 1 + 1
+                \\
+                &= k
+            \end{split}
+        \]
+
+        Thus according to the pigeonhole principle, the number of states
+        reached is equal to \(k\) yet the number of states in \(A\) is only
+        \(k - 1\). That means that there exists one state in \(A\) that is visited
+        twice. Let's let that state be \(q\).
+        \\
+
+        Therefore there exists a \(w'\) such that \(w' \in L_k\) and the run of
+        \(A\) over \(w'\) is \(\rho' = q_0 \dots q \dots q \dots q_k\). This is true
+        because if a state is visited more than once, there is a loop in \(A\)
+        and \(q\) can be visited more than once
+        \\
+
+        This is a contradiction because
+        \[
+            \begin{split}
+                \left|w'\right| &\geq \left|w\right| + 1
+                \\
+                &= (k - 1) + 1
+                \\
+                &= k
+            \end{split}
+        \]
+        yet the largest string in \(L_k\) has length \(k - 1\) according to the
+        definition of \(L_k\). Therefore we have shown that \(L_k\) cannot be
+        recognized by any DFA with \(k-1\) states.
 
     \end{proof}
 \end{homeworkProblem}
@@ -244,80 +340,57 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Co-determinism.
+    Let \(L_n\) be the language that "the n-th letter of w from the end is 1"
+    for \(n \geq 1\).
 
     \begin{proof}
-        \textbf{Show that every CDFA is a DFA.}
+        \textbf{Part 1}
         \\
 
-        To do this, we will look at what the differences are between a DFA and
-        NFA. A NFA has the following differences:
-        \begin{enumerate}
-            \item Alphabet = \(\Sigma_{\epsilon}\), allows epsilon transitions
-            \item Can have 0 or more transitions for any given input and state
-        \end{enumerate}
+        \(L_n\) can be recognized by a NFA with \(n + 1\) states. To show this,
+        we will construct a NFA as such:
 
-        A CDFA has already been defined for us. Therefore it has these
-        differences from a NFA:
-        \begin{enumerate}
-            \item Allows only input from \(\Sigma\), no epsilon
-            \item Cannot have multiple transitions with the same input going
-            into the same state, or \(\delta(q, a) \cap \delta(q', a) =
-            \emptyset\)
-        \end{enumerate}
+        \begin{figure}[here]
+            \centering
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+                \node[state, initial] (q_0) {$q_0$}; 
+                \node[state] (q_1) [right=of q_0] {$q_1$}; 
+                \node[state] (q_dots) [right=of q_1] {$\cdots$}; 
+                \node[state] (q_{n-1}) [right=of q_dots] {$q_{n-1}$}; 
+                \node[state, accepting] (q_n) [right=of q_{n-1}] {$q_n$}; 
+                \path[->] 
+                    (q_0)
+                        edge [loop above] node {0, 1} (q_1)
+                        edge node {1} (q_1)
+                    (q_1)
+                        edge node {0, 1} (q_dots)
+                    (q_dots)
+                        edge node {0, 1} (q_{n-1})
+                    (q_{n-1})
+                        edge node {0, 1} (q_n);
+            \end{tikzpicture}
+            \caption{NFA, \(A\)}
+            \label{fig:automataNFA}
+        \end{figure}
 
-        It can be seen that a CDFA and NFA do not share the same properties.
-        Therefore a CDFA is just a more specific DFA.
+        As we can see, there will be one state that accepts both 0s and 1s,
+        since it is an NFA we can nondeterministically skip to when the nth
+        spot of a word is 1 and accept it. We can also see that to do so it
+        requires one initial state, and then \(n\) states to transition through
+        once there is a 1 in the nth spot. Therefore the number of states = \(n + 1\).
+
     \end{proof}
 
-    \textbf{Show that every DFA is a CDFA.}
-    \\
-
-    \textbf{Counterexample} To show that this is not true, we can take the given
-    DFA:
-    \begin{figure}[here]
-        \centering
-        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-            \node[state, initial] (q_0) {$q_0$}; 
-            \node[state] (q_1) [above right=of q_0] {$q_1$}; 
-            \node[state] (q_2) [below right=of q_0] {$q_2$}; 
-            \node[state, accepting] (q_3) [above right=of q_2] {$q_3$}; 
-            \path[->] 
-                (q_0)
-                    edge node {0} (q_1)
-                    edge node {1} (q_2)
-                (q_1)
-                    edge [loop above] node {1} ()
-                    edge node {0} (q_3)
-                (q_2)
-                    edge [loop above] node {1} ()
-                    edge node {0} (q_3)
-                (q_3)
-                    edge [loop right] node {0, 1} ();
-        \end{tikzpicture}
-        \caption{NFA, \(B\)}
-        \label{fig:counterexample1}
-    \end{figure}
-
-    The Figure~\ref{fig:counterexample1} is a counterexample because it has
-    a state, \(q_3\), that has two incoming arrows for state 0. Thus it violates
-    the definition of co-determinism.
-
     \begin{proof}
-        \textbf{Show that every NFA can be converted into an equivalent CDFA.}
-        \\\\
-        Using the theorem 1.39 out of Sipser's book, it is proven that every NFA
-        can be converted into an equivalent DFA.
+        \textbf{Part 2}
         \\
+        
+        We will prove that any DFA that recognizes \(L_n\) needs at least \(2^n\).
 
-        Taking that same DFA, one could add more states to (maximizing) it and
-        it would be possible to reduce all same input transisitions to a single
-        state down to none such that
-        \(\delta(q, a) \cap \delta(q', a) = \emptyset\).
-        \\
+        Assume there is a DFA with \(2^n - 1\) states that accepts \(L_n\).
+        
 
-        Once this has been achieved, the state machine would then be
-        co-deterministic.
+
     \end{proof}
 \end{homeworkProblem}
 
