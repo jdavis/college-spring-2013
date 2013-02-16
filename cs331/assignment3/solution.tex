@@ -208,7 +208,7 @@
         
         Since we have proven the complement of \(L(A\), we know that the class
         regular languages is closed under under the complement. Therefore since
-        the complement of \(L(A\) is regular, than so is just normal \(L(A\).
+        the complement of \(L(A)\) is regular, than so is just normal \(L(A)\).
         And we have concluded our proof.
     \end{proof}
 
@@ -392,9 +392,26 @@
         
         We will prove that any DFA that recognizes \(L_n\) needs at least \(2^n\).
 
-        Assume there is a DFA with \(2^n - 1\) states that accepts \(L_n\).
-        
+        Assume there is a DFA, \(A\) with less than \(2^n\) states that accepts \(L_n\).
+        Let \(A = (Q, \Sigma, \delta, q_0, F)\).
+        \\
 
+        The number of strings when we have \(n\) is equal to \(2^n\) since our
+        alphabet is binary.
+        \\
+
+        Since there are \(2^n - 1\) states yet \(2^n\) strings, there must be
+        two strings (according to the pigeonhole principle) such that they end
+        on the same state. Or more formally \(\delta(q_0, w) = \delta(q_0, w')\).
+        \\
+
+        Since \(w, w'\) are the same length, there must be a point in each
+        string where they differ from each other. Because of this, \(A\) cannot
+        accept both \(w, w'\).
+        \\
+
+        Similar to problem 4, continuing this gives us a contradiction because either
+        \(A\) accepts both words or it rejects both.
 
     \end{proof}
 \end{homeworkProblem}
