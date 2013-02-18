@@ -1,0 +1,40 @@
+
+Assignment 5 (Due: Thursday, February 21, 11:59pm)
+
+1. (70pts)
+Consider the following set of processes, with the arrival time and the length of the CPU burst given in milliseconds:
+
+
+Process     Arrival Time        Burst Time      Priority
+P1      0           10          3
+P2      1           1           1
+P3      2           2           3
+P4      3           1           4
+P5      4           5           2
+
+Assume the computer system has only one CPU.
+
+a. Show Gantt charts that illustrate the execution of these processes using the following scheduling algorithms: 
+
+    FCFS, 
+    non-preemptive SJF, 
+    preemptive priority (a smaller priority number implies a higher priority), 
+    and RR (quantum = 2). 
+
+   No context-switch time is considered.
+
+b. What is the turnaround time of each process for each of the scheduling algorithms in part a?
+
+c. What is average waiting time of all the processes for each of the scheduling algorithms?
+
+
+
+
+2. (30pts)
+Consider a system running ten I/O-bound tasks and one CPU-bound task. Assume that the I/O-bound tasks issue an I/O operation once for every millisecond of CPU computing and that each I/O operation takes 10 milliseconds to complete; the CPU-bound task performs only computations. Also assume that the context-switching overhead is 0.1 milli-second and that all processes are long-running tasks. Find out the CPU utilization for a round-robin scheduler when:
+
+a. The time quantum is 1 millisecond
+
+b. The time quantum is 10 milliseconds
+
+
