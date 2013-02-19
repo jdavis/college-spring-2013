@@ -108,6 +108,58 @@ What is the turnaround time of each process for each scheduling algorithm?
 
 What is the average waiting time of all process for each scheduling algorithm?
 
+#### First Come First Serve
+
+    P1 = 0
+    P2 = 10
+    P3 = 11
+    P4 = 13
+    P5 = 14
+
+    AWT = (0 + 10 + 11 + 13 + 14) / 5
+        = 9.6
+
+#### Non-preemptive SJF
+
+    P1 = 0
+    P2 = 10 - 1
+       = 9
+    P3 = 12 - 2
+       = 10
+    P4 = 11 - 3
+       = 8
+    P5 = 14 - 4
+       = 10
+
+    AWT = (0 + 10 + 12 + 11 + 14) / 5
+        = 9.4
+
+#### Preemptive Priority
+
+    P1 = 3 + 5
+       = 8
+    P2 = 0
+    P3 = 15 - 2
+       = 13
+    P4 = 18 - 3
+       = 15
+    P5 = 0
+
+    AWT = (8 + 0 + 13 + 15 + 0) / 5
+        = 7.2
+
+#### Round Robin
+
+    P1 = 9
+    P2 = 1
+    P3 = 1
+    P4 = 2
+    P5 = (15 - 5 - 4)
+       = 6
+
+    AWT = (9 + 1 + 1 + 2 + 6) / 5
+        = 3.8
+
 ## Problem 2 (30pts)
 
 ### Part a
