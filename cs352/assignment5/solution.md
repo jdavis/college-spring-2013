@@ -166,6 +166,11 @@ What is the average waiting time of all process for each scheduling algorithm?
 
 Time quantum is 1 millisecond.
 
+For every context switch, it takes .1 ms to switch, therefore
+
+    CPU Utilization = (1 / 1.1) * 100
+                    = 91%
+
 ### Part b
 
 Time quantum is 10 milliseconds.
