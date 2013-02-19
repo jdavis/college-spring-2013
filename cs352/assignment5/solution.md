@@ -7,7 +7,7 @@ Due: Thurs, Feb 21 at midnight
 
 ## Problem 1 (70pts)
 
-### a
+### Part a
 
 Show Gantt charts for the following:
 
@@ -46,7 +46,7 @@ Show Gantt charts for the following:
 
     PX-- means two units, PX- means one unit
 
-### b
+### Part b
 
 What is the turnaround time of each process for each scheduling algorithm?
 
@@ -58,16 +58,16 @@ What is the turnaround time of each process for each scheduling algorithm?
 
 #### Round Robin
 
-### c
+### Part c
 
 What is the average waiting time of all process for each scheduling algorithm?
 
 ## Problem 2 (30pts)
 
-### a
+### Part a
 
 Time quantum is 1 millisecond.
 
-### b
+### Part b
 
 Time quantum is 10 milliseconds.
