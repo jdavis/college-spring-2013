@@ -54,11 +54,55 @@ What is the turnaround time of each process for each scheduling algorithm?
 
 #### First Come First Serve
 
+    P1 = 10 + (0 - 0)
+       = 10
+    P2 = 1 + (11 - 1)
+       = 11
+    P3 = 2 + (12 - 2)
+       = 12
+    P4 = 1 + (14 - 3)
+       = 12
+    P5 = 5 + (15 - 4)
+       = 16
+
 #### Non-preemptive SJF
+
+    P1 = 10 + (0 - 0)
+       = 10
+    P2 = 1 + (11 - 1)
+       = 11
+    P3 = 2 + (13 - 2)
+       = 13
+    P4 = 1 + (14 - 3)
+       = 12
+    P5 = 5 + (15 - 4)
+       = 16
 
 #### Preemptive Priority
 
+    P1 = 10 + (16 - 0)
+       = 26
+    P2 = 1 + (2 - 1)
+       = 2
+    P3 = 2 + (18 - 2)
+       = 18
+    P4 = 1 + (18 - 3)
+       = 16
+    P5 = 5 + (8 - 4)
+       = 9
+
 #### Round Robin
+
+    P1 = 10 + (19 - 0)
+       = 29
+    P2 = 1 + (3 - 1)
+       = 3
+    P3 = 2 + (5 - 2)
+       = 5
+    P4 = 1 + (6 - 3)
+       = 4
+    P5 = 5 + (15 - 4)
+       = 16
 
 ### Part c
 
