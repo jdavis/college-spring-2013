@@ -14,9 +14,11 @@ Show Gantt charts for the following:
 #### First Come First Serve
 
     |
-    |------------P1-------------|P2-|-P3-|P4-|----P5------|
+    |------------P1-------------|P2-|P3--|P4-|----P5------|
     |________________________________________________________
                   5             10            15            20                    
+
+    PX-- means two units, PX- means one unit
 
 #### Non-preemptive SJF
 
@@ -30,7 +32,7 @@ Show Gantt charts for the following:
 #### Preemptive Priority
 
     |
-    |P1-|P2-|P1-|-------P5----|----------P1----------|P3--|
+    |P1-|P2-|P1-|-----P5---|----------P1--------|P3--|P4-|
     |________________________________________________________
                   5             10            15            20                    
 
