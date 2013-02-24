@@ -36,9 +36,9 @@ A repository to store all code from every class I've taken at ISU so far.
 * None
 
 ## Spring 2013
-* [Theory of Computing (Com S 331)](coms331)
-* [Intro to Operating Systems (Com S 352)](coms352)
-* [Object-Oriented Analysis and Design (Com S 362)](coms362)
+* [Theory of Computing (Com S 331)][coms331]
+* [Intro to Operating Systems (Com S 352)][coms352]
+* [Object-Oriented Analysis and Design (Com S 362)][coms362]
 * Eng 335
 * Phil 343
 
