@@ -93,66 +93,27 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Prove that if \(L\) is regular, then so is \(L_{\frac{1}{2}}\).
-    
-    \begin{proof}
-        We will show that if \(L\) is regular, then so is \(L_{\frac{1}{2}}\).
-        \\
-    
-        Suppose that \(L\) is regular. Since \(L\) is regular, that means we
-        can create a automata for it. Let this automata be \(A\) such that
-        \(L(A) = L\). Also let B be an automata such that \(L(B) = L^R\). The
-        automata can also be defined as follows:
-        \[
-            \begin{split}
-                A = (Q_A, \Sigma, \delta_A, q_{A}, F_A)
-                \\
-                B = (Q_B, \Sigma, \delta_B, q_{B}, F_B)
-            \end{split}
-        \]
-        
-        
-        Since \(L\) is regular, we know that \(L^R\) is also regular because of
-        homework two from last week.
-        \\
+    Find a CFG to describe \(L\).
+    \\
 
-        Now we will make an automata \(C\) constructed from \(A\) and \(B\).
-        This will show that \(L_{\frac{1}{2}}\) is regular. \(C\) will be
-        defined as follows:
+    The CFG, \(G\), that describes \(L\) is below:
 
-        \[
-            C = (Q, \Sigma, \delta, q, F)
-        \]
+    \[
+        G = (V, \Sigma, R, S)
+    \]
 
-        where
+    such that
 
-        \begin{enumerate}
-            \item \(Q = Q_A \times Q_B\) 
-            \item The alphabet is the same, \(\Sigma = \Sigma\)
-            \item The start is in the start state for \(A\) and the ending
-            state of \(B\), \(q = (q_A, F_B)\).
-            \item The final is when we are at the end of \(A\) but the start of
-            \(B\), \(F = (F_A, q_B)\)
-            \item Define \(\delta\) so that
-            \[
-                \delta((q_1, q_2), a) = \left\{
-                    \begin{array}{ll}
-                        (\delta_A(a), q_2) & \quad a \in w \\
-                        (q_1, \delta_B(a)) & \quad a \in w'
-                    \end{array}
-                \right.
-            \]
-            where \(w \in L\) such that \(\left|w\right| = \left|w'\right|\) and \(ww' \in L\).
-        \end{enumerate}
+    \[
+        V = (\{A, B\}, {a, b, c}, R, A)
+    \]
+    where
 
-        The reason this works is because we just create an automata that is the
-        cross product of both of their states. Therefore we create a grid of
-        states such that \(q_1 \in Q_A\) and \(q_2 \in Q_B\). Then if we just
-        start at the beginning of \(A\) and the end of \(B\) then only
-        accept it when we reach the end of both strings, then it is a valid automata
-        that satisfies the condition.
-
-    \end{proof}
+    \[
+        R: &\\
+           & A \rightarrow aAc | B | \epsilon \\
+           & B \rightarrow bB | \epsilon
+    \]
 
 \end{homeworkProblem}
 
