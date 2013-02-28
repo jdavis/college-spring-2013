@@ -105,72 +105,89 @@
     such that
 
     \[
-        V = (\{A, B\}, {a, b, c}, R, A)
+        G = (\{A, B\}, \{a, b, c\}, R, A)
     \]
     where
 
     \[
-        R: &\\
-           & A \rightarrow aAc | B | \epsilon \\
-           & B \rightarrow bB | \epsilon
+        \begin{split}
+            R: &
+            \\
+               & A \rightarrow aAc | B | \epsilon
+            \\
+               & B \rightarrow bB | \epsilon
+        \end{split}
     \]
+
+    \begin{figure}[here]
+        \centering
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state, initial, accepting] (q_0) {$q_0$}; 
+            \node[state] (q_1) [right=of q_0] {$q_1$}; 
+            \node[state] (q_2) [below right=of q_1] {$q_2$}; 
+            \node[state] (q_3) [below left=of q_2] {$q_3$}; 
+            \node[state, accepting] (q_4) [left=of q_3] {$q_4$}; 
+            \path[->] 
+                (q_0)
+                    edge node {$\epsilon, \epsilon \rightarrow \$ $} (q_1)
+                (q_1)
+                    edge [loop right] node {$a, a \rightarrow \epsilon $} (q_1)
+                    edge node [left] {$c, a \rightarrow \epsilon $} (q_3)
+                    edge node {$ b, \epsilon \rightarrow \epsilon $} (q_2)
+                (q_2)
+                    edge [loop right] node {$b, \epsilon \rightarrow \epsilon $} (q_2)
+                    edge node {$ c, a \rightarrow \epsilon $} (q_3)
+                (q_3)
+                    edge [loop right] node {$c, a \rightarrow \epsilon $} (q_2)
+                    edge node {$\epsilon, \$ \rightarrow \epsilon $} (q_4)
+                    ;
+        \end{tikzpicture}
+        \caption{PDA, \(A\)}
+        \label{fig:automataA}
+    \end{figure}
 
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
-    Prove that UFAs recognize the class of regular languages or a language
-    \(L\) is recognized by a UFA \(A\) where \(A = (Q, \Sigma, Q_0, \delta,
-    F)\) if and only if \(L\) is regular.
+    \textbf{Part A}
+    \\
+    Prove that if \(L\) is context-free and \(L'\) is a regular languagte, then
+    \(L \cap L'\) is context-free too.
+    \\
+    
+    \begin{proof}
+        If \(L\) is a context-free language, and \(L'\) is a regular language, then
+        let \(M\) and \(N\) be the finite automata and push down automata that
+        accept both languages respectively.
+        \\
+
+        We can construct a new push down automata, \(O\) such that \(M\) and
+        \(N\) both receive the input and the new machine accepts a word only if
+        both \(M\) and \(N\) accept it. This is possible because a finite
+        automata doesn't use a stack which means one stack is sufficient for
+        the complete push down automata. This concludes the proof.
+    \end{proof}
+
+    \textbf{Part B}
+    \\
+    Let \(\Sigma = \{a, b, c\}\) and
+    \[
+        L = \{ w \in \Sigma^* | w \mbox{ contains equal number of a's, b's, and c's} \}
+    \]
+
+    Prove that \(L\) is not a context-free language.
 
     \begin{proof}
-        To prove this, we will consider the complement of \(L\), or \(L'\).
-        This is the language such that \(L'(A)\), or an NFA that accepts a word
-        if no run ends in F, or there does not exist a run that ends in F. This
-        automata, \(B\) can be defined like so:
-
-        \[
-            B = (Q, \Sigma, \delta, Q_0, F_B)
-        \]
-        
-        where \(F_B = \overline{F}\).
+        Suppose \(L\) is context-free. Let \(L' = \{a^* b^* c^*\}\), a regular language.
         \\
 
-        Now to prove this, we must prove the if and only if which means to show
-        that each side implies the other.
-        \\
+        Then according to what we proved in the first part, \(L \cap L'\) is
+        context-free. This is a contradiction because the language \(\{a^n b^n
+        c^n\}\) is not context-free thus violating our previous proof. We have
+        arrived at a contradiction therefore our proof is complete.
 
-        Let our NFA that that we will show equals the UFA be \(N\), \(N = (Q,
-        \Sigma, \delta, Q_0, F_N)\), where \(L(N)\) is the language that it
-        accepts.
-        \\
-
-        For the first side, \(w \in L(N) \rightarrow w \in L(B)\) we can see that
-        if a word is in an NFA, then
-        it will be accepted if there exists a run that ends in \(F_N\). We
-        can trivially see that this is true for our
-        new automata \(B\) as well. Since we've defined the final state,
-        \(F_B\), such that it is the complement of \(F\), we can see that in
-        order for \(B\) to accept it, there must not exist a run that ends in
-        \(F\). Thus there must be a run that ends in \(F_B\) which shows that
-        \(w \in L(N) \rightarrow w \in L(B))\).
-        \\
-
-        For the second side, \(w \in L(B) \rightarrow w \in L(N)\) we can see
-        that if a word is in \(B\) then there exists a run that ends in
-        \(F_B\). In order for this to be accepted by \(N\), there must also be
-        a run that ends in the final state of \(F_N\). We can see that this is
-        true just by the definition of an NFA. A word is only accepted if there
-        exists a run that ends in its final states. Thus there must be a run
-        that ends in \(F_N\) which shows that \(w \in L(B) \rightarrow w \in
-        L(N)\).
-        \\
-        
-        Since we have proven the complement of \(L(A\), we know that the class
-        regular languages is closed under under the complement. Therefore since
-        the complement of \(L(A)\) is regular, than so is just normal \(L(A)\).
-        And we have concluded our proof.
     \end{proof}
 
 \end{homeworkProblem}
@@ -180,7 +197,7 @@
 \begin{homeworkProblem}
     Prove that the following language is not context-free:
     \[
-        L = \left{a^ib^jc^k 
+        L = \{ a^i b^j c^k \}
     \]
 
     \begin{proof}
