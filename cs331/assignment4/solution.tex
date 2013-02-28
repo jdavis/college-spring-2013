@@ -195,40 +195,27 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Prove that the following language is not context-free:
-    \[
-        L = \{ a^i b^j c^k \}
-    \]
+    Prove that right linear grammars recognize exactly the class of regular languages.
 
     \begin{proof}
-        We will show \(L\) is irregular by showing that the complement of \(L\), \(L'\) or "w is a palindrome"
-        is regular. This is valid because languages are closed under the complement.
+        This proof will consist of two parts. First proving that any regular
+        language can be described by a RLG, and that any language described by
+        an RLG is regular.
+
+        \textbf{Part One}
+        Proving that any regular language can be described by an RLG.
         \\
 
-        Let \(w = 0^{p}10^{p}\) which is a palindrome and in \(L'\). Now assume that \(L'\) is regular.
-        According to the pumping lemma, \(w = xyz\) and let \(p\) be the
-        pumping length. Without taking the third condition of the pumping lemma into
-        consideration gives us six cases for splitting \(w\).
+        
 
-        \begin{enumerate}
-            \item The string y consists of all 0s at the beginning of \(w\).
-            \item The string y consists of 01s.
-            \item The string y consists of 10s.
-            \item The string y consists of all 1s.
-            \item The string y consists of all 0s at the end of \(w\).
-            \item The string y consists of 010s.
-        \end{enumerate}
-
-        The cases of 2, 3, 4, 5, 6  all violate the third condition of the pumping
-        lemma, that \(\left|xy\right| \leq p\). Therefore we have cornered
-        \(y\) and are only left with case 1.
+        \textbf{Part Two}
+        Proving that any language described by an RLG is regular.
         \\
 
-        Now we can pump \(y\) which gives us more 0s at the beginning of \(w\)
-        than at the end. Therefore \(w\) is no longer a palindrome and thus not
-        in \(L\). We have arrived at a contradiction which shows that the
-        language \(L'\) is not regular. Therefore the complement of \(L'\) is
-        just \(L\) and also not regular.
+
+        Since both sides have been proven, the proof is complete and RLGs
+        recognize exactly the class of regular languages.
+
     \end{proof}
 \end{homeworkProblem}
 
