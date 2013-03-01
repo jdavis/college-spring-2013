@@ -119,6 +119,8 @@
         \end{split}
     \]
 
+    The push down automata that represents \(G\) is as follows:
+
     \begin{figure}[here]
         \centering
         \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
@@ -174,7 +176,7 @@
     \\
     Let \(\Sigma = \{a, b, c\}\) and
     \[
-        L = \{ w \in \Sigma^* | w \mbox{ contains equal number of a's, b's, and c's} \}
+        L = \{ w \in \Sigma^* : w \mbox{ contains equal number of a's, b's, and c's} \}
     \]
 
     Prove that \(L\) is not a context-free language.
@@ -275,11 +277,104 @@
 \pagebreak
 
 \begin{homeworkProblem}
+    Use pumping lemma to show that the following language is not context-free:
+    \[
+        L = \{a^i b^j c^k : i, j, k \geq 0 \mbox{ and } i > j \mbox{ and } j > k \}
+    \]
+
+    \begin{proof}
+        We let \(w = a^{p + 2} b^{p + 1} c^{p}\) where \(p\) is the pumping length.
+        We then split up \(w\) so that \(w = uvxyz\). In doing so, we can break it up into
+        cases like so:
+        \begin{enumerate}
+            \item \(vxy\) contains just a's. This will result in a contradiction
+                because pumping down yields \(a^{0} a^{p - 2} a^{0} = \epsilon a^p \epsilon\) which means \(i \leq j\) and
+                thus \(w \notin L\).
+            \item \(vxy\) contains just b's. This will result in a contradiction
+                because pumping down yields \(b^{0} b^{p - 2} b^{0} = \epsilon b^p \epsilon\) which means \(j \leq k\) and
+                thus \(w \notin L\).
+            \item \(vxy\) contains just c's. This will result in a contradiction
+                because pumping up will eventually give us \(k > j\)
+                thus \(w \notin L\).
+            \item \(vxy\) is the split between a's and b's. 
+                This can be divided into four more cases:
+                \begin{enumerate}
+                    \item \(vxy = aab\), pumping down will lower the number of b's to be the same as
+                        the number of c's. Thus \(w \notin L\).
+                    \item \(vxy = abb\), pumping down will lower the number of a's to be the same as
+                        the number of b's. Thus \(w \notin L\).
+                    \item \(vxy = \epsilon ab\), pumping up will increase the number of b's past the
+                        number of a's. Thus \(w \notin L\).
+                    \item \(vxy = ab \epsilon\), pumping down will lower the number of a's to be the
+                        same as the number of b's. Thus \(w \notin L\).
+                \end{enumerate}
+
+            \item \(vxy\) is the split between b's and c's. Regardless of where the subsplit is,
+                it can be pumped until eventually \(i < j\) or \(i < k\), thus \(w \notin L\).
+        \end{enumerate}
+        
+        Now that I have (hopefully) exhausted all possibilities, the proof is complete and the language,
+        \(L\), is not context-free.
+    \end{proof}
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
+    Let \(G = \langle \{S\}, \{a, b\}, R, S \rangle\) be a context-free grammar
+    with the rules, \(R\) defined as follows:
+    \[
+        S \rightarrow aS | aSbS | \epsilon
+    \]
+
+    \textbf{Part One}
+    Prove that \(G\) is ambiguous.
+    \\
+    \begin{proof}
+        We can prove that \(G\) is ambiguous if there are two left most derivations
+        for one string.
+        \\
+
+        Take \(s = aab\), it can be derived twice as follows:
+        \[
+            \begin{split}
+                S &= aS = aaSbS = aabS = aab
+                \\
+                S &= aSbS = aaSbS = aabS = aab
+            \end{split}
+        \]
+        
+        Thus the context free language, \(G\) is ambiguous.
+    \end{proof}
+
+    \textbf{Part Two}
+    Give unambigous grammar that generates the same language as \(G\).
+    \\
+
+    The new grammar can be defined as follows:
+    \[
+        \begin{split}
+            S &\rightarrow aT | T
+            \\
+            T &\rightarrow aSbU | S
+            \\
+            U &\rightarrow a | b | \epsilon
+        \end{split}
+    \]
+
+    Using the previous example of \(s = aab\), we can try to derive it multiple times
+    like so:
+    \[
+        \begin{split}
+            S &= aT = aSbU = aTbU = aabU = aab
+            \\
+            S &= T = aSbU = ... = \mbox{ no way to get aab}
+        \end{split}
+    \]
+
+    And there it can't be derived multiple ways. So unless I'm missing
+    something, I think the homework is finished. YAY!
+    
 \end{homeworkProblem}
 
 \end{document}
