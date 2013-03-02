@@ -14,6 +14,7 @@ typedef struct {
 typedef Thread** Queue;
 
 Queue queue;
+Thread *main;
 Thread *current;
 int queue_items = 0;
 int queue_size = 0;
@@ -46,7 +47,9 @@ int insert_thread(ucontext_t *context, int priority) {
     }
 
     thread = (Thread *) malloc(sizeof(Thread));
-    if (thread == NULL) return -1; /* Implement errno stuff */
+
+    /* TODO: Implement errno stuff */
+    if (thread == NULL) return -1;
 
     /* Set our Thread data */
     thread->uc = context;
@@ -61,6 +64,10 @@ int insert_thread(ucontext_t *context, int priority) {
     return 0;
 }
 
+/*
+ * Implements a standard heapify function to ensure the heap property is
+ * satisfied for the entire heap.
+ */
 void heapify_queue(int i) {
     printf("Heapifying...\n");
 }
@@ -92,6 +99,7 @@ Thread *next_thread() {
  */
 void system_init() {
     if (queue_size == 0) {
+        printf("Creating queue...\n");
         queue_size = 2;
         queue = (Queue) malloc(sizeof(Thread) * queue_size);
     }
@@ -103,7 +111,23 @@ void system_init() {
  * returns 0 if succeeds, or -1 otherwise. 
  */
 int uthread_create(void (*func)(void *), int priority) {
-    printf("I'm in uthread_create!\n");
+    if (current == NULL) {
+        getcontext(current);
+    }
+
+    Thread *thread;
+    ucontext_t *context;
+
+    if (priority <= 0) return -1;
+
+    context = (ucontext_t *) malloc(sizeof(ucontext_t));
+    if (context == NULL) return -1;
+
+    thread = (Thread *) malloc(sizeof(Thread));
+    if (thread == NULL) return -1;
+
+    thread->uc = context;
+
     return 0;
 }
 
