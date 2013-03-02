@@ -14,8 +14,8 @@ typedef struct {
 typedef Thread** Queue;
 
 Queue queue;
-Thread *main;
 Thread *current;
+ucontext_t *main_context;
 int queue_items = 0;
 int queue_size = 0;
 
@@ -37,23 +37,14 @@ int expand_queue() {
  * Adds a new thread to the queue.
  * Returns 0 on success.
  */
-int insert_thread(ucontext_t *context, int priority) {
-    Thread *thread;
+int insert_thread(Thread *thread) {
     if (queue_size == 0) return -1;
+
     if (queue_items >= queue_size) {
         if (expand_queue() != 0) {
             return -1;
         }
     }
-
-    thread = (Thread *) malloc(sizeof(Thread));
-
-    /* TODO: Implement errno stuff */
-    if (thread == NULL) return -1;
-
-    /* Set our Thread data */
-    thread->uc = context;
-    thread->priority = priority;
 
     /* Load it into the queue */
     queue[queue_size] = thread;
@@ -94,6 +85,26 @@ Thread *next_thread() {
 }
 
 /*
+ * Run Thread
+ */
+int run_thread(Thread *next_thread) {
+    if (next_thread == NULL) return -1;
+
+    return swapcontext(current->uc, next_thread->uc);
+}
+
+/*
+ * Run next priority Thread.
+ */
+int run_next_thread() {
+    Thread *next = next_thread();
+
+    if (next == NULL) return 0;
+
+    return run_thread(next);
+}
+
+/*
  * This function is called before any other uthread library
  * functions can be called. It initializes the uthread system.
  */
@@ -111,24 +122,32 @@ void system_init() {
  * returns 0 if succeeds, or -1 otherwise. 
  */
 int uthread_create(void (*func)(void *), int priority) {
-    if (current == NULL) {
-        getcontext(current);
-    }
-
     Thread *thread;
     ucontext_t *context;
+
+    thread = (Thread *) malloc(sizeof(Thread));
+
+    /* TODO: Implement errno stuff */
+    if (thread == NULL) return -1;
+
+    /* Set our Thread data */
+    thread->uc = context;
+    thread->priority = priority;
+
+
+    if (main_context == NULL) {
+        getcontext(main_context);
+    }
 
     if (priority <= 0) return -1;
 
     context = (ucontext_t *) malloc(sizeof(ucontext_t));
     if (context == NULL) return -1;
 
-    thread = (Thread *) malloc(sizeof(Thread));
-    if (thread == NULL) return -1;
+    /* Retrieve the next highest priority thread */
+    insert_thread(thread);
 
-    thread->uc = context;
-
-    return 0;
+    return run_next_thread();
 }
 
 /*
@@ -141,15 +160,22 @@ int uthread_create(void (*func)(void *), int priority) {
  * if succeeds, or -1 otherwise.
  */
 int uthread_yield(int priority) {
-    printf("I'm in yield!\n");
-    return 0;
+    if (priority <= 0) return -1;
+
+    /* Update priority */
+    current->priority = priority;
+
+    /* Retrieve the next highest priority thread */
+    insert_thread(current);
+
+    return run_next_thread();
 }
 
 /*
  * The calling user-level thread ends its execution. 
  */
 void uthread_exit() {
-    printf("I'm in exit!\n");
+    run_next_thread();
 }
 
 #endif
