@@ -4,7 +4,7 @@ CC = gcc
 $(TARGETS): $(DEPS)
 
 test: test.c lib-ult.c
-	$(CC) test.c -o test $(CFLAGS)
+	$(CC) $(CFLAGS) test.c -o test
 
 run: test
 	./test > test.txt
