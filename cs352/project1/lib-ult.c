@@ -1,14 +1,100 @@
 #ifndef LIB_ULTC_C
 #define LIB_ULTC_C
+#define _XOPEN_SOURCE
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <ucontext.h>
+
+typedef struct {
+    ucontext_t *uc;
+    int priority;
+} Thread;
+
+typedef Thread** Queue;
+
+Queue queue;
+Thread *current;
+int queue_items = 0;
+int queue_size = 0;
+
+/*
+ * Queue Handling Functions
+ */
+
+/*
+ * Expands the queue to 2x the size.
+ * Returns 0 on success.
+ */
+int expand_queue() {
+    printf("Expanding queue...\n");
+
+    return 0;
+}
+
+/*
+ * Adds a new thread to the queue.
+ * Returns 0 on success.
+ */
+int insert_thread(ucontext_t *context, int priority) {
+    Thread *thread;
+    if (queue_size == 0) return -1;
+    if (queue_items >= queue_size) {
+        if (expand_queue() != 0) {
+            return -1;
+        }
+    }
+
+    thread = (Thread *) malloc(sizeof(Thread));
+    if (thread == NULL) return -1; /* Implement errno stuff */
+
+    /* Set our Thread data */
+    thread->uc = context;
+    thread->priority = priority;
+
+    /* Load it into the queue */
+    queue[queue_size] = thread;
+    queue_size += 1;
+
+    /* Swap with parents */
+
+    return 0;
+}
+
+void heapify_queue(int i) {
+    printf("Heapifying...\n");
+}
+
+/*
+ * Remove and return the next thread to execute
+ * Returns NULL on error
+ */
+Thread *next_thread() {
+    Thread *next;
+
+    if (queue_size < 1) {
+        return NULL;
+    }
+
+    next = queue[0];
+
+    queue[0] = queue[queue_size - 1];
+    queue_size -= 1;
+
+    heapify_queue(0);
+
+    return next;
+}
 
 /*
  * This function is called before any other uthread library
  * functions can be called. It initializes the uthread system.
  */
 void system_init() {
-    printf("I'm in system_init!\n");
+    if (queue_size == 0) {
+        queue_size = 2;
+        queue = (Queue) malloc(sizeof(Thread) * queue_size);
+    }
 }
 
 /*
