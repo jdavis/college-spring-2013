@@ -14,8 +14,8 @@ typedef struct {
 typedef Thread** Queue;
 
 Queue queue;
-Thread *current;
-ucontext_t *main_context;
+Thread *current = NULL;
+ucontext_t *main_context = NULL;
 int queue_items = 0;
 int queue_size = 0;
 
@@ -70,14 +70,16 @@ void heapify_queue(int i) {
 Thread *next_thread() {
     Thread *next;
 
-    if (queue_size < 1) {
+    if (queue_items < 1) {
         return NULL;
     }
 
     next = queue[0];
 
-    queue[0] = queue[queue_size - 1];
-    queue_size -= 1;
+    printf("queue_items = %d\n", queue_items);
+
+    queue[0] = queue[queue_items - 1];
+    queue_items -= 1;
 
     heapify_queue(0);
 
@@ -87,10 +89,11 @@ Thread *next_thread() {
 /*
  * Run Thread
  */
-int run_thread(Thread *next_thread) {
-    if (next_thread == NULL) return -1;
+int run_thread(Thread *next) {
+    if (next == NULL) return -1;
+    if (current == NULL) return -1;
 
-    return swapcontext(current->uc, next_thread->uc);
+    return swapcontext(current->uc, next->uc);
 }
 
 /*
@@ -123,20 +126,32 @@ void system_init() {
  */
 int uthread_create(void (*func)(void *), int priority) {
     Thread *thread;
-    ucontext_t *context;
+    ucontext_t *context, *current_context;
+
+    printf("Uthread_create\n");
 
     thread = (Thread *) malloc(sizeof(Thread));
-
-    /* TODO: Implement errno stuff */
     if (thread == NULL) return -1;
+
+    context = (ucontext_t *) malloc(sizeof(ucontext_t));
+    if (context == NULL) return -1;
+
+    makecontext(context, func, 0);
 
     /* Set our Thread data */
     thread->uc = context;
     thread->priority = priority;
 
 
-    if (main_context == NULL) {
-        getcontext(main_context);
+    if (current == NULL) {
+        current = (Thread *) malloc(sizeof(Thread));
+        if (current == NULL) return -1;
+
+        current_context = (ucontext_t *) malloc(sizeof(ucontext_t));
+        if (current_context == NULL) return -1;
+
+        getcontext(current_context);
+        current->uc = current_context;
     }
 
     if (priority <= 0) return -1;
@@ -160,6 +175,7 @@ int uthread_create(void (*func)(void *), int priority) {
  * if succeeds, or -1 otherwise.
  */
 int uthread_yield(int priority) {
+    printf("Uthread_yield\n");
     if (priority <= 0) return -1;
 
     /* Update priority */
@@ -175,6 +191,7 @@ int uthread_yield(int priority) {
  * The calling user-level thread ends its execution. 
  */
 void uthread_exit() {
+    printf("Uthread_exit\n");
     run_next_thread();
 }
 
