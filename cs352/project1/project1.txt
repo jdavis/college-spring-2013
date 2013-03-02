@@ -1,0 +1,151 @@
+k
+ComS 352 Spring 2013 Project 1 Description (Due: Tuesday, March 26, 2013)
+
+Development of uthread: a User-level Thread Library
+
+The purpose of this project is to deepen your understadning of 
+the basic OS concepts of kernel threads, user-level threads, 
+running context of threads, context switch and thread scheduling, 
+as well as to familize you with C/C++ system programming.   
+
+1. uthread library functions
+
+In this project, you are required to develop a library of APIs 
+for user-level thread programming. Specifically, the library 
+should provide the following functions:
+
+void system_init()
+
+    This function is called before any other uthread library
+    functions can be called. It initializes the uthread system.
+ 
+int uthread_create(void func(), int priority)
+
+    This function creates a new user-level thread which runs func(),
+    with priority number specified by argument priority. This function 
+    returns 0 if succeeds, or -1 otherwise. 
+
+int uthread_yield(int priority)
+
+    The calling thread requests to yield the kernel thread that
+    it is currently running to one of other user threads which 
+    has the highest priority level among the ready threads if 
+    there is one or more other threads ready to run. If no
+    any other thread is ready to run, the calling thread should
+    proceed to run on the kernel thread. This function returns 0 
+    if succeeds, or -1 otherwise.
+   
+void uthread_exit()
+
+    The calling user-level thread ends its execution. 
+
+
+2. Scheduling of user-level threads in uthread library
+
+    Recall that user-level threads should be mapped (scheduled) 
+    to kernel threads to run on the CPU(s). The uthread library 
+    should implement "many to one mapping" method to map user 
+    threads to a single kernel thread (that is, the kernel thread
+    that runs the main() function of the application code). 
+
+    The uthread library should implement non-preemptive, cooperative, 
+    priority-based algorithm when scheduling user threads to the 
+    kernel thread. That is, when the kernel thread becomes available 
+    (because yielding or ending of a user thread) and several other 
+    user threads are ready to run, the thread that has the highest 
+    priority level (i.e., lowest priority number) is picked to run on 
+    the kernel thread. If there are multiple ready threads of the 
+    same highest priority level, the FCFS algorithm is used to schedule 
+    these same-priority threads. 
+
+3. A simple example program for your self-test
+
+#include "lib-ult.c" //the uthread library code is in lib-ult.c
+
+int n_threads=0;
+int myid=0;
+
+void do_something()
+{
+        int id;
+
+        id=myid;
+        myid++;
+
+        printf("This is ult %d\n", id);
+        if(n_threads<10){
+                uthread_create(do_something,2);
+                n_threads++;
+                uthread_create(do_something,2);
+                n_threads++;
+        }
+        printf("This is ult %d again\n",id);
+        uthread_yield(1);
+        printf("This is ult %d one more time\n",id);
+}
+
+main()
+{
+        int i;
+        system_init(); 
+        uthread_create(do_something,2);
+	uthread_exit();
+}
+
+
+The expected output should be as follows:
+
+This is ult 0
+This is ult 0 again
+This is ult 1
+This is ult 1 again
+This is ult 0 once more
+This is ult 1 once more
+This is ult 2
+This is ult 2 again
+This is ult 3
+This is ult 3 again
+This is ult 2 once more
+This is ult 3 once more
+This is ult 4
+This is ult 4 again
+This is ult 5
+This is ult 5 again
+This is ult 4 once more
+This is ult 5 once more
+This is ult 6
+This is ult 6 again
+This is ult 7
+This is ult 7 again
+This is ult 6 once more
+This is ult 7 once more
+This is ult 8
+This is ult 8 again
+This is ult 9
+This is ult 9 again
+This is ult 8 once more
+This is ult 9 once more
+This is ult 10
+This is ult 10 again
+This is ult 10 once more
+
+
+4. Other Instructions 
+
+-- Put your library implementation code (including library functions, 
+   definitions of data structures, etc.) in a C file named "lib-ult.c".  
+
+-- Your code should compile successfully in pyrite. 
+   Otherwise, you may receive no points.  
+
+-- Write comments in your code to help debugging, testing and grading.  
+
+-- Well test your code before submission.
+
+-- Your code (i.e., lib-ult.c) should be submitted to Blackboard system 
+   by deadline. If submitted late, the same late policy as weekly 
+   assignments will be applied.
+
+-- Start as early as possible!
+    
+
