@@ -1,11 +1,10 @@
-TARGETS = test
 CFLAGS = -Wall -pedantic
 CC = gcc
 
 $(TARGETS): $(DEPS)
 
-%.o: %.c
-	$(CC) -c -o $@ $< $(CFLAGS)
+test: test.c lib-ult.c
+	$(CC) test.c -o test $(CFLAGS)
 
 run: test
 	./test > test.txt
