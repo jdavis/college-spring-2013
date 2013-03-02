@@ -1,4 +1,4 @@
-CFLAGS = -Wall -pedantic
+CFLAGS = -g -Wall -pedantic
 CC = gcc
 
 $(TARGETS): $(DEPS)
@@ -11,5 +11,5 @@ run: test
 	diff test.txt output.txt
 
 clean:
-	rm -f $(TARGETS)
-	rm -f *.o
+	rm test
+	rm *.o
