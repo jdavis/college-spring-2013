@@ -1,6 +1,5 @@
 #ifndef LIB_ULTC_C
 #define LIB_ULTC_C
-#define _XOPEN_SOURCE
 
 #define STACK_SIZE 256
 
@@ -11,15 +10,17 @@
 typedef struct {
     ucontext_t *uc;
     int priority;
+    int id;
 } Thread;
 
-typedef Thread** Queue;
+typedef Thread **Queue;
 
-Queue queue;
-Thread *current = NULL;
-ucontext_t main_context;
+int id = 0;
 int queue_items = 0;
 int queue_size = 0;
+Queue queue = NULL;
+Thread *current = NULL;
+ucontext_t main_context;
 
 /*
  * Queue Handling Functions
@@ -30,7 +31,20 @@ int queue_size = 0;
  * Returns 0 on success.
  */
 int expand_queue() {
+    int i;
+    Queue new;
+
+    new = malloc(sizeof(Thread *) * queue_size * 2);
     printf("Expanding queue...\n");
+
+    for(i = 0; i < queue_size; i++) {
+        new[i] = queue[i];
+    }
+
+    /*free(queue);*/
+
+    queue = new;
+    queue_size *= 2;
 
     return 0;
 }
@@ -50,6 +64,7 @@ int insert_thread(Thread *thread) {
     }
 
     /* Load it into the queue */
+    printf("Queue_items = %i\n", queue_items);
     queue[queue_items] = thread;
     queue_items += 1;
 
@@ -81,6 +96,7 @@ Thread *next_thread() {
 
     printf("queue_items = %d\n", queue_items);
 
+    printf("Swapping last item at %i with item at 0\n", queue_items - 1);
     queue[0] = queue[queue_items - 1];
     queue_items -= 1;
 
@@ -94,6 +110,7 @@ Thread *next_thread() {
  */
 int run_thread(Thread *next) {
     current = next;
+    printf("Setting current to thread with id = %i\n", next->id);
 
     printf("Running thread with priority %i..\n", next->priority);
 
@@ -108,6 +125,7 @@ int run_thread(Thread *next) {
 int run_next_thread() {
     Thread *next = next_thread();
 
+    printf("Next thread id = %i\n", next->id);
     printf("Threads on Queue =%i\n", queue_items);
 
     if (next == NULL) return 0;
@@ -125,7 +143,7 @@ void system_init() {
     if (queue_size == 0) {
         printf("Creating queue...\n");
         queue_size = 2;
-        queue = (Queue) malloc(sizeof(Thread) * queue_size);
+        queue = malloc(sizeof(Thread *) * queue_size);
     }
 }
 
@@ -134,7 +152,7 @@ void system_init() {
  * with priority number specified by argument priority. This function 
  * returns 0 if succeeds, or -1 otherwise. 
  */
-int uthread_create(void (*func)(void *), int priority) {
+int uthread_create(void (*func)(void), int priority) {
     Thread *thread;
     ucontext_t *context;
 
@@ -156,6 +174,9 @@ int uthread_create(void (*func)(void *), int priority) {
     /* Set our Thread data */
     thread->uc = context;
     thread->priority = priority;
+    thread->id = id;
+
+    id += 1;
 
     if (priority <= 0) return -1;
 
@@ -179,7 +200,15 @@ int uthread_create(void (*func)(void *), int priority) {
  */
 int uthread_yield(int priority) {
     printf("Uthread_yield\n");
-    if (priority <= 0) return -1;
+    if (priority <= 0) {
+        printf("Priority <= 0\n");
+        return -1;
+    }
+
+    if (current == NULL) {
+        printf("Current == NULL\n");
+        return -1;
+    }
 
     /* Update priority */
     current->priority = priority;
@@ -195,7 +224,14 @@ int uthread_yield(int priority) {
  */
 void uthread_exit() {
     printf("Uthread_exit\n");
-    run_next_thread();
+    if (current == NULL) {
+        printf("Exit, running next thread\n");
+        run_next_thread();
+    } else {
+        printf("Swapping context instead\n");
+        swapcontext(current->uc, &main_context);
+    }
+
 }
 
 #endif
