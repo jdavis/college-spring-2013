@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "lib-ult.c"
 
 int n_threads=0;
