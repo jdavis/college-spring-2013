@@ -20,7 +20,6 @@ int queue_items = 0;
 int queue_size = 0;
 Queue queue = NULL;
 Thread *current = NULL;
-ucontext_t main_context;
 
 /*
  * Queue Handling Functions
@@ -34,8 +33,10 @@ int expand_queue() {
     int i;
     Queue new;
 
-    new = malloc(sizeof(Thread *) * queue_size * 2);
     printf("Expanding queue...\n");
+
+    new = malloc(sizeof(Thread *) * queue_size * 2);
+    if (new == NULL) return -1;
 
     for(i = 0; i < queue_size; i++) {
         new[i] = queue[i];
@@ -64,7 +65,7 @@ int insert_thread(Thread *thread) {
     }
 
     /* Load it into the queue */
-    printf("Queue_items = %i\n", queue_items);
+    printf("Queue_items = %i, Queue_size = %i\n", queue_items, queue_size);
     queue[queue_items] = thread;
     queue_items += 1;
 
@@ -82,17 +83,14 @@ void heapify_queue(int i) {
 }
 
 /*
- * Remove and return the next thread to execute
- * Returns NULL on error
+ * Run next priority Thread.
  */
-Thread *next_thread() {
-    Thread *next;
+int run_next_thread() {
+    Thread *previous;
+    if (queue_items == 0) return -1;
 
-    if (queue_items < 1) {
-        return NULL;
-    }
-
-    next = queue[0];
+    previous = current;
+    current = queue[0];
 
     printf("queue_items = %d\n", queue_items);
 
@@ -102,35 +100,16 @@ Thread *next_thread() {
 
     heapify_queue(0);
 
-    return next;
-}
-
-/*
- * Run Thread
- */
-int run_thread(Thread *next) {
-    current = next;
-    printf("Setting current to thread with id = %i\n", next->id);
-
-    printf("Running thread with priority %i..\n", next->priority);
-
-    if (next == NULL) return -1;
-
-    return swapcontext(&main_context, &current->uc);
-}
-
-/*
- * Run next priority Thread.
- */
-int run_next_thread() {
-    Thread *next = next_thread();
-
-    printf("Next thread id = %i\n", next->id);
+    printf("Next thread id = %i\n", current->id);
     printf("Threads on Queue =%i\n", queue_items);
 
-    if (next == NULL) return 0;
+    if (current == NULL) return 0;
 
-    return run_thread(next);
+    printf("Setting current to thread with id = %i\n", current->id);
+
+    printf("Running thread with priority %i..\n", current->priority);
+
+    return swapcontext(&previous->uc, &current->uc);
 }
 
 /*
@@ -138,12 +117,17 @@ int run_next_thread() {
  * functions can be called. It initializes the uthread system.
  */
 void system_init() {
-    getcontext(&main_context);
+    current = (Thread *) malloc(sizeof(Thread));
+    if (current == NULL) return;
+
+    getcontext(&current->uc);
 
     if (queue_size == 0) {
         printf("Creating queue...\n");
         queue_size = 2;
         queue = malloc(sizeof(Thread *) * queue_size);
+
+        if (queue == NULL) printf("Queue is NULL, this is bad\n");
     }
 }
 
@@ -192,14 +176,18 @@ int uthread_create(void (*func)(void), int priority) {
  */
 int uthread_yield(int priority) {
     printf("Uthread_yield\n");
+
+    /* Invalid data handling */
     if (priority <= 0) {
         printf("Priority <= 0\n");
         return -1;
     }
 
-    if (current == NULL) {
-        printf("Current == NULL\n");
-        return -1;
+    /* Handle base cases */
+    if (current == NULL) return -1;
+
+    if (queue_items == 0) {
+        return 0;
     }
 
     /* Update priority */
@@ -208,7 +196,8 @@ int uthread_yield(int priority) {
     /* Retrieve the next highest priority thread */
     insert_thread(current);
 
-    return swapcontext(&current->uc, &main_context);
+    printf("Swapping context back to main_context\n");
+    return run_next_thread();
 }
 
 /*
@@ -216,14 +205,10 @@ int uthread_yield(int priority) {
  */
 void uthread_exit() {
     printf("Uthread_exit\n");
-    if (current == NULL) {
-        printf("Exit, running next thread\n");
-        run_next_thread();
-    } else {
-        printf("Swapping context instead\n");
-        swapcontext(&current->uc, &main_context);
-    }
 
+    if (current == NULL) return;
+
+    run_next_thread();
 }
 
 #endif

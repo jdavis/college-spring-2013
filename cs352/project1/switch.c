@@ -12,7 +12,7 @@ void main()
 {
     system_init();
     uthread_create(first_thread, 2);
-    uthread_create(second_thread, 2);
+    /*uthread_create(second_thread, 2);*/
 
     uthread_exit();
 
