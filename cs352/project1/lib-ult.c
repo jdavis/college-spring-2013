@@ -2,6 +2,8 @@
 #define LIB_ULTC_C
 #define _XOPEN_SOURCE
 
+#define STACK_SIZE 256
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ucontext.h>
@@ -15,7 +17,7 @@ typedef Thread** Queue;
 
 Queue queue;
 Thread *current = NULL;
-ucontext_t *main_context = NULL;
+ucontext_t main_context;
 int queue_items = 0;
 int queue_size = 0;
 
@@ -91,11 +93,13 @@ Thread *next_thread() {
  * Run Thread
  */
 int run_thread(Thread *next) {
-    printf("Running thread..\n");
-    if (next == NULL) return -1;
-    if (current == NULL) return -1;
+    current = next;
 
-    return swapcontext(current->uc, next->uc);
+    printf("Running thread with priority %i..\n", next->priority);
+
+    if (next == NULL) return -1;
+
+    return swapcontext(&main_context, current->uc);
 }
 
 /*
@@ -105,7 +109,6 @@ int run_next_thread() {
     Thread *next = next_thread();
 
     printf("Threads on Queue =%i\n", queue_items);
-    printf("Next thread = %i\n", next);
 
     if (next == NULL) return 0;
 
@@ -117,6 +120,8 @@ int run_next_thread() {
  * functions can be called. It initializes the uthread system.
  */
 void system_init() {
+    getcontext(&main_context);
+
     if (queue_size == 0) {
         printf("Creating queue...\n");
         queue_size = 2;
@@ -131,7 +136,7 @@ void system_init() {
  */
 int uthread_create(void (*func)(void *), int priority) {
     Thread *thread;
-    ucontext_t *context, *current_context;
+    ucontext_t *context;
 
     printf("Uthread_create\n");
 
@@ -143,30 +148,14 @@ int uthread_create(void (*func)(void *), int priority) {
 
     getcontext(context);
 
-    context->uc_stack.ss_sp = malloc(16384);
-    context->uc_stack.ss_size = 16384;
+    context->uc_stack.ss_sp = (char *) malloc(sizeof(char) * STACK_SIZE);
+    context->uc_stack.ss_size = STACK_SIZE;
 
     makecontext(context, func, 0);
 
     /* Set our Thread data */
     thread->uc = context;
     thread->priority = priority;
-
-
-    if (current == NULL) {
-        current = (Thread *) malloc(sizeof(Thread));
-        if (current == NULL) return -1;
-
-        current_context = (ucontext_t *) malloc(sizeof(ucontext_t));
-        if (current_context == NULL) return -1;
-
-        getcontext(current_context);
-
-        current_context->uc_stack.ss_sp = malloc(16384);
-        current_context->uc_stack.ss_size = 16384;
-
-        current->uc = current_context;
-    }
 
     if (priority <= 0) return -1;
 
@@ -176,7 +165,7 @@ int uthread_create(void (*func)(void *), int priority) {
     /* Retrieve the next highest priority thread */
     insert_thread(thread);
 
-    return run_next_thread();
+    return 0;
 }
 
 /*
@@ -198,7 +187,7 @@ int uthread_yield(int priority) {
     /* Retrieve the next highest priority thread */
     insert_thread(current);
 
-    return run_next_thread();
+    return swapcontext(current->uc, &main_context);
 }
 
 /*
