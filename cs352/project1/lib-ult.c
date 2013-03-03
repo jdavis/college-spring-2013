@@ -38,6 +38,7 @@ int expand_queue() {
  * Returns 0 on success.
  */
 int insert_thread(Thread *thread) {
+    printf("Inserting into queue\n");
     if (queue_size == 0) return -1;
 
     if (queue_items >= queue_size) {
@@ -47,10 +48,10 @@ int insert_thread(Thread *thread) {
     }
 
     /* Load it into the queue */
-    queue[queue_size] = thread;
-    queue_size += 1;
+    queue[queue_items] = thread;
+    queue_items += 1;
 
-    /* Swap with parents */
+    printf("Queue now has items %i\n", queue_items);
 
     return 0;
 }
@@ -90,6 +91,7 @@ Thread *next_thread() {
  * Run Thread
  */
 int run_thread(Thread *next) {
+    printf("Running thread..\n");
     if (next == NULL) return -1;
     if (current == NULL) return -1;
 
@@ -101,6 +103,9 @@ int run_thread(Thread *next) {
  */
 int run_next_thread() {
     Thread *next = next_thread();
+
+    printf("Threads on Queue =%i\n", queue_items);
+    printf("Next thread = %i\n", next);
 
     if (next == NULL) return 0;
 
@@ -136,6 +141,11 @@ int uthread_create(void (*func)(void *), int priority) {
     context = (ucontext_t *) malloc(sizeof(ucontext_t));
     if (context == NULL) return -1;
 
+    getcontext(context);
+
+    context->uc_stack.ss_sp = malloc(16384);
+    context->uc_stack.ss_size = 16384;
+
     makecontext(context, func, 0);
 
     /* Set our Thread data */
@@ -151,6 +161,10 @@ int uthread_create(void (*func)(void *), int priority) {
         if (current_context == NULL) return -1;
 
         getcontext(current_context);
+
+        current_context->uc_stack.ss_sp = malloc(16384);
+        current_context->uc_stack.ss_size = 16384;
+
         current->uc = current_context;
     }
 
