@@ -8,7 +8,7 @@
 #include <ucontext.h>
 
 typedef struct {
-    ucontext_t *uc;
+    ucontext_t uc;
     int priority;
     int id;
 } Thread;
@@ -116,7 +116,7 @@ int run_thread(Thread *next) {
 
     if (next == NULL) return -1;
 
-    return swapcontext(&main_context, current->uc);
+    return swapcontext(&main_context, &current->uc);
 }
 
 /*
@@ -154,34 +154,26 @@ void system_init() {
  */
 int uthread_create(void (*func)(void), int priority) {
     Thread *thread;
-    ucontext_t *context;
 
     printf("Uthread_create\n");
 
     thread = (Thread *) malloc(sizeof(Thread));
     if (thread == NULL) return -1;
 
-    context = (ucontext_t *) malloc(sizeof(ucontext_t));
-    if (context == NULL) return -1;
+    getcontext(&thread->uc);
 
-    getcontext(context);
+    thread->uc.uc_stack.ss_sp = (char *) malloc(sizeof(char) * STACK_SIZE);
+    thread->uc.uc_stack.ss_size = STACK_SIZE;
 
-    context->uc_stack.ss_sp = (char *) malloc(sizeof(char) * STACK_SIZE);
-    context->uc_stack.ss_size = STACK_SIZE;
-
-    makecontext(context, func, 0);
+    makecontext(&thread->uc, func, 0);
 
     /* Set our Thread data */
-    thread->uc = context;
     thread->priority = priority;
     thread->id = id;
 
     id += 1;
 
     if (priority <= 0) return -1;
-
-    context = (ucontext_t *) malloc(sizeof(ucontext_t));
-    if (context == NULL) return -1;
 
     /* Retrieve the next highest priority thread */
     insert_thread(thread);
@@ -216,7 +208,7 @@ int uthread_yield(int priority) {
     /* Retrieve the next highest priority thread */
     insert_thread(current);
 
-    return swapcontext(current->uc, &main_context);
+    return swapcontext(&current->uc, &main_context);
 }
 
 /*
@@ -229,7 +221,7 @@ void uthread_exit() {
         run_next_thread();
     } else {
         printf("Swapping context instead\n");
-        swapcontext(current->uc, &main_context);
+        swapcontext(&current->uc, &main_context);
     }
 
 }
