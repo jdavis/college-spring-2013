@@ -93,30 +93,35 @@ int run_next_thread() {
     previous = current;
     current = queue[0];
 
-    printf("queue_items = %d\n", queue_items);
+    printf("Running next thread, queue_items = %d\n", queue_items);
 
-    printf("Swapping last item at %i with item at 0\n", queue_items - 1);
-    queue[0] = queue[queue_items - 1];
+    if (queue_items != 1) {
+        printf("Swapping last item at %i with item at 0\n", queue_items - 1);
+        queue[0] = queue[queue_items - 1];
+    }
+
     queue_items -= 1;
 
     heapify_queue(0);
 
     printf("Next thread id = %i\n", current->id);
+    printf("Next thread priority = %i\n", current->priority);
     printf("Threads on Queue =%i\n", queue_items);
 
     if (current == NULL) return 0;
-
-    printf("Setting current to thread with id = %i\n", current->id);
-
-    printf("Running thread with priority %i..\n", current->priority);
 
     return swapcontext(&previous->uc, &current->uc);
 }
 
 void switch_func() {
     printf("In Switch function\n");
-    if (queue_items != 0) run_next_thread();
-    exit(0);
+    printf("Queue Itmes = %i\n", queue_items);
+    if (queue_items != 0) {
+        printf("Running next thread\n");
+        run_next_thread();
+    } else {
+        exit(0);
+    }
 }
 
 /*

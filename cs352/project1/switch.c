@@ -16,7 +16,7 @@ void main()
     sleep(1);
     printf("Leaving from thread 0.\n");
 
-    uthread_yield(2);
+    uthread_yield(1);
 
     printf("Back to thread 0.\n");
 }
@@ -26,7 +26,5 @@ void first_thread()
 	int i;
 	printf("This is thread 1.\n");
 
-    printf("Leaving from thread 1.\n");
-	
-    printf("Back to thread 1.\n");
+    printf("Ending thread now\n");
 }
