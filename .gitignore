@@ -1,5 +1,5 @@
-*.sw[p|o]
-*.py[c|o]
+*.sw[po]
+*.py[co]
 a.out
 *.aux
 *.log
