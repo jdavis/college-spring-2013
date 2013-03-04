@@ -20,6 +20,7 @@ int queue_items = 0;
 int queue_size = 0;
 Queue queue = NULL;
 Thread *current = NULL;
+ucontext_t switcher;
 
 /*
  * Queue Handling Functions
@@ -112,6 +113,12 @@ int run_next_thread() {
     return swapcontext(&previous->uc, &current->uc);
 }
 
+void switch_func() {
+    printf("In Switch function\n");
+    if (queue_items != 0) run_next_thread();
+    exit(0);
+}
+
 /*
  * This function is called before any other uthread library
  * functions can be called. It initializes the uthread system.
@@ -121,6 +128,12 @@ void system_init() {
     if (current == NULL) return;
 
     getcontext(&current->uc);
+    getcontext(&switcher);
+
+    switcher.uc_stack.ss_sp = (char *) malloc(sizeof(char) * STACK_SIZE);
+    switcher.uc_stack.ss_size = STACK_SIZE;
+
+    makecontext(&switcher, switch_func, 0);
 
     if (queue_size == 0) {
         printf("Creating queue...\n");
@@ -139,6 +152,8 @@ void system_init() {
 int uthread_create(void (*func)(void), int priority) {
     Thread *thread;
 
+    if (current == NULL) return -1;
+
     printf("Uthread_create\n");
 
     thread = (Thread *) malloc(sizeof(Thread));
@@ -148,6 +163,7 @@ int uthread_create(void (*func)(void), int priority) {
 
     thread->uc.uc_stack.ss_sp = (char *) malloc(sizeof(char) * STACK_SIZE);
     thread->uc.uc_stack.ss_size = STACK_SIZE;
+    thread->uc.uc_link = &switcher;
 
     makecontext(&thread->uc, func, 0);
 
@@ -177,14 +193,12 @@ int uthread_create(void (*func)(void), int priority) {
 int uthread_yield(int priority) {
     printf("Uthread_yield\n");
 
-    /* Invalid data handling */
+    if (current == NULL) return -1;
+
     if (priority <= 0) {
         printf("Priority <= 0\n");
         return -1;
     }
-
-    /* Handle base cases */
-    if (current == NULL) return -1;
 
     if (queue_items == 0) {
         return 0;
@@ -196,7 +210,6 @@ int uthread_yield(int priority) {
     /* Retrieve the next highest priority thread */
     insert_thread(current);
 
-    printf("Swapping context back to main_context\n");
     return run_next_thread();
 }
 
