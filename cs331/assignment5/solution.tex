@@ -103,16 +103,17 @@
 
     \(M = \)`` On input string \(w\):
     \begin{enumerate}
-        \item Start on the left side of the word, move right until we find a 1, cross it out
-        \item If in stage 1 and the tape is empty, mopve to \(q_{accept}\)
+        \item Start on the left side of the word, if the word is empty, move to \(q_{accept}\)
+        \item Move to the left of the word
+        \item Move right until we find a 1, cross it out
         \item If in stage 1 and we reach the end of the tape, move to \(q_{reject}\)
         \item Move back to the left of the word
-        \item Scan right until a 0 is found, cross it out
+        \item Scan right until the first 0 is found, cross it out
+        \item If in previous stage and we reach the end of the tape, move to \(q_{reject}\)
         \item Move back to the left of the word
+        \item Scan right again until the second 0 is found, cross it out
         \item If in previous stage and we reach the end of the tape, move to \(q_{reject}\)
-        \item Scan right again until a 0 is found, cross it out
         \item Move to the left of the word
-        \item If in previous stage and we reach the end of the tape, move to \(q_{reject}\)
         \item Move to left of the word, move to stage 1
     \end{enumerate}
 
@@ -130,17 +131,13 @@
                 \begin{tabular}{c || c | c | c | c}
                     \(\delta\) & 0 & 1 & x & \textvisiblespace \\
                     \hline
-                    \(q_0\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_0, 0, R)\) & \((q_0, 0, R)\) \\
-                    \(q_1\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_0, 0, R)\) & \((q_0, 0, R)\) \\
-                    \(q_2\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_0, 0, R)\) & \((q_0, 0, R)\) \\
-                    \(q_3\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_0, 0, R)\) & \((q_0, 0, R)\) \\
-                    \(q_4\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_0, 0, R)\) & \((q_0, 0, R)\) \\
-                    \(q_5\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_0, 0, R)\) & \((q_0, 0, R)\) \\
-                    \(q_6\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_0, 0, R)\) & \((q_0, 0, R)\) \\
-                    \(q_7\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_0, 0, R)\) & \((q_0, 0, R)\) \\
-                    \(q_8\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_0, 0, R)\) & \((q_0, 0, R)\) \\
-                    \(q_9\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_0, 0, R)\) & \((q_0, 0, R)\) \\
-                    \(q_{10}\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_0, 0, R)\) & \((q_0, 0, R)\) \\
+                    \(q_0\) & \((q_1, 0, L)\) & \((q_1, 1, L)\) & \((q_1, x, L)\) & \((q_{accept}, \textvisiblespace, R)\) \\
+                    \(q_1\) & \((q_1, 0, L)\) & \((q_1, 1, L)\) & \((q_1, x, L)\) & \((q_2, \textvisiblespace, L)\) \\
+                    \(q_2\) & \((q_2, 0, R)\) & \((q_3, x, L)\) & \((q_2, x, R)\) & \((q_{accept}, 0, R)\) \\
+                    \(q_3\) & \((q_3, 0, L)\) & \((q_3, 1, L)\) & \((q_3, x, L)\) & \((q_4, \textvisiblespace, R)\) \\
+                    \(q_4\) & \((q_5, x, L)\) & \((q_4, 1, R)\) & \((q_4, x, R)\) & \((q_{reject}, 0, R)\) \\
+                    \(q_5\) & \((q_5, 0, L)\) & \((q_5, 1, L)\) & \((q_5, x, L)\) & \((q_6, 0, R)\) \\
+                    \(q_6\) & \((q_1, x, L)\) & \((q_6, 1, R)\) & \((q_6, x, R)\) & \((q_{reject}, 0, R)\) \\
                 \end{tabular}
             \end{table}
     \end{enumerate}
