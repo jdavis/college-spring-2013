@@ -5,16 +5,15 @@
 
 int count = 0;
 pthread_t tids[3];
-sem_t mutex[3];
+sem_t mutex[2];
 
 void *th0(void *x);
 void *th1(void *x);
 void *th2(void *x);
 
 int main(int argc, const char *argv[]) {
-    sem_init(&mutex[0], 0, 1);
+    sem_init(&mutex[0], 0, 0);
     sem_init(&mutex[1], 0, 0);
-    sem_init(&mutex[2], 0, 0);
 
     pthread_create(tids, NULL, th0, NULL);
     pthread_create(tids + 1, NULL, th1, NULL);
@@ -29,37 +28,35 @@ int main(int argc, const char *argv[]) {
 void *th0(void *x) {
     printf("Th0 starts.\n");
 
-    sem_wait(&mutex[0]);
     printf("Th 0: Count = %d\n", count);
     count = count + 1;
     sleep(1);
     count = count - 1;
     printf("Th 0: Count is changed to %d\n", count);
-    sem_post(&mutex[1]);
     sem_post(&mutex[0]);
 }
 
 void *th1(void *x) {
     printf("Th1 starts.\n");
 
-    sem_wait(&mutex[1]);
+    sem_wait(&mutex[0]);
     printf("Th 1: Count = %d\n", count);
     count = count + 2;
     sleep(1);
     count = count - 2;
     printf("Th 1: Count is changed to %d\n", count);
-    sem_post(&mutex[2]);
+    sem_post(&mutex[0]);
     sem_post(&mutex[1]);
 }
 
 void *th2(void *x) {
     printf("Th2 starts.\n");
 
-    sem_wait(&mutex[2]);
+    sem_wait(&mutex[1]);
     printf("Th 2: Count = %d\n", count);
     count = count - 3;
     sleep(1);
     count = count + 3;
     printf("Th 2: Count is changed to %d\n", count);
-    sem_post(&mutex[2]);
+    sem_post(&mutex[1]);
 }
