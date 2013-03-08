@@ -153,20 +153,44 @@
     \textbf{Part One} Describe \(M\) in pseudo-code.
     \\
 
-    That pseudo-code that describes \(M\) is as follows:
-    \(M = \)" On input string \(w\):
-    \begin{enumerate}
-        \item Start on left side of the input, move right until no 0 or 1 is found
-            mark the tape with \#
-        \item 
-    \end{enumerate}
-    "
+    The pseudo-code that describes \(M\) is as follows:
 
-    \textbf{Part Two} Formally define \(M\)
+    \(M = \)`` On input string \(w\):
+    \begin{enumerate}
+        \item Start on the left side the word, write \# at the end and move left, go to the next stage
+        \item If the head is on a 0, write an x and go to stage 3, if the head is on a 1 write an x and
+            go to stage 5, if the head is on white space, go to \(q_{halt}\)
+        \item Move to the right until we hit empty tape, write 0 and move left, go to next stage
+        \item Move to the left until we hit an x, write a 0 and move left, go to stage 2
+        \item Move to the right until we hit empty tape, write a 1 and move left, go to next stage
+        \item Move to the left until we hit an x, write a 1 and move left, go to stage 2
+    \end{enumerate}
+
+    \textbf{Part Two} Formally define \(M\), where \(M = \langle \Sigma, \Gamma, Q, q_0, q_{accept}, q_{reject} \rangle\)
     \\
 
-
-
+    \(M\) can be formally defined as follows:
+    \begin{enumerate}
+        \item \(\Gamma = \Sigma \cup \{\textvisiblespace, x, \#\}\)
+        \item \(Q = \{q_0, q_1, q_2, q_3, q_4, q_5, q_6, q_7, q_8, q_{accept}, q_{reject}\}\), the states
+        \item \(q_0\), the start state
+        \item Then \(\delta\) as given by the table:
+            \begin{table}[ht]
+                \centering
+                \begin{tabular}{c || c | c | c | c | c}
+                    \(\delta\) & 0 & 1 & x & \# & \textvisiblespace \\
+                    \hline
+                    \(q_0\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & - & - & \((q_1, \#, L)\) \\
+                    \(q_1\) & \((q_2, x, R)\) & \((q_4, x, R)\) & - & - & \((q_{halt}, \textvisiblespace, R)\) \\
+                    \(q_2\) & \((q_2, 0, R)\) & \((q_2, 1, R)\) & - & \((q_2, \#, R)\) & \((q_3, 0, L)\) \\
+                    \(q_3\) & \((q_3, 0, L)\) & \((q_3, 1, L)\) & \((q_1, 0, L)\) & \((q_3, \#, L)\) & - \\
+                    \(q_4\) & \((q_4, 0, R)\) & \((q_4, 0, R)\) & - & \((q_4, \#, R)\) & \((q_5, 1, L)\) \\
+                    \(q_5\) & \((q_5, 0, L)\) & \((q_5, 1, L)\) & \((q_1, 1, L)\) & \((q_5, \#, L)\) & \\
+                \end{tabular}
+            \end{table}
+            \\
+            Places with a - denote that the given configuration \textit{should} never be reached.
+    \end{enumerate}
 \end{homeworkProblem}
 
 \pagebreak
@@ -388,7 +412,7 @@
     \textbf{Part Two} What is the functionality of \(M\)? Justify your answer.
     \\
 
-    Given a word that represents a number in binary, it will increment it based
+    Given a word that represents a number in binary, it will increment it by one based
     on the rules of binary addition.
     \\
 
@@ -404,110 +428,42 @@
     of the number. It will then flip the 0 to a 1, or the space to a 1.
     \\
 
-    The result is that the binary representation of the number will be incremented.
+    The result is that the binary representation of the number will be incremented by one.
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
-    Use pumping lemma to show that the following language is not context-free:
-    \[
-        L = \{a^i b^j c^k : i, j, k \geq 0 \mbox{ and } i > j \mbox{ and } j > k \}
-    \]
+    Let \(L\) be the language of \(\Sigma = \{0, 1\}\). Prove that \(L\)
+    is Turing-decidable if and only if \(L\) can be enumerated by an enumerator
+    Turing machine in strictly increasing order.
 
     \begin{proof}
-        We let \(w = a^{p + 2} b^{p + 1} c^{p}\) where \(p\) is the pumping length.
-        We then split up \(w\) so that \(w = uvxyz\). In doing so, we can break it up into
-        cases like so:
-        \begin{enumerate}
-            \item \(vxy\) contains just a's. This will result in a contradiction
-                because pumping down yields \(a^{0} a^{p - 2} a^{0} = \epsilon a^p \epsilon\) which means \(i \leq j\) and
-                thus \(w \notin L\).
-            \item \(vxy\) contains just b's. This will result in a contradiction
-                because pumping down yields \(b^{0} b^{p - 2} b^{0} = \epsilon b^p \epsilon\) which means \(j \leq k\) and
-                thus \(w \notin L\).
-            \item \(vxy\) contains just c's. This will result in a contradiction
-                because pumping up will eventually give us \(k > j\)
-                thus \(w \notin L\).
-            \item \(vxy\) is the split between a's and b's. 
-                This can be divided into four more cases:
-                \begin{enumerate}
-                    \item \(vxy = aab\), pumping down will lower the number of b's to be the same as
-                        the number of c's. Thus \(w \notin L\).
-                    \item \(vxy = abb\), pumping down will lower the number of a's to be the same as
-                        the number of b's. Thus \(w \notin L\).
-                    \item \(vxy = \epsilon ab\), pumping up will increase the number of b's past the
-                        number of a's. Thus \(w \notin L\).
-                    \item \(vxy = ab \epsilon\), pumping down will lower the number of a's to be the
-                        same as the number of b's. Thus \(w \notin L\).
-                \end{enumerate}
-
-            \item \(vxy\) is the split between b's and c's. Regardless of where the subsplit is,
-                it can be pumped until eventually \(i < j\) or \(i < k\), thus \(w \notin L\).
-        \end{enumerate}
-
-        Now that I have (hopefully) exhausted all possibilities, the proof is complete and the language,
-        \(L\), is not context-free.
-    \end{proof}
-\end{homeworkProblem}
-
-\pagebreak
-
-\begin{homeworkProblem}
-    Let \(G = \langle \{S\}, \{a, b\}, R, S \rangle\) be a context-free grammar
-    with the rules, \(R\) defined as follows:
-    \[
-        S \rightarrow aS | aSbS | \epsilon
-    \]
-
-    \textbf{Part One}
-    Prove that \(G\) is ambiguous.
-    \\
-    \begin{proof}
-        We can prove that \(G\) is ambiguous if there are two left most derivations
-        for one string.
+        This proof will consist of two parts. First proving that any \(L\)
+        that is Turing-decidable can be enumerated by an enumerator Turing machine
+        in strictly increasing order. The second part is that an enumerator Turing machine
+        in strictly increasing order gives a language, \(L\), that is Turing-decidable.
         \\
 
-        Take \(s = aab\), it can be derived twice as follows:
-        \[
-            \begin{split}
-                S &= aS = aaSbS = aabS = aab
-                \\
-                S &= aSbS = aaSbS = aabS = aab
-            \end{split}
-        \]
+        \textbf{Part One}
+        Proving that any Turing-decidable language can be enumerated by
+        an enumerator Turing machine in strictly increasing order.
+        \\
 
-        Thus the context free language, \(G\) is ambiguous.
+        This concludes the first part of the proof.
+        \\
+
+        \textbf{Part Two}
+        Proving that any enumerator Turing machine in strictly increasing order
+        gives a language, \(L\), that is Turing-decidable.
+        \\
+
+
+        This concludes the second part of the proof.
+        \\
+
+        Since both sides have been proven, the proof is complete.
     \end{proof}
-
-    \textbf{Part Two}
-    Give unambigous grammar that generates the same language as \(G\).
-    \\
-
-    The new grammar can be defined as follows:
-    \[
-        \begin{split}
-            S &\rightarrow aT | T
-            \\
-            T &\rightarrow aSbU | S
-            \\
-            U &\rightarrow a | b | \epsilon
-        \end{split}
-    \]
-
-    Using the previous example of \(s = aab\), we can try to derive it multiple times
-    like so:
-    \[
-        \begin{split}
-            S &= aT = aSbU = aTbU = aabU = aab
-            \\
-            S &= T = aSbU = ... = \mbox{ no way to get aab}
-        \end{split}
-    \]
-
-    And there it can't be derived multiple ways. So unless I'm missing
-    something, I think the homework is finished. YAY!
-
 \end{homeworkProblem}
 
 \end{document}
