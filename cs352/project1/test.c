@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "priority.h"
 #include "lib-ult.c"
 
 int n_threads=0;
