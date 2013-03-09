@@ -22,6 +22,7 @@ void do_something()
     printf("This is ult %d again\n",id);
     uthread_yield(1);
     printf("This is ult %d one more time\n",id);
+	uthread_exit();
 }
 
 int main() {

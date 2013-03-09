@@ -5,7 +5,7 @@ CC = gcc
 
 $(TARGETS): $(DEPS)
 
-run-test: test
+run-test: test lib-ult.c
 	./test > test.txt
 	diff test.txt output.txt
 
