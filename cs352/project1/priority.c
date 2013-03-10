@@ -48,7 +48,7 @@ int enlarge(PriorityQueue_t *q) {
     /*free(q->q);*/
 
     /* Update properties for new array */
-    q->array_size *= 2;
+    q->array_size = q->array_size * 2;
     q->q = newQ;
 
     return 0;
@@ -84,7 +84,7 @@ void heapify(PriorityQueue_t *q, int i) {
     }
 
     /* Swap the larger item with current node */
-    if (q->q[i]->priority > q->q[larger]->priority) {
+    if (q->q[i]->priority >= q->q[larger]->priority) {
         swap = q->q[larger];
         q->q[larger] = q->q[i];
         q->q[i] = swap;

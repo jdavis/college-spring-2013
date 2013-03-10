@@ -1,14 +1,13 @@
 #ifndef LIB_ULTC_C
 #define LIB_ULTC_C
 
-#define STACK_SIZE 256
+#define STACK_SIZE 16384
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <ucontext.h>
 #include "priority.h"
 
-ucontext_t switcher;
 ucontext_t *current = NULL;
 PriorityQueue_t *pq = NULL;
 
@@ -18,20 +17,11 @@ PriorityQueue_t *pq = NULL;
  */
 void system_init() {
     pq = newPriorityQueue();
-
     
     current = (ucontext_t *) malloc(sizeof(ucontext_t));
     if (current == NULL) return;
 
     getcontext(current);
-    /*
-    getcontext(&switcher);
-
-    switcher.uc_stack.ss_sp = (char *) malloc(sizeof(char) * STACK_SIZE);
-    switcher.uc_stack.ss_size = STACK_SIZE;
-
-    makecontext(&switcher, switch_func, 0);
-    */
 }
 
 /*
@@ -71,17 +61,14 @@ int uthread_create(void (*func)(void), int priority) {
 int uthread_yield(int priority) {
     ucontext_t *previous;
 
+    /* Error checking */
     if (pq == NULL) return -1;
-
-    if (priority <= 0) {
-        printf("Priority <= 0\n");
-        return -1;
-    }
-
-    if (pq->size == 0) return 0;
+    if (priority <= 0) return -1;
+    if (pq->size <= 0) return 0;
 
     previous = current;
     current = dequeue(pq);
+
     enqueue(pq, previous, priority);
 
     return swapcontext(previous, current);
