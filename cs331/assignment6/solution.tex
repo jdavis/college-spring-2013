@@ -166,289 +166,38 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Let \(\Sigma = \{0, 1\}\) and \(\Gamma = \{0, 1, \textvisiblespace, \#, x\}\). Write a Turing machine, \(M\),
-    such that given any input \(w \in \Sigma^*\), \(M\) halts with tape content \(w\#w^R\).
-    \\
+    Prove that 2-dimensional Turing machines are no more powerful than standard Turing
+    machines.
 
-    \textbf{Part One} Describe \(M\) in pseudo-code.
-    \\
-
-    The pseudo-code that describes \(M\) is as follows:
-
-    \(M = \)`` On input string \(w\):
-    \begin{enumerate}
-        \item Start on the left side the word, write \# at the end and move left, go to the next stage
-        \item If the head is on a 0, write an x and go to stage 3, if the head is on a 1 write an x and
-            go to stage 5, if the head is on white space, go to \(q_{halt}\)
-        \item Move to the right until we hit empty tape, write 0 and move left, go to next stage
-        \item Move to the left until we hit an x, write a 0 and move left, go to stage 2
-        \item Move to the right until we hit empty tape, write a 1 and move left, go to next stage
-        \item Move to the left until we hit an x, write a 1 and move left, go to stage 2''
-    \end{enumerate}
-
-    \textbf{Part Two} Formally define \(M\), where \(M = \langle \Sigma, \Gamma, Q, q_0, q_{accept}, q_{reject} \rangle\)
-    \\
-
-    \(M\) can be formally defined as follows:
-    \begin{enumerate}
-        \item \(\Gamma = \Sigma \cup \{\textvisiblespace, x, \#\}\)
-        \item \(Q = \{q_0, q_1, q_2, q_3, q_4, q_5, q_6, q_7, q_8, q_{accept}, q_{reject}\}\), the states
-        \item \(q_0\), the start state
-        \item Then \(\delta\) as given by the table:
-            \begin{table}[ht]
-                \centering
-                \begin{tabular}{c || c | c | c | c | c}
-                    \(\delta\) & 0 & 1 & x & \# & \textvisiblespace \\
-                    \hline
-                    \(q_0\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & - & - & \((q_1, \#, L)\) \\
-                    \(q_1\) & \((q_2, x, R)\) & \((q_4, x, R)\) & - & - & \((q_{halt}, \textvisiblespace, R)\) \\
-                    \(q_2\) & \((q_2, 0, R)\) & \((q_2, 1, R)\) & - & \((q_2, \#, R)\) & \((q_3, 0, L)\) \\
-                    \(q_3\) & \((q_3, 0, L)\) & \((q_3, 1, L)\) & \((q_1, 0, L)\) & \((q_3, \#, L)\) & - \\
-                    \(q_4\) & \((q_4, 0, R)\) & \((q_4, 0, R)\) & - & \((q_4, \#, R)\) & \((q_5, 1, L)\) \\
-                    \(q_5\) & \((q_5, 0, L)\) & \((q_5, 1, L)\) & \((q_1, 1, L)\) & \((q_5, \#, L)\) & \\
-                \end{tabular}
-            \end{table}
-            \\
-            Places with a - denote that the given configuration \textit{should} never be reached.
-    \end{enumerate}
+    \begin{proof}
+    \end{proof}
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
-    Let \(M = \langle \Sigma, \Gamma, Q, q_0, \delta, q_{accept}, q_{reject}
-    \rangle \) be a Turing machine where \(\Sigma = \{0, 1\}\), \(\Gamma = \{0, 1, \textvisiblespace \}\),
+    Prove that the class of Turing-recognizable languages are closed under certain operations.
 
-    \(Q = \{q_0, q_1, q_2, q_3, q_{accept}, q_{reject}\}\) and \(\delta\) is represented by the
-    following table:
+    \textbf{Part One} Union: \(L = L_1 \cup L_2\)
+    \begin{proof}
+        Given two Turing machines, \(M_1\) and \(M_2\) that recognize the languages \(L_1\)
+        and \(L_2\), respectively, we will construct a new Turing machine, \(M\), that recognizes
+        the union of the two languages.
+    \end{proof}
 
-    \begin{table}[ht]
-        \centering
-        \begin{tabular}{c || c | c | c | c}
-            \(\delta\) & 0 & 1 & \textvisiblespace \\
-            \hline
-            \(q_0\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_1, \textvisiblespace, L)\) \\
-            \(q_1\) & \((q_2, 1, L)\) & \((q_1, 0, L)\) & \((q_3, 1, L)\) \\
-            \(q_2\) & \((q_2, 0, L)\) & \((q_1, 1, L)\) & \((q_{accept}, \textvisiblespace, R)\) \\
-            \(q_3\) & - & - & \((q_{accept}, \textvisiblespace, R)\) \\
-        \end{tabular}
-    \end{table}
+    \textbf{Part Two} Intersection: \(L = L_1 \cap L_2\)
+    \begin{proof}
+        Given two Turing machines, \(M_1\) and \(M_2\) that recognize the languages \(L_1\)
+        and \(L_2\), respectively, we will construct a new Turing machine, \(M\), that recognizes
+        the intersection of the two languages.
+    \end{proof}
 
-    \textbf{Part One} Show the sequence of computation of \(M\) when given 01101 input.
-    \\
-
-    Read from left to right, top to bottom, the sequence is as follows:
-    \begin{figure}[h]
-        \centering
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$0$};
-            \node (E) [right=of D] {$1$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of A,draw=red,thick] {$q_0$};
-            \draw[-latex] (F) -- (A);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-        \hspace{20px}
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$0$};
-            \node (E) [right=of D] {$1$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of B,draw=red,thick] {$q_0$};
-            \draw[-latex] (F) -- (B);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-        \hspace{20px}
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$0$};
-            \node (E) [right=of D] {$1$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of C,draw=red,thick] {$q_0$};
-            \draw[-latex] (F) -- (C);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-        \hspace{20px}
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$0$};
-            \node (E) [right=of D] {$1$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of D,draw=red,thick] {$q_0$};
-            \draw[-latex] (F) -- (D);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-
-        \vspace{20px}
-
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$0$};
-            \node (E) [right=of D] {$1$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of E,draw=red,thick] {$q_0$};
-            \draw[-latex] (F) -- (E);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-        \hspace{20px}
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$0$};
-            \node (E) [right=of D] {$1$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of 1,draw=red,thick] {$q_0$};
-            \draw[-latex] (F) -- (1);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-        \hspace{20px}
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$0$};
-            \node (E) [right=of D] {$1$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of E,draw=red,thick] {$q_1$};
-            \draw[-latex] (F) -- (E);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-        \hspace{20px}
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$0$};
-            \node (E) [right=of D] {$0$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of D,draw=red,thick] {$q_1$};
-            \draw[-latex] (F) -- (D);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-
-        \vspace{20px}
-
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$1$};
-            \node (E) [right=of D] {$0$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of C,draw=red,thick] {$q_2$};
-            \draw[-latex] (F) -- (C);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-        \hspace{20px}
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$1$};
-            \node (E) [right=of D] {$0$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of B,draw=red,thick] {$q_2$};
-            \draw[-latex] (F) -- (B);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-        \hspace{20px}
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$1$};
-            \node (E) [right=of D] {$0$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of A,draw=red,thick] {$q_2$};
-            \draw[-latex] (F) -- (A);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-        \hspace{20px}
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$1$};
-            \node (E) [right=of D] {$0$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of 0,draw=red,thick] {$q_2$};
-            \draw[-latex] (F) -- (0);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-        
-        \vspace{20px}
-
-        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
-            \node (C) {$1$};
-            \node (B) [left=of C] {$1$};
-            \node (A) [left=of B] {$0$};
-            \node (0) [left=of A] {$\textvisiblespace$};
-            \node (D) [right=of C] {$1$};
-            \node (E) [right=of D] {$0$};
-            \node (1) [right=of E] {$\textvisiblespace$};
-            \node (F) [above = 0.75cm of A,draw=red,thick] {$q_{accept}$};
-            \draw[-latex] (F) -- (A);
-            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
-                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
-        \end{tikzpicture}
-    \end{figure}
-
-    \textbf{Part Two} What is the functionality of \(M\)? Justify your answer.
-    \\
-
-    Given a word that represents a number in binary, it will increment it by one based
-    on the rules of binary addition.
-    \\
-
-    \textbf{Justification}
-    \\
-
-    In binary addition a 1 is added to the farthest right place value of
-    the number. If this value is 1, it will flip it to 0 and carry to the next
-    place value to the left.
-    \\
-
-    This flipping will occur until a 0 is reached or the read/write head reaches the end
-    of the number. It will then flip the 0 to a 1, or the space to a 1.
-    \\
-
-    The result is that the binary representation of the number will be incremented by one.
+    \textbf{Part Three} Concatentation: \(L = L_1 * L_2\)
+    \begin{proof}
+        Given two Turing machines, \(M_1\) and \(M_2\) that recognize the languages \(L_1\)
+        and \(L_2\), respectively, we will construct a new Turing machine, \(M\), that recognizes
+        the concatentation of the two languages.
+    \end{proof}
 \end{homeworkProblem}
 
 \pagebreak
