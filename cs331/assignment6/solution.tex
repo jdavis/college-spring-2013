@@ -1,0 +1,527 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+
+\usetikzlibrary{automata,positioning,calc}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{}
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
+    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+    \nobreak\extramarks{#1}{}\nobreak
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{homeworkProblemCounter}
+
+\newcommand{\homeworkProblemName}{}
+\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]{
+    \stepcounter{homeworkProblemCounter}
+    \renewcommand{\homeworkProblemName}{#1}
+    \section{\homeworkProblemName}
+    \enterProblemHeader{\homeworkProblemName}
+}{
+    \exitProblemHeader{\homeworkProblemName}
+}
+
+\newcommand{\problemAnswer}[1]{
+\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}}
+}
+
+\newcommand{\homeworkSectionName}{}
+\newenvironment{homeworkSection}[1]{
+    \renewcommand{\homeworkSectionName}{#1}
+    \subsection{\homeworkSectionName}
+    \enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]}
+}{
+    \enterProblemHeader{\homeworkProblemName}
+}
+
+\newcommand{\hmwkTitle}{Homework\ \#6}
+\newcommand{\hmwkDueDate}{March 14, 2013 at 11:59pm}
+\newcommand{\hmwkClass}{CS331}
+\newcommand{\hmwkClassTime}{9:00am}
+\newcommand{\hmwkClassInstructor}{Professor Zhang}
+\newcommand{\hmwkAuthorName}{Josh Davis}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Let \(\Sigma = \{0, 1\}\). Consider the following language over \(\Sigma\),
+    \[
+         L = \{w_1 \# w_2 : w_1 w_2, \in \{0, 1\}^* \mbox{ and } w_1 < w_2 \}
+    \]
+
+    Design a Turing machine that recognizes \(L\).
+    \\
+
+    The pseudo-code that describes the Turing machine is as follows:
+
+    \(M = \)`` On input string \(w\):
+    \begin{enumerate}
+        \item Start on the left side of the word, move all the way to the right of the input, move to stage \(loop_{<}\)
+        \item \textbf{\(loop_<\)} If on 0, mark with x and move to stage \textbf{\(cmp_{<0}\)}. If on 1, mark with x
+            and move to \textbf{\(cmp_{<1}\)}. If on \textvisiblespace, move to \(q_{reject}\)
+    \end{enumerate}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Let \(\Sigma = \{0, 1\}\) and \(\Gamma = \{0, 1, \textvisiblespace, \#, x\}\). Write a Turing machine, \(M\),
+    such that given any input \(w \in \Sigma^*\), \(M\) halts with tape content \(w\#w^R\).
+    \\
+
+    \textbf{Part One} Describe \(M\) in pseudo-code.
+    \\
+
+    The pseudo-code that describes \(M\) is as follows:
+
+    \(M = \)`` On input string \(w\):
+    \begin{enumerate}
+        \item Start on the left side the word, write \# at the end and move left, go to the next stage
+        \item If the head is on a 0, write an x and go to stage 3, if the head is on a 1 write an x and
+            go to stage 5, if the head is on white space, go to \(q_{halt}\)
+        \item Move to the right until we hit empty tape, write 0 and move left, go to next stage
+        \item Move to the left until we hit an x, write a 0 and move left, go to stage 2
+        \item Move to the right until we hit empty tape, write a 1 and move left, go to next stage
+        \item Move to the left until we hit an x, write a 1 and move left, go to stage 2''
+    \end{enumerate}
+
+    \textbf{Part Two} Formally define \(M\), where \(M = \langle \Sigma, \Gamma, Q, q_0, q_{accept}, q_{reject} \rangle\)
+    \\
+
+    \(M\) can be formally defined as follows:
+    \begin{enumerate}
+        \item \(\Gamma = \Sigma \cup \{\textvisiblespace, x, \#\}\)
+        \item \(Q = \{q_0, q_1, q_2, q_3, q_4, q_5, q_6, q_7, q_8, q_{accept}, q_{reject}\}\), the states
+        \item \(q_0\), the start state
+        \item Then \(\delta\) as given by the table:
+            \begin{table}[ht]
+                \centering
+                \begin{tabular}{c || c | c | c | c | c}
+                    \(\delta\) & 0 & 1 & x & \# & \textvisiblespace \\
+                    \hline
+                    \(q_0\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & - & - & \((q_1, \#, L)\) \\
+                    \(q_1\) & \((q_2, x, R)\) & \((q_4, x, R)\) & - & - & \((q_{halt}, \textvisiblespace, R)\) \\
+                    \(q_2\) & \((q_2, 0, R)\) & \((q_2, 1, R)\) & - & \((q_2, \#, R)\) & \((q_3, 0, L)\) \\
+                    \(q_3\) & \((q_3, 0, L)\) & \((q_3, 1, L)\) & \((q_1, 0, L)\) & \((q_3, \#, L)\) & - \\
+                    \(q_4\) & \((q_4, 0, R)\) & \((q_4, 0, R)\) & - & \((q_4, \#, R)\) & \((q_5, 1, L)\) \\
+                    \(q_5\) & \((q_5, 0, L)\) & \((q_5, 1, L)\) & \((q_1, 1, L)\) & \((q_5, \#, L)\) & \\
+                \end{tabular}
+            \end{table}
+            \\
+            Places with a - denote that the given configuration \textit{should} never be reached.
+    \end{enumerate}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Let \(M = \langle \Sigma, \Gamma, Q, q_0, \delta, q_{accept}, q_{reject}
+    \rangle \) be a Turing machine where \(\Sigma = \{0, 1\}\), \(\Gamma = \{0, 1, \textvisiblespace \}\),
+
+    \(Q = \{q_0, q_1, q_2, q_3, q_{accept}, q_{reject}\}\) and \(\delta\) is represented by the
+    following table:
+
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{c || c | c | c | c}
+            \(\delta\) & 0 & 1 & \textvisiblespace \\
+            \hline
+            \(q_0\) & \((q_0, 0, R)\) & \((q_0, 1, R)\) & \((q_1, \textvisiblespace, L)\) \\
+            \(q_1\) & \((q_2, 1, L)\) & \((q_1, 0, L)\) & \((q_3, 1, L)\) \\
+            \(q_2\) & \((q_2, 0, L)\) & \((q_1, 1, L)\) & \((q_{accept}, \textvisiblespace, R)\) \\
+            \(q_3\) & - & - & \((q_{accept}, \textvisiblespace, R)\) \\
+        \end{tabular}
+    \end{table}
+
+    \textbf{Part One} Show the sequence of computation of \(M\) when given 01101 input.
+    \\
+
+    Read from left to right, top to bottom, the sequence is as follows:
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$0$};
+            \node (E) [right=of D] {$1$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of A,draw=red,thick] {$q_0$};
+            \draw[-latex] (F) -- (A);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+        \hspace{20px}
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$0$};
+            \node (E) [right=of D] {$1$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of B,draw=red,thick] {$q_0$};
+            \draw[-latex] (F) -- (B);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+        \hspace{20px}
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$0$};
+            \node (E) [right=of D] {$1$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of C,draw=red,thick] {$q_0$};
+            \draw[-latex] (F) -- (C);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+        \hspace{20px}
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$0$};
+            \node (E) [right=of D] {$1$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of D,draw=red,thick] {$q_0$};
+            \draw[-latex] (F) -- (D);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+
+        \vspace{20px}
+
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$0$};
+            \node (E) [right=of D] {$1$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of E,draw=red,thick] {$q_0$};
+            \draw[-latex] (F) -- (E);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+        \hspace{20px}
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$0$};
+            \node (E) [right=of D] {$1$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of 1,draw=red,thick] {$q_0$};
+            \draw[-latex] (F) -- (1);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+        \hspace{20px}
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$0$};
+            \node (E) [right=of D] {$1$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of E,draw=red,thick] {$q_1$};
+            \draw[-latex] (F) -- (E);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+        \hspace{20px}
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$0$};
+            \node (E) [right=of D] {$0$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of D,draw=red,thick] {$q_1$};
+            \draw[-latex] (F) -- (D);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+
+        \vspace{20px}
+
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$1$};
+            \node (E) [right=of D] {$0$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of C,draw=red,thick] {$q_2$};
+            \draw[-latex] (F) -- (C);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+        \hspace{20px}
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$1$};
+            \node (E) [right=of D] {$0$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of B,draw=red,thick] {$q_2$};
+            \draw[-latex] (F) -- (B);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+        \hspace{20px}
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$1$};
+            \node (E) [right=of D] {$0$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of A,draw=red,thick] {$q_2$};
+            \draw[-latex] (F) -- (A);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+        \hspace{20px}
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$1$};
+            \node (E) [right=of D] {$0$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of 0,draw=red,thick] {$q_2$};
+            \draw[-latex] (F) -- (0);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+        
+        \vspace{20px}
+
+        \begin{tikzpicture}[every node/.style={block}, block/.style={minimum height=1.5em,outer sep=0pt,draw,rectangle,node distance=0pt}]
+            \node (C) {$1$};
+            \node (B) [left=of C] {$1$};
+            \node (A) [left=of B] {$0$};
+            \node (0) [left=of A] {$\textvisiblespace$};
+            \node (D) [right=of C] {$1$};
+            \node (E) [right=of D] {$0$};
+            \node (1) [right=of E] {$\textvisiblespace$};
+            \node (F) [above = 0.75cm of A,draw=red,thick] {$q_{accept}$};
+            \draw[-latex] (F) -- (A);
+            \draw (0.north west) -- ++(-.25cm,0) (0.south west) -- ++ (-.25cm,0) 
+                (1.north east) -- ++(.25cm,0) (1.south east) -- ++ (.25cm,0);
+        \end{tikzpicture}
+    \end{figure}
+
+    \textbf{Part Two} What is the functionality of \(M\)? Justify your answer.
+    \\
+
+    Given a word that represents a number in binary, it will increment it by one based
+    on the rules of binary addition.
+    \\
+
+    \textbf{Justification}
+    \\
+
+    In binary addition a 1 is added to the farthest right place value of
+    the number. If this value is 1, it will flip it to 0 and carry to the next
+    place value to the left.
+    \\
+
+    This flipping will occur until a 0 is reached or the read/write head reaches the end
+    of the number. It will then flip the 0 to a 1, or the space to a 1.
+    \\
+
+    The result is that the binary representation of the number will be incremented by one.
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Let \(L\) be the language of \(\Sigma = \{0, 1\}\). Prove that \(L\)
+    is Turing-decidable if and only if \(L\) can be enumerated by an enumerator
+    Turing machine in strictly increasing order.
+
+    \begin{proof}
+        This proof will consist of two parts. First proving that any \(L\)
+        that is Turing-decidable can be enumerated by an enumerator Turing machine
+        in strictly increasing order. The second part is that an enumerator Turing machine
+        in strictly increasing order gives a language, \(L\), that is Turing-decidable.
+        \\
+
+        \textbf{Part One}
+        Proving that if a language is Turing-decidable, it can be enumerated by
+        an enumerator Turing machine in strictly increasing order.
+        \\
+
+        Let the Turing-decidable language be \(L\) decided by \(M\) and the enumerator 
+        Turing machine be \(E\).
+        \\
+
+        We can use \(M\) to help us in the construction of \(E\).
+        \\
+
+        Since \(L\) is the language decided by \(M\), let the lexographic
+        ordering of the strings be denoted as \(s_1, s_2, s_3, \hdots\).
+        We can then define \(E\) as follows:
+
+        \(E = \)`` On input string \(s\):
+        \begin{enumerate}
+            \item For input, \(i = 1, 2, 3, \hdots\)
+            \item Let \(M\) run on the string, \(s_i\)
+            \item If \(M\) accepts the string, \(s_i\), print it.
+            \item If \(M\) rejets the string, continue through the loop''
+        \end{enumerate}
+
+        This concludes the first part of the proof.
+        \\
+
+        \textbf{Part Two}
+        Proving that if an enumerator Turing machine can enumerate a language
+        in strictly increasing order, then it is Turing-decidable.
+        \\
+
+        Let the Turing-decidable language be \(L\) decided by \(M\) and the enumerator 
+        Turing machine be \(E\).
+        \\
+
+        There are two cases to consider, when \(L\) is finite and when it is infinite.
+        \\
+
+        When it is finite, it has to be decidable. Every finite language can be decided.
+        \\
+
+        When it is inifinte, we can use \(E\) to help us in the construction of \(M\).
+        \\
+
+        The pseudo-code that describes \(M\) is as follows:
+
+        \(M = \)`` On input string \(w\):
+        \begin{enumerate}
+            \item Receive input from \(E\), \(s\)
+            \item If \(s\) is the same as \(w\), accept it
+            \item If \(s\) is lexicographically larger than \(w\), reject it
+            \item If \(s\) is lexicographically smaller than \(w\), go back to stage 1''
+        \end{enumerate}
+
+        This works because \(w\) is guaranteed to be in \(L\) because it is infinite.
+        \\
+
+        This concludes the second part of the proof. Thus both sides have been proven and
+        the proof is complete.
+    \end{proof}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Prove that any Turing machine can be simulated by a 2-PDA.
+
+    \begin{proof}
+        To prove that any Turing machine can be simulated by a 2-PDA, we will
+        use a proof by construction. We will construct a Turing machine, \(M\), where
+        \[
+            M = \langle Q_M, \Sigma_M, \Gamma_M, q_{M0}, q_{accept}, q_{reject} \rangle
+        \] 
+
+        such that it is constructed from a 2-PDA, \(M\), where
+
+        \[
+            P = \langle Q_P, \Sigma_P, \Gamma_P, \delta_P, q_{P0}, F_P \rangle
+        \]
+
+        \(M\) will be defined as follows:
+
+        \begin{enumerate}
+            \item \(Q_M = Q_P\), the state machine is preserved
+            \item \(\Sigma_M = \Sigma_P\), the alphabets are identical
+            \item \(\Gamma_M = \Gamma_P \cap \{\textvisiblespace\} \), the stack alphabet
+            \item \(q_{M0} = q_{P0}\), the start states are the same
+            \item Next we have to implement the transition function, \(\delta_M\),
+                A Turing machine can do two movements on the tape, Left and Right. To replicate
+                this with the 2-PDA, whenever the \(M\) is supposed to move to the left, we can
+                just pop the value off the left stack and push it onto the right stack. Trivially
+                we can do the same for moving right, pop off the right and push to the left.
+                \\
+
+                To handle writing new values to the tape, instead of pushing the value that
+                was just popped, we can push any value such that value is in \(\Gamma\), the
+                stack alphabet.
+        \end{enumerate}
+
+        The reason this works is because the first stack can be viewed as everything to
+        the left of the read/write head, while everything on the second stack can be
+        viewed as everything to the right of the read/write head. Since stacks are infinite
+        in PDA's, two of them can represent the tape in a Turing machine.
+        \\
+
+        It follows that a Turing machine can be simulated using a 2-PDA and
+        thus the proof is complete.
+
+    \end{proof}
+\end{homeworkProblem}
+
+\end{document}
