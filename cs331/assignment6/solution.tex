@@ -104,10 +104,63 @@
 
     \(M = \)`` On input string \(w\):
     \begin{enumerate}
-        \item Start on the left side of the word, move all the way to the right of the input, move to stage \(loop_{<}\)
-        \item \textbf{\(loop_<\)} If on 0, mark with x and move to stage \textbf{\(cmp_{<0}\)}. If on 1, mark with x
-            and move to \textbf{\(cmp_{<1}\)}. If on \textvisiblespace, move to \(q_{reject}\)
+        \item Start on the left side of the word, move all the way to the right of the input, move to stage \(loop_{>}\)
+        \item \textbf{\(loop_>\)} Move to the first character in the second word that isn't an x.  If on 0, mark
+            with x and move to stage \textbf{\(cmp_{<0}\)}. If on 1, mark with x and move to \textbf{\(cmp_{>1}\)}.
+            If on \textvisiblespace, move to \(q_{reject}\). If on \#, move to stage \textbf{check}.
+        \item \textbf{\(loop_<\)} If on 0, mark with x and move to stage \textbf{\(cmp_{>0}\)}. If on 1, mark with x
+            and move to \textbf{\(cmp_{<1}\)}. If on \textvisiblespace, move to \(q_{accept}\)
+        \item \textbf{\(cmp_{<0}\)} Move to the first character in the first word that isn't an x. If 1, mark with x
+            and move to \text{\(loop_>\)}. If 0, mark with x and move to \text{\(loop_<\)}. If \textvisiblespace, move
+            to \textbf{\(loop_<\)}.
+        \item \textbf{\(cmp_{<1}\)} Move to the first character in the first word that isn't an x. If 1, mark with x
+            and move to \text{\(loop_<\)}. If 0, mark with x and move to \text{\(loop_<\)}. If \textvisiblespace,
+            move to \textbf{\(loop_<\)}.
+        \item \textbf{\(cmp_{>0}\)} Move to the first character in the first word that isn't an x. If 1, mark with x
+            and move to \text{\(loop_>\)}. If 0, mark with x and move to \text{\(loop_>\)}. If \textvisiblespace, move
+            to \textbf{\(loop_>\)}.
+        \item \textbf{\(cmp_{>1}\)} Move to the first character in the first word that isn't an x. If 1, mark with x
+            and move to \text{\(loop_>\)}. If 0, mark with x and move to \text{\(loop_<\)}. If \textvisiblespace, move
+            to \textbf{\(loop_>\)}.
+        \item \textbf{check} Move to first character in the first word that isn't an x. If 1, move to \(q_{reject}\).
+        If 0, move to stage \textbf{check}. If \textvisiblespace, move to \(q_{accept}\).''
     \end{enumerate}
+
+    This is valid because we can split up the input into four cases which each have two sub-cases as follows:
+    \\
+    \textbf{Case One} Input is \(0 w_1 \# 0 w_2\):
+
+    \begin{enumerate}
+        \item If \(w_1 < w_2\), then \(w_1 < w_2\)
+        \item If \(w_1 > w_2\), then \(w_1 > w_2\)
+    \end{enumerate}
+
+    \textbf{Case Two} Input is \(0 w_1 \# 1 w_2\):
+
+    \begin{enumerate}
+        \item If \(w_1 < w_2\), then \(w_1 < w_2\)
+        \item If \(w_1 > w_2\), then \(w_1 < w_2\)
+    \end{enumerate}
+
+    \textbf{Case Three} Input is \(1 w_1 \# 0 w_2\):
+
+    \begin{enumerate}
+        \item If \(w_1 < w_2\), then \(w_1 > w_2\)
+        \item If \(w_1 > w_2\), then \(w_1 > w_2\)
+    \end{enumerate}
+
+    \textbf{Case Four} Input is \(1 w_1 \# 1 w_2\):
+
+    \begin{enumerate}
+        \item If \(w_1 < w_2\), then \(w_1 < w_2\)
+        \item If \(w_1 > w_2\), then \(w_1 > w_2\)
+    \end{enumerate}
+
+    Thus when the word ends, we just accept if we still satisfy \(w_1 < w_2\).
+    \\
+
+    \textbf{Note} When a given word runs out of characters, we just treat it if it had
+    0's appended to the beginning such that the length of the words are equal.
 \end{homeworkProblem}
 
 \pagebreak
