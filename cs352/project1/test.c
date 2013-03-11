@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "priority.h"
 #include "lib-ult.c"
 
 int n_threads=0;
@@ -20,7 +21,8 @@ void do_something()
     }
     printf("This is ult %d again\n",id);
     uthread_yield(1);
-    printf("This is ult %d one more time\n",id);
+    printf("This is ult %d once more\n",id);
+	uthread_exit();
 }
 
 int main() {

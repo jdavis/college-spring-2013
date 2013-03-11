@@ -1,15 +1,11 @@
+TARGETS = test switch
 CFLAGS = -ggdb -Wall -pedantic
+DEPS = priority.o
 CC = gcc
 
 $(TARGETS): $(DEPS)
 
-test: test.c lib-ult.c
-	$(CC) $(CFLAGS) test.c -o test
-
-switch: switch.c lib-ult.c
-	$(CC) $(CFLAGS) switch.c -o switch
-
-run-test: test
+run-test: test lib-ult.c
 	./test > test.txt
 	diff test.txt output.txt
 

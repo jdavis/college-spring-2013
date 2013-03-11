@@ -1,0 +1,11 @@
+
+Assignment 7 (Due: Thursday, March 14, 11:59pm)
+
+1. (70pts) Develop a monitor in C (using pthread library functions) or Jave to solve the producer-consumer problem. [Hint: your program can be cased on the pseudo-code on Page 7 of 2013-3-4's lecture]
+
+
+2. (30pts) Modify the monitor pseudo-code for the reader-writer problem on Page 8 of 2013-3-4's lecture to solve the "writer's priority" version of the problem defined as follows:
+
+(1) At any time, the shared file can be accessed by one writer exclusively, or one or multiple readers concurrently.
+
+(2) Whenever there are both reader and writer processes arriving or waiting to access the shared file, a writer has higher priority than reader to acess the shared file. 
