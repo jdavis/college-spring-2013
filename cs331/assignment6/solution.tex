@@ -206,16 +206,6 @@
             \item \(\Sigma = \Sigma_1 \cup \Sigma_2\), the alphabet
             \item \(\Gamma = \Gamma_1 \cup \Gamma_2 \), the stack alphabet
             \item \(q_{0} = (q_{M10}, q_{M20}\), the start state is the state for both TMs
-            \item Next we have to implement the transition function, \(\delta_M\),
-                A Turing machine can do two movements on the tape, Left and Right. To replicate
-                this with the 2-PDA, whenever the \(M\) is supposed to move to the left, we can
-                just pop the value off the left stack and push it onto the right stack. Trivially
-                we can do the same for moving right, pop off the right and push to the left.
-                \\
-
-                To handle writing new values to the tape, instead of pushing the value that
-                was just popped, we can push any value such that value is in \(\Gamma\), the
-                stack alphabet.
         \end{enumerate}
     \end{proof}
 
