@@ -23,6 +23,10 @@ follows:
     access the shared file, the writer has higher priority than reader to access
     the shared file.
 
+The logic of the pseudocode is that a reader only starts when there are no
+writers accessing or when there are no writers in the queue. This gives priority
+to the writers thus solving the solution.
+
 ### Modified Pseudocode
 
     Monitor Reader-Writer
