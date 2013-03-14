@@ -7,9 +7,9 @@ Due: Thurs, March 14 at midnight
 
 ## Problem 1 (70pts)
 
-Monitor in C to solve the producer-consumer problem.
+For the code to the monitor in C to solve the producer-consumer problem, look at
+the source files included with the zip.
 
-    /* code here */
 
 ## Problem 2 (30pts)
 
@@ -20,10 +20,10 @@ follows:
     or multiple readers concurrently.
 
  2. Whenever there are both reader and writer processes arriving or waiting to
-    access the shared file, the writer has higher priority than reader toa ccess
+    access the shared file, the writer has higher priority than reader to access
     the shared file.
 
-### Pseudocode
+### Modified Pseudocode
 
     Monitor Reader-Writer
     begin
@@ -33,28 +33,28 @@ follows:
 
         procedure startread
         begin
-            If busy then OKtoread.wait;
-            readercount := readercount + 1;
-            OKtoread.signal
+            If busy or Oktowrite.queue then Oktoread.wait
+            readercount := readercount + 1
+            Oktoread.signal
         end startread
 
         procedure endread;
         begin
-            readercount := readercount-1;
-            If readercount = 0 then OKtowrite.signal;
+            readercount := readercount - 1
+            If readercount = 0 then Oktowrite.signal
         end endread
 
         procedure startwrite;
         begin
-            If busy or readercount <>0 then OKtowrite.wait;
+            If busy or readercount <> 0 then Oktowrite.wait;
             busy := true;
         end startwrite
 
         procedure endwrite;
         begin
-            busy := false
-            if OKtoread.queue then OKtoread.signal
-            else OKtowrite.signal
+            busy := false;
+            If Oktowrite.queue Oktowrite.signal
+            else Oktoread.signal
         end endwrite
 
         begin /* initialization of local data */
