@@ -202,11 +202,24 @@
         We can then construct \(M\) as follows:
 
         \begin{enumerate}
-            \item \(Q = Q_0 \times Q_1\), the state machine
+            \item \(Q = Q_1 \times Q_2\), the state machine
             \item \(\Sigma = \Sigma_1 \cup \Sigma_2\), the alphabet
             \item \(\Gamma = \Gamma_1 \cup \Gamma_2 \), the stack alphabet
-            \item \(q_{0} = (q_{M10}, q_{M20}\), the start state is the state for both TMs
+            \item \(q_{accept}\) would just be any state with \textit{accept} in the tuple.
+            \item \(q_{0} = (q_{M10}, q_{M20})\), the start state is the state for both TMs
+            \item \(\delta\) would be defined as follows:
+
+            \[
+                \delta((q_1, q_2), a) = \left\{
+                    \begin{array}{ll}
+                        (\delta_2(a), q_2) & \quad q \in Q_1 \\
+                        (q_1, \delta_1(a)) & \quad q \in Q_2
+                    \end{array}
+                \right.
+            \]
         \end{enumerate}
+
+        This would work because we would just move along the state machine spitting out 
     \end{proof}
 
     \textbf{Part Three} Concatentation: \(L = L_1 * L_2\)
@@ -220,78 +233,19 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Let \(L\) be the language of \(\Sigma = \{0, 1\}\). Prove that \(L\)
-    is Turing-decidable if and only if \(L\) can be enumerated by an enumerator
-    Turing machine in strictly increasing order.
+    Prove the following languages aren't Turing decidable.
+    \\
+
+    \textbf{Part One} A TM, \(M\) will write "V" somewhere on the tape, \(L_B\).
 
     \begin{proof}
-        This proof will consist of two parts. First proving that any \(L\)
-        that is Turing-decidable can be enumerated by an enumerator Turing machine
-        in strictly increasing order. The second part is that an enumerator Turing machine
-        in strictly increasing order gives a language, \(L\), that is Turing-decidable.
-        \\
+        We assume that \(M\) is decidable and obtain a contradiction. Suppose
+        \(N\) is a decider for \(L_B\). Then \(N\) is a TM and it will accept
+        any \(\left<M\right>\) and either accept or reject it.
 
-        \textbf{Part One}
-        Proving that if a language is Turing-decidable, it can be enumerated by
-        an enumerator Turing machine in strictly increasing order.
-        \\
-
-        Let the Turing-decidable language be \(L\) decided by \(M\) and the enumerator 
-        Turing machine be \(E\).
-        \\
-
-        We can use \(M\) to help us in the construction of \(E\).
-        \\
-
-        Since \(L\) is the language decided by \(M\), let the lexographic
-        ordering of the strings be denoted as \(s_1, s_2, s_3, \hdots\).
-        We can then define \(E\) as follows:
-
-        \(E = \)`` On input string \(s\):
-        \begin{enumerate}
-            \item For input, \(i = 1, 2, 3, \hdots\)
-            \item Let \(M\) run on the string, \(s_i\)
-            \item If \(M\) accepts the string, \(s_i\), print it.
-            \item If \(M\) rejets the string, continue through the loop''
-        \end{enumerate}
-
-        This concludes the first part of the proof.
-        \\
-
-        \textbf{Part Two}
-        Proving that if an enumerator Turing machine can enumerate a language
-        in strictly increasing order, then it is Turing-decidable.
-        \\
-
-        Let the Turing-decidable language be \(L\) decided by \(M\) and the enumerator 
-        Turing machine be \(E\).
-        \\
-
-        There are two cases to consider, when \(L\) is finite and when it is infinite.
-        \\
-
-        When it is finite, it has to be decidable. Every finite language can be decided.
-        \\
-
-        When it is inifinte, we can use \(E\) to help us in the construction of \(M\).
-        \\
-
-        The pseudo-code that describes \(M\) is as follows:
-
-        \(M = \)`` On input string \(w\):
-        \begin{enumerate}
-            \item Receive input from \(E\), \(s\)
-            \item If \(s\) is the same as \(w\), accept it
-            \item If \(s\) is lexicographically larger than \(w\), reject it
-            \item If \(s\) is lexicographically smaller than \(w\), go back to stage 1''
-        \end{enumerate}
-
-        This works because \(w\) is guaranteed to be in \(L\) because it is infinite.
-        \\
-
-        This concludes the second part of the proof. Thus both sides have been proven and
-        the proof is complete.
     \end{proof}
+
+    \textbf{Part Two} A TM, \(M\) halts on all words except one.
 \end{homeworkProblem}
 
 \pagebreak
