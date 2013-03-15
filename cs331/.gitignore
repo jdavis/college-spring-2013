@@ -1,1 +1,3 @@
 template.pdf
+*.fls
+*.fdb_latexmk
