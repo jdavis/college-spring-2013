@@ -175,13 +175,46 @@
 
 \begin{homeworkProblem}
     Prove that the class of Turing-recognizable languages are closed under certain operations.
+    \\
 
     \textbf{Part One} Union: \(L = L_1 \cup L_2\)
     \begin{proof}
         Given two Turing machines, \(M_1\) and \(M_2\) that recognize the languages \(L_1\)
         and \(L_2\), respectively, we will construct a new Turing machine, \(M\), that recognizes
         the union of the two languages.
+        \\
+
+        Let \(M_1\) and \(M_2\) be defined as follows:
+        \[
+            \begin{split}
+                M_1 = (Q_1, \Sigma_1, \Gamma_1, \delta_1, q_{M10}, q_{M1accept}, q_{M1reject})
+                \\
+                M_2 = (Q_2, \Sigma_2, \Gamma_2, \delta_2, q_{M20}, q_{M2accept}, q_{M2reject})
+            \end{split}
+        \]
+
+        We can then construct \(M\) as follows:
+
+        \begin{enumerate}
+            \item \(Q = Q_1 \cup Q_2\), the state machine
+            \item \(\Sigma = \Sigma_1 \cup \Sigma_2\), the alphabet
+            \item \(\Gamma = \Gamma_1 \cup \Gamma_2 \), the stack alphabet
+            \item \(q_{accept}\) A new accept state for when both machines accept.
+            \item \(q_{0}\) A new start state.
+            \item \(M = \)`` On input string \(w\):
+                \begin{enumerate}
+                    \item Run the input \(w\) over the two TMs in parallel.
+                    \item If either \(M_1\) or \(M_2\) accept the input, move to the accept state
+                        if both machines reject it, move to the reject state.
+                \end{enumerate}
+        \end{enumerate}
+
+        This works because we can run the TMs in parallel and accept if either of them accepts. This
+        shows that the language will accept words that are in either the language of the first TM
+        or the secnod one.
     \end{proof}
+
+    \pagebreak
 
     \textbf{Part Two} Intersection: \(L = L_1 \cap L_2\)
     \begin{proof}
@@ -202,31 +235,67 @@
         We can then construct \(M\) as follows:
 
         \begin{enumerate}
-            \item \(Q = Q_1 \times Q_2\), the state machine
+            \item \(Q = Q_1 \cup Q_2\), the state machine
             \item \(\Sigma = \Sigma_1 \cup \Sigma_2\), the alphabet
             \item \(\Gamma = \Gamma_1 \cup \Gamma_2 \), the stack alphabet
-            \item \(q_{accept}\) would just be any state with \textit{accept} in the tuple.
-            \item \(q_{0} = (q_{M10}, q_{M20})\), the start state is the state for both TMs
-            \item \(\delta\) would be defined as follows:
-
-            \[
-                \delta((q_1, q_2), a) = \left\{
-                    \begin{array}{ll}
-                        (\delta_2(a), q_2) & \quad q \in Q_1 \\
-                        (q_1, \delta_1(a)) & \quad q \in Q_2
-                    \end{array}
-                \right.
-            \]
+            \item \(q_{accept}\) A new accept state for when both machines accept.
+            \item \(q_{0}\) A new start state.
+            \item \(M = \)`` On input string \(w\):
+                \begin{enumerate}
+                    \item Run the input \(w\) over the two TMs in parallel.
+                    \item If both \(M_1\) and \(M_2\) accept the input, move to the accept state
+                        if either machine rejects it, move to the reject state.
+                \end{enumerate}
         \end{enumerate}
 
-        This would work because we would just move along the state machine spitting out 
+        This works because we can just run the two TMs in parallel and only accept when
+        they both accept. Thus a word will only appear in our new language when both TMs accept it
+        and don't reject it.
     \end{proof}
+    
+    \pagebreak
 
     \textbf{Part Three} Concatentation: \(L = L_1 * L_2\)
     \begin{proof}
         Given two Turing machines, \(M_1\) and \(M_2\) that recognize the languages \(L_1\)
         and \(L_2\), respectively, we will construct a new Turing machine, \(M\), that recognizes
         the concatentation of the two languages.
+        \\
+
+        Let \(M_1\) and \(M_2\) be defined as follows:
+        \[
+            \begin{split}
+                M_1 = (Q_1, \Sigma_1, \Gamma_1, \delta_1, q_{M10}, q_{M1accept}, q_{M1reject})
+                \\
+                M_2 = (Q_2, \Sigma_2, \Gamma_2, \delta_2, q_{M20}, q_{M2accept}, q_{M2reject})
+            \end{split}
+        \]
+
+        We can then construct \(M\) as follows:
+
+        \begin{enumerate}
+            \item \(Q = Q_1 \cup Q_2\), the state machine
+            \item \(\Sigma = \Sigma_1 \cup \Sigma_2\), the alphabet
+            \item \(\Gamma = \Gamma_1 \cup \Gamma_2 \), the stack alphabet
+            \item \(q_{accept}\) A new accept state for when both machines accept.
+            \item \(q_{0}\) A new start state.
+            \item \(M = \)`` On input string \(w\):
+                \begin{enumerate}
+                    \item Split the input \(w\) into two parts, \(w = xy\). We
+                        can do this nondeterministically.
+                    \item Then run \(M_1\) over the first part, \(x\), if it
+                        accepts it go to the next stage, if it rejects it, move
+                        to the reject state
+                    \item Next, run \(M_2\) over the second part, \(y\). If it
+                        accepts it, move to the accept state, if it rejects it,
+                        move to the reject state.
+                \end{enumerate}
+        \end{enumerate}
+
+        This works because we can use the power of Nondeterministic TMs to split the string and run each
+        TM sequentially. This is valid because it is shown in the book that NTMs are no more powerful than
+        normal TMs. In splitting the string, we can assure that every possibility will be checked and thus
+        it will show that the first language is the concatenation of the second one.
     \end{proof}
 \end{homeworkProblem}
 
@@ -236,64 +305,117 @@
     Prove the following languages aren't Turing decidable.
     \\
 
-    \textbf{Part One} A TM, \(M\) will write "V" somewhere on the tape, \(L_B\).
+    \textbf{Part One} A TM, \(N\) will write "V" somewhere on the tape, \(L_B\).
 
     \begin{proof}
-        We assume that \(M\) is decidable and obtain a contradiction. Suppose
+        We assume that \(N\) is decidable and obtain a contradiction. Suppose
         \(N\) is a decider for \(L_B\). Then \(N\) is a TM and it will accept
         any \(\left<M\right>\) and either accept or reject it.
+        \\
 
+        If we order the language, \(L_B\), we can sort it by when the first occurence of "V"
+        happens on the tape and label it \(M_i\) where \(i\) is the index of
+        the occurrence. This will give us a table as below where x indicates
+        any other character:
+
+        \begin{table}[ht]
+            \centering
+            \begin{tabular}{c || c | c | c | c | c}
+                 & 1 & 2 & 3 & 4 & \(\hdots\) \\
+                \hline
+                \(\left<M_1\right>\) & V & x & x & x & x \\
+                \(\left<M_2\right>\) & x & V & x & x & x \\
+                \(\left<M_3\right>\) & x & x & V & x & x \\
+                \(\left<M_4\right>\) & x & x & x & V & x \\
+                \(\left<M_5\right>\) & x & x & x & x & V \\
+            \end{tabular}
+        \end{table}
+
+        To prove that this is a contradiction, all \(M_i\) should be decidable by \(N\).
+        However, if we use the diagonalization method, we can see that if we select a diagonal
+        through the table and change it such that the input becomes something else, it would make
+        a new input, \(y = xxxxxx\hdots\). This new input must exist somewhere along the rows but
+        as we know, it won't because at the point where this new input crosses the diagonal, it won't
+        be equal to the value located there.
+        \\
+
+        Thus we have found a contradiction and \(L_B\) is not decidable.
     \end{proof}
 
-    \textbf{Part Two} A TM, \(M\) halts on all words except one.
+    \textbf{Part Two} A TM, \(N\) halts on all words except one.
+
+    \begin{proof}
+        We assume that \(N\) is decidable and obtain a contradiction. Suppose
+        \(N\) is a decider for \(L_U\). Then \(N\) is a TM and it will accept
+        any \(\left<M\right>\) and either accept or reject it.
+        \\
+
+        If we order the language, \(L_U\), we can sort it by when the word that
+        the machine happens on the tape and label it \(M_i\) where \(i\) is the
+        index of the occurrence. This will give us a table as below where x
+        indicates any other character:
+
+        \begin{table}[ht]
+            \centering
+            \begin{tabular}{c || c | c | c | c | c}
+                 & 1 & 2 & 3 & 4 & \(\hdots\) \\
+                \hline
+                \(\left<M_1\right>\) & doesn't halt & halts & halts & halts & halts \\
+                \(\left<M_2\right>\) & halts & doesn't halt & halts & halts & halts \\
+                \(\left<M_3\right>\) & halts & halts & doesn't halt & halts & halts \\
+                \(\left<M_4\right>\) & halts & halts & halts & doesn't halt & halts \\
+                \(\left<M_5\right>\) & halts & halts & halts & halts & doesn't halt \\
+            \end{tabular}
+        \end{table}
+
+        To prove that this is a contradiction, all \(M_i\) should be decidable by \(N\).
+        However, if we use the diagonalization method, we can see that if we select a diagonal
+        through the table and change it such that the input becomes the opposite, it would make
+        a new input, \(y\), that doesn't halt for all input. This new input
+        must exist somewhere along the rows but as we know, it won't because at
+        the point where this new input crosses the diagonal, it won't
+        be equal to the value located there.
+        \\
+
+        Thus we have found a contradictino and \(L_U\) is not decidable.
+    \end{proof}
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
-    Prove that any Turing machine can be simulated by a 2-PDA.
+    Prove or disprove that the language, \(L_s\) is Turing decidable.
+    \\
 
     \begin{proof}
-        To prove that any Turing machine can be simulated by a 2-PDA, we will
-        use a proof by construction. We will construct a Turing machine, \(M\), where
-        \[
-            M = \langle Q_M, \Sigma_M, \Gamma_M, q_{M0}, q_{accept}, q_{reject} \rangle
-        \] 
-
-        such that it is constructed from a 2-PDA, \(M\), where
-
-        \[
-            P = \langle Q_P, \Sigma_P, \Gamma_P, \delta_P, q_{P0}, F_P \rangle
-        \]
-
-        \(M\) will be defined as follows:
-
-        \begin{enumerate}
-            \item \(Q_M = Q_P\), the state machine is preserved
-            \item \(\Sigma_M = \Sigma_P\), the alphabets are identical
-            \item \(\Gamma_M = \Gamma_P \cap \{\textvisiblespace\} \), the stack alphabet
-            \item \(q_{M0} = q_{P0}\), the start states are the same
-            \item Next we have to implement the transition function, \(\delta_M\),
-                A Turing machine can do two movements on the tape, Left and Right. To replicate
-                this with the 2-PDA, whenever the \(M\) is supposed to move to the left, we can
-                just pop the value off the left stack and push it onto the right stack. Trivially
-                we can do the same for moving right, pop off the right and push to the left.
-                \\
-
-                To handle writing new values to the tape, instead of pushing the value that
-                was just popped, we can push any value such that value is in \(\Gamma\), the
-                stack alphabet.
-        \end{enumerate}
-
-        The reason this works is because the first stack can be viewed as everything to
-        the left of the read/write head, while everything on the second stack can be
-        viewed as everything to the right of the read/write head. Since stacks are infinite
-        in PDA's, two of them can represent the tape in a Turing machine.
+        We will show that the language \(L_s\) is in fact Turing decidable.
         \\
 
-        It follows that a Turing machine can be simulated using a 2-PDA and
-        thus the proof is complete.
+        To show that this is true, we will use the idea of Configuration History
+        to prove it.
+        \\
 
+        Given a TM, \(M = (Q, \Sigma, \Gamma, \delta, q, q_{accept}, q_{reject})\), we
+        can keep track of the configurations. This can be represented as follows:
+        \[
+            c_0 \rightarrow c_1 \rightarrow \hdots \rightarrow c_{n-1} \rightarrow c_n
+        \]
+
+        \(c_0\) will be the starting state while \(c_n\) will be the accepting state (if it halts).
+        \\
+
+        Since we have this configuration, we can deterministically represent
+        all the possible states that the configurations can be in. The total
+        number of possibilities is \(n^k(k)(m)\) where \(k =
+        \left|\Gamma\right|\), \(m = \left|Q\right|\).
+        \\
+
+        Thus each configuration step we move along, we can compare it to the last. If the configuration
+        is in the same state, it must be in a loop and we reject. If it isn't in the same state, continue.
+        \\
+
+        Doing this we can turn the language, \(L_s\) into a decidable language by bounding the number of
+        movements the head can make.
     \end{proof}
 \end{homeworkProblem}
 
