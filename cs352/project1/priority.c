@@ -71,7 +71,7 @@ int enlarge(PriorityQueue_t *q) {
         newQ[i] = q->q[i];
     }
 
-    /*free(q->q);*/
+    free(q->q);
 
     /* Update properties for new array */
     q->array_size = q->array_size * 2;
