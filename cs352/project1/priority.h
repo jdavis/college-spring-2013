@@ -15,5 +15,6 @@ typedef struct {
 PriorityQueue_t *newPriorityQueue();
 int enqueue(PriorityQueue_t *q, void *i, int priority);
 void *dequeue(PriorityQueue_t *q);
+void printQueue(PriorityQueue_t *q, char *mesg);
 
 #endif

@@ -1,4 +1,7 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+
 #include "priority.h"
 
 /* Internal Functions for Priority Queue */
@@ -7,27 +10,50 @@ int parent(int i);
 int leftChild(int i);
 int rightChild(int i);
 int enlarge(PriorityQueue_t *q);
-void heapify(PriorityQueue_t *q, int i);
+void heapifyUp(PriorityQueue_t *q, int i);
+void heapifyDown(PriorityQueue_t *q, int i);
 
 /*
- * Returns the index of the parent
+ * Returns the index of the parent (zero indexed)
  */
 int parent(int i) {
-    return i >> 1;
+    return (i - 1) / 2;
 }
 
 /*
- * Returns the index of the left child
+ * Returns the index of the left child (zero indexed)
  */
 int leftChild(int i) {
-    return (i << 1) + 1;
+    return (i * 2) + 1;
 }
 
 /*
- * Returns the index of the right child
+ * Returns the index of the right child (zero indexed)
  */
 int rightChild(int i) {
-    return (i << 1) + 2;
+    return (i * 2) + 2;
+}
+
+void printQueue(PriorityQueue_t *q, char *mesg) {
+    int i, total, next;
+
+    next = 1;
+    total = 0;
+    printf("Priority Queue: %s\n", mesg);
+    for(i = 0; i < q->size; ) {
+        printf("\t(%d) ", q->q[i]->priority);
+
+        i += 1;
+
+        if (i == next + total) {
+            printf("\n");
+            total += next;
+            next *= 2;
+        }
+
+    }
+
+    printf("\n");
 }
 
 /*
@@ -55,13 +81,11 @@ int enlarge(PriorityQueue_t *q) {
 }
 
 /*
- * Heapifies a Node given by i
- * Heapify moves nodes to keep the heap property
- * in tact
+ * Keeps the heap property in tact by moving downward through the heap
  */
-void heapify(PriorityQueue_t *q, int i) {
-    Node_t *swap, *left, *right;
-    int l, r, larger;
+void heapifyDown(PriorityQueue_t *q, int i) {
+    Node_t *swap;
+    int l, r, smaller;
 
     l = leftChild(i);
     r = rightChild(i);
@@ -69,27 +93,40 @@ void heapify(PriorityQueue_t *q, int i) {
     /* No left child would make the node a leaf */
     if (l >= q->size) return;
 
-    left = q->q[l];
-
     /* Determine which child is larger */
     if (r >= q->size) {
-        larger = l;
+        /* Only option is to check the left*/
+        smaller = l;
     } else {
-        right = q->q[r];
-        if (left->priority > right->priority) {
-            larger = l;
+        /* There are both right and left children, determine which one to swap with */
+        if (q->q[l]->priority < q->q[r]->priority) {
+            smaller = l;
         } else {
-            larger = r;
+            smaller = r;
         }
     }
 
-    /* Swap the larger item with current node */
-    if (q->q[i]->priority >= q->q[larger]->priority) {
-        swap = q->q[larger];
-        q->q[larger] = q->q[i];
+    /* Swap the if item smaller than current */
+    if (q->q[i]->priority > q->q[smaller]->priority) {
+        swap = q->q[smaller];
+        q->q[smaller] = q->q[i];
         q->q[i] = swap;
 
-        heapify(q, larger);
+        heapifyDown(q, smaller);
+    }
+}
+
+void heapifyUp(PriorityQueue_t *q, int i) {
+    Node_t *swap;
+    int p = parent(i);
+
+    while(i > 0 && q->q[p]->priority > q->q[i]->priority) {
+        swap = q->q[p];
+        q->q[p] = q->q[i];
+        q->q[i] = swap;
+
+        i = p;
+        p = parent(i);
     }
 }
 
@@ -109,7 +146,11 @@ PriorityQueue_t *newPriorityQueue() {
 
 /*
  * Takes a given PriorityQueue and adds the pointer to it
- * and the given priority
+ * and the given priority.
+ *
+ * This works the opposite of dequeue, instead of working downwards, it works
+ * upwards and places the new item where it belongs according to the heap
+ * property.
  */
 int enqueue(PriorityQueue_t *q, void *i, int priority) {
     Node_t *n;
@@ -127,17 +168,20 @@ int enqueue(PriorityQueue_t *q, void *i, int priority) {
 
     if (q->size >= q->array_size) enlarge(q);
 
-    q->q[q->size] = n;
-
     q->size += 1;
+    q->q[q->size - 1] = n;
 
-    heapify(q, 0);
+    heapifyUp(q, q->size - 1);
 
     return 0;
 }
 
 /*
  * Removes the highest priority item from the queue and returns it.
+ *
+ * Algorithmically, it takes the first item and returns it. While swapping the
+ * last item with the first and decrementing the size. It then heapify
+ * downwards through the heap.
  */
 void *dequeue(PriorityQueue_t *q) {
     Node_t *n = q->q[0];
@@ -147,7 +191,7 @@ void *dequeue(PriorityQueue_t *q) {
     q->size -= 1;
     q->q[0] = q->q[q->size];
 
-    heapify(q, 0);
+    heapifyDown(q, 0);
 
     /*free(n);*/
 
