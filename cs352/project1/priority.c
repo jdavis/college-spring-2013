@@ -186,14 +186,15 @@ int enqueue(PriorityQueue_t *q, void *i, int priority) {
 void *dequeue(PriorityQueue_t *q) {
     Node_t *n = q->q[0];
     void *result = n->data;
+    n->data = NULL;
 
     /* Move the last item to the first and heapify it */
     q->size -= 1;
     q->q[0] = q->q[q->size];
 
-    heapifyDown(q, 0);
+    if (q->size > 0) free(n);
 
-    /*free(n);*/
+    heapifyDown(q, 0);
 
     return result;
 }
