@@ -14,7 +14,7 @@ int main(int argc, const char *argv[]) {
     pthread_create(&threads[0], NULL, consumer, (void *) monitor);
 
     pthread_exit(NULL);
-    
+
     return 0;
 }
 

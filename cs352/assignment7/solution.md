@@ -31,8 +31,8 @@ to the writers thus solving the solution.
 
     Monitor Reader-Writer
     begin
-        readercount: integer 
-        busy: boolean 
+        readercount: integer
+        busy: boolean
         OKtoread, OKtowrite: condition
 
         procedure startread
