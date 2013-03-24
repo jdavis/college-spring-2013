@@ -41,5 +41,6 @@ void *consumer(void *m) {
         x = (int *) consume(m);
 
         printf("Consumed %d\n", *x);
+        free(x);
     }
 }
