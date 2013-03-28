@@ -41,13 +41,14 @@ possibilities to try and find a deadlock
 
     DEADLOCK!
 
-So yes, it is possible that P1 and P2 can run into a deadlock. Here is how we
-can prevent it by altering P2:
+So yes, it is possible that P1 and P2 can run into a deadlock. We need to edit
+P2 to prevent deadlock. We can do this by keeping the partial order of 1, 2, 3
+that is used in P1.
 
-##### P2 New Code TODO
+##### P2 New Code
+    wait(s3);
     wait(s2);
     y = y*2;
-    wait(s3);
     z = z - y;
     signal(s2);
     wait(s1);
