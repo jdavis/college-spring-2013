@@ -93,6 +93,43 @@
 \pagebreak
 
 \begin{homeworkProblem}
+    Let \(K = \{\left<M\right> : \left<M\right> \notin L(M)\}\). Prove that \(K\) is not Turing
+    recognizable.
+
+    \begin{proof}
+        To prove that \(K\) is not Turing recognizable, we will prove this by coming up with a contradiction.
+        \\
+
+        Assume that \(K\) is Turing recognizable and \(N\) is a Turing machine
+        that recognizes it. \(K\) is the set of all encoded Turing machines
+        that recognize the language that doesn't include their own encoding.
+        \\
+
+        Using this assumption, we can see that if we take the TM that
+        recognizes \(K\), \(N\), we can see there are two cases in which this
+        property of \(K\) still holds.
+        \\
+
+        \textbf{Case One}
+        \\
+
+        If \(N \in K\) then \(N \notin K\). This is because if it contains
+        itself, then it must be removed because \(K\) cannot contain the
+        encoding of itself.
+        \\
+
+        \textbf{Case Two}
+        \\
+
+        If \(N \notin K\) then \(N \in K\). This is because the encoding of
+        \(N\) must be represented in \(K\) because it is the set of all TM that
+        don't recognize themselves.
+        \\
+
+        Thus \(N \in K \iff N \notin K\).  This is clearly a contradiction and
+        thus we have shown that \(K\) is not Turing recognizable.
+    \end{proof}
+
 \end{homeworkProblem}
 
 \end{document}
