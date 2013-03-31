@@ -214,4 +214,40 @@
     \end{proof}
 \end{homeworkProblem}
 
+\pagebreak
+
+\begin{homeworkProblem}
+    Prove that \(A_{TM} \not\leq_{m} \overline{A_{TM}}\), where \(A_{TM} =
+    \{\left<M, w\right> : M \mbox{ is a TM and } M \mbox{ accepts } w \}\)
+
+    \begin{proof}
+        To prove this, we will do a proof by contradiction.
+        \\
+
+        Suppose that \(A_{TM} \leq_{m} \overline{A_{TM}}\), or \(A_{TM}\)
+        reduces to \(\overline{A_{TM}}\). This means that there is a computable
+        function, \(f\) that on every input \(w\), \(w
+        \in A_{TM} \iff f(w) \in \overline{A_{TM}}\). Let \(M\) be the TM that
+        recognizes \(A_{TM}\).
+        \\
+
+        According to the above, we can construct a new TM, \(N\) that
+        recognizes \(\overline{A_{TM}}\). Let \(N\) be constructed as follows:
+
+        \(N = \)`` On input string \(w\):
+        \begin{enumerate}
+            \item Compute \(f(w)\)
+            \item Run \(M\) with \(w\), if \(M\) rejects, then accepts and if \(M\) accepts, then reject''
+        \end{enumerate}
+
+        As we can see, the only way to that \(A_{TM}\) reduces to
+        \(\overline{A_{TM}}\) is if \(A_{TM}\) is decidable. Since we know that
+        \(A_{TM}\) is not decidable, we have a contradiction.
+        \\
+
+        Since we have a contradiction \(A_{TM} \leq_{m}
+        \overline{A_{TM}}\) cannot be true and we have concluded our proof.
+    \end{proof}
+\end{homeworkProblem}
+
 \end{document}
