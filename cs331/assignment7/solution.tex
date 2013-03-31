@@ -132,4 +132,86 @@
 
 \end{homeworkProblem}
 
+\pagebreak
+
+\begin{homeworkProblem}
+    Prove the following statements:
+    \begin{enumerate}
+        \item \(L_1 \leq_{m} L_2\) and \(L_2 \leq_{m} L_3\) imply \(L_1 \leq_{m} L_3\).
+        \item \(L_1 \leq_{T} L_2\) implies that \(\overline{L_1} \leq_{m} \overline{L_2}\).
+    \end{enumerate}
+
+    \textbf{Part One}
+
+    \begin{proof}
+        Let there be three TMs that decide the three languages. \(M_1\)
+        recognizes \(L_1\), \(M_2\) recognizes \(L_2\), and \(M_3\) recognizes
+        \(L_3\).
+        \\
+
+        According to many-one reduction, if one language reduces to another
+        language, that means there is a computable function such that the
+        function reduces the first language to the second.
+        \\
+
+        Therefore with \(L_1 \leq_{m} L_2\), there is a computable function,
+        \(f_{12}\) where for every \(w\), \(w \in L_1 \iff f_{12}(w) \in L_2\).
+        \\
+
+        The same can be said for \(L_2 \leq_{m} L_3\), there is a computable
+        function, \(f_{23}\) where for every \(w\), \(w \in L_2 \iff f_{23}(w) \in
+        L_3\).
+        \\
+
+        Now to prove that \(L_1 \leq_{m} L_2\) and \(L_2 \leq_{m} L_3\) imply
+        \(L_1 \leq_{m} L_3\), we will construct a new TM, \(N\), that
+        recognizes \(L_1 \leq_{m} L_3\). We will construct \(N\) using the following
+        computable function, \(f(w) = f_{23}(f_{12}(w))\):
+        \\
+
+        \(N = \)`` On input string \(w\):
+        \begin{enumerate}
+            \item Run \(M_1\) on \(w\), if it accepts, move on, else reject
+            \item Compute \(f(w)\) using our new computable function
+            \item Run \(M_3\) on the previously computed value, output whatever \(M_3\) outputs''
+        \end{enumerate}
+
+        Thus we have shown that when \(L_1\) reduces to \(L_2\) and \(L_2\) reduces to \(L_3\),
+        we can construct a new many-reduction that reduces \(L_1\) to \(L_3\). Thus we have proved
+        what we sought to prove and our proof is complete.
+    \end{proof}
+
+    \textbf{Part Two}
+
+    \begin{proof}
+        Since \(L_1\) is Turing reducible to \(L_2\), that means \(L_1\) is
+        deciable relative to \(L_2\) and there is an oracle TM, \(M^1\), that can report
+        whether or not any string \(w\) is a member of \(L_1\). Likewise there
+        is another oracle TM, \(M^2\), that can report whether or not any
+        string \(w\) is a member of \(L_2\).
+        \\
+
+        To show that this then implies that \(\overline{L_1} \leq_{m} \overline{L_2}\),
+        we can construct a new oracle TM using these existing oracle TMs. Let
+        our new oracle TM be \(N\) and defined as follows:
+        \\
+
+        \(N = \)`` On input string \(w\):
+        \begin{enumerate}
+            \item Query \(M^1\) with \(w\), if it answers \textbf{no}, continue, else reject
+            \item Next query \(M^2\) with \(w\), if it answers \textbf{no} accept, else reject''
+        \end{enumerate}
+
+        This is valid because when we query the oracles, since we want the
+        complement of the languages, we just answer the opposite of what the
+        oracle tells us. Thus we can create a new oracle from the oracles for
+        \(L_1\) and \(L_2\) that can show that \(L_1 \leq_{T} L_2\) implies
+        that \(\overline{L_1} \leq_{m} \overline{L_2}\).
+        \\
+
+        Thus we have proven what we wanted to and our proof is complete.
+
+    \end{proof}
+\end{homeworkProblem}
+
 \end{document}
