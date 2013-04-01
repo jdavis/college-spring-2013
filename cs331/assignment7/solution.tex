@@ -323,4 +323,46 @@
 
 \end{homeworkProblem}
 
+\pagebreak
+
+\begin{homeworkProblem}
+    Show that \(BB(k)\) is not a computable function.
+
+    \begin{proof}
+        We will show that \(BB(k)\) is not a computable function by proof by contradiction.
+        \\
+
+        Assume that \(BB(k)\) is a computable function. Since \(BB(k)\) is a
+        computable function, we can represent this function as a Turing
+        machine. Let's name this TM, \(M_B\).
+        \\
+
+        We also need a TM for each value of \(k\) given. Let's create a \(M_k\) TM that will be
+        defined later. Using this, \(M_B\) can be defined as follows:
+
+        \(M_B = \)`` On input string \(w\), where \(w\) is a TM encoding:
+        \begin{enumerate}
+            \item If \(w\) has k states, continue, else \(reject\).
+            \item Erase the tape k
+            \item Run \(HALT_{TM}\) with input \(w\), if it accepts, accept, else reject.
+        \end{enumerate}
+
+        In addition to \(M_k\), let's take the standard \(HALT_{TM}\) that
+        decides whether or not a given TM halts.
+
+        Now lets define \(M_k\) as follows:
+
+        \(M_k = \)`` On input string \(w\), where \(w\) is a TM encoding:
+        \begin{enumerate}
+            \item If \(w\) has k states, continue, else \(reject\).
+            \item Erase the tape k
+            \item Run \(HALT_{TM}\) with input \(w\), if it accepts, accept, else reject.
+        \end{enumerate}
+
+        This is clearly a contradiction because we know that \(HALT_{TM}\) is
+        undecidable thus by reduction, \(M_k\) is also undecideable
+
+    \end{proof}
+\end{homeworkProblem}
+
 \end{document}
