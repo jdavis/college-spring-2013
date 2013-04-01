@@ -1,0 +1,14 @@
+Note: I wasn't able to get barcode to work on any of the images Jim posted. I feel terrible because I spent a lot of time on it but wasn't able to get it to work. The code is all there, it just needs a few tweaks. I'm sorry.
+
+JNI: I know a lot of people probably use an excuse like this, but I accidentally deleted part of my JNI code. I had it in a file called matrix.c but deleted it when I was zipping my file (I use Linux and accidentally did rm matrix.c) and it was gone. 
+
+I feel really crumby for not having the barcoder working and deleting my JNI file, be merciful though. I totally understand JNI, I was beating myself up over it.
+
+Ah well.
+
+I hope everything is organized correctly and easy to understand.
+My GUI uses the sharpen.kfile and smooth.kfile becuase of how I implemented it.
+
+Also, my lighten is actually a Symbolic link to darken
+
+Good luck!
