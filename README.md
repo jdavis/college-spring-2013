@@ -16,7 +16,7 @@ A repository to store all code from every class I've taken at ISU so far.
 * Eng 250
 
 ## Fall 2010
-* Computer Science 229
+* [Advanced Programming Techniques (Com S 229)][cs229]
 * Physics 221
 * Digial Logic (Cpr E 281)
 
@@ -42,6 +42,7 @@ A repository to store all code from every class I've taken at ISU so far.
 * Eng 335
 * Phil 343
 
+[coms229]: cs229/
 [coms331]: cs331/
 [coms352]: cs352/
 [coms362]: http://github.com/jdavis/nebulous-adventure
