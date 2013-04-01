@@ -16,7 +16,7 @@ A repository to store all code from every class I've taken at ISU so far.
 * Eng 250
 
 ## Fall 2010
-* [Advanced Programming Techniques (Com S 229)][cs229]
+* [Advanced Programming Techniques (Com S 229)][coms229]
 * Physics 221
 * Digial Logic (Cpr E 281)
 
