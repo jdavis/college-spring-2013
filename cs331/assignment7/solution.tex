@@ -111,17 +111,18 @@
         \textbf{Case One}
         \\
 
-        If \(N \in K\) then \(N \notin K\). This is because if it contains
-        itself, then it must be removed because \(K\) cannot contain the
-        encoding of itself.
+        If \(N \in K\) then that means \(N\) recognizes the language of all
+        encoded TMs that don't recognize themselves. This also means that \(N\)
+        must now be removed from the language because it cannot contain itself.
+        Thus \(N\) cannot be in \(K\).
         \\
 
         \textbf{Case Two}
         \\
 
-        If \(N \notin K\) then \(N \in K\). This is because the encoding of
-        \(N\) must be represented in \(K\) because it is the set of all TM that
-        don't recognize themselves.
+        If \(N \notin K\) then that means \(N\) recognizes the language of all encoded
+        TMS that don't recognize themselves. This also means that \(N\), by the definition,
+        doesn't recognize itself. Thus it must be added to \(K\).
         \\
 
         Thus \(N \in K \iff N \notin K\).  This is clearly a contradiction and
@@ -253,12 +254,22 @@
 
     \Large
     \begin{enumerate}
-        \item \(\{\left[\frac{ab}{a}\right], \left[\frac{bb}{ab}\right],
-                \left[\frac{aa}{ba}\right], \left[\frac{cc}{bc}\right],
-                \left[\frac{aa}{ca}\right], \left[\frac{d}{cd}\right]\}\)
-        \item \(\{\left[\frac{ab}{a}\right], \left[\frac{bb}{ab}\right],
-                \left[\frac{aa}{ba}\right], \left[\frac{c}{bc}\right],
-                \left[\frac{aa}{ca}\right], \left[\frac{d}{cd}\right]\}\)
+        \item \(\{
+                \left[\frac{ab}{a}\right],
+                \left[\frac{bb}{ab}\right],
+                \left[\frac{aa}{ba}\right],
+                \left[\frac{cc}{bc}\right],
+                \left[\frac{aa}{ca}\right],
+                \left[\frac{d}{cd}\right]
+            \}\)
+        \item \(\{
+                \left[\frac{ab}{a}\right],
+                \left[\frac{bb}{ab}\right],
+                \left[\frac{aa}{ba}\right],
+                \left[\frac{c}{bc}\right],
+                \left[\frac{aa}{ca}\right],
+                \left[\frac{d}{cd}\right]
+            \}\)
     \end{enumerate}
     \normalsize
 
@@ -267,25 +278,31 @@
 
     One possible solution is below:
     \[
-        \left[\frac{ab}{a}\right] \left[\frac{cc}{bc}\right] \left[\frac{d}{cd}\right]
+        \left[\frac{ab}{a}\right]
+        \left[\frac{aa}{ba}\right]
+        \left[\frac{bb}{ab}\right]
+        \left[\frac{cc}{bc}\right]
+        \left[\frac{aa}{ca}\right]
+        \left[\frac{bb}{ab}\right]
+        \left[\frac{cc}{bc}\right]
+        \left[\frac{d}{cd}\right]
     \]
 
-    This is a solution because if we read across the top, we get \(abccd\) and
-    if we read across the bottom we get \(abccd\). Thus we have solved this
+    This is a solution because if we read across the top, we get \(abaabbccaabbccd\) and
+    if we read across the bottom we get \(abaabbccaabbccd\). Thus we have solved this
     given PCB problem.
     \\
 
     \textbf{Part Two}
     \\
 
-    One possible solution is below:
-    \[
-        \left[\frac{ab}{a}\right] \left[\frac{aa}{ba}\right] \left[\frac{bb}{ab}\right] \left[\frac{c}{bc}\right]
-    \]
-
-    This is a solution because if we read across the top, we get \(abaabbc\) and
-    if we read across the bottom we get \(abaabcc\). Thus we have solved this
-    given PCB problem.
+    This part is almost identical to the first part, except there is one
+    missing \(c\) on the 4th tile. In using the tiles from the bottom and not
+    including the 4th tile, there will be two \(c\)'s. Taking the 4th tile into
+    account, this is the only way to add a \(c\) to the top, except it also
+    adds a \(c\) to the bottom. Thus if \(n_1\) is the number of \(c\)s on the top
+    and \(n_2\) is the number of \(c\)'s on the bottom, then \(n_1 + 2 \leq n_2\).
+    Thus we will never be able to balance the number of \(c\)'s.
 \end{homeworkProblem}
 
 \pagebreak
@@ -293,31 +310,29 @@
 \begin{homeworkProblem}
     Does the following PCP problem P have a solution?
 
-    \[
-        \{
-            \left[\frac{a}{ab}\right],
-            \left[\frac{b}{ccc}\right],
-            \left[\frac{c}{b}\right],
-            \left[\frac{c}{d}\right],
-            \left[\frac{dddd}{}\right],
-            \left[\frac{ddde}{e}\right],
-        \}
-    \]
+    \begin{proof}
+        To show that the PCP problem P has a solution, we wil show that P has a solution
+        if and only if there exists an \(n\) such that \((3^n \mod 4) = 3\).
+        \\
 
-    Yes, it has a solution. One possible solution is below:
+        If \((3^n \mod 4) = 3\), then there must be \(n\) of tile 2. Since
+        there are \(3^n\) \(c\)'s, they must be matched on the top with \(c\)'s
+        as well. This will either give zero \(d\)'s on the bottom or \(3^n\)
+        \(d\)'s as well. Thus the next tile that needs to be used is the 5th
+        tile. The 5th tile needs to be used until \(3^n \mod 4 = 3\). Then we
+        can add the last tile, making a solution.  \\
 
-    \[
-        \left[\frac{a}{ab}\right]
-        \left[\frac{b}{ccc}\right]
-        \left[\frac{c}{d}\right]
-        \left[\frac{c}{d}\right]
-        \left[\frac{c}{d}\right]
-        \left[\frac{ddde}{e}\right]
-    \]
+        Likewise the opposite is similar, if there is a solution, then the
+        number of \(d\)'s must match on the top and the bottom. Since we can
+        only add more \(d\)'s to the bottom by matching \(c\)'s, we must add 3
+        at a time. Then we need to use the 4th tile until there are only three
+        \(d\)'s left. Then we add the last tile and the solution is complete.
+        \\
 
-    This is a solution because if we read across the top, we get \(abcccddde\)
-    and if we read across the bottom we get \(abcccddde\). Thus we have solved
-    this given PCB problem.
+        Since we have proven both ways, we have shown that a solution can exist
+        iff there exists an \(n\) such that \((3^n \mod 4) = 3\).
+
+    \end{proof}
 
 \end{homeworkProblem}
 
@@ -337,7 +352,7 @@
         \(M_B = \)`` On input \(k\) and \(w\), where \(k\) is a natural number and \(w\) is a TM encoding:
         \begin{enumerate}
             \item If \(w\) has k states, continue, else \(reject\).
-            \item Run \(HALT_{TM}\) with input \(w\), if it accepts, continue, else reject.
+            \item Run \(HALT_{TM}\) with input \(w\), if it accepts, accept, else reject.
         \end{enumerate}
 
         This works because we can reduce our problem of finding the TM that
