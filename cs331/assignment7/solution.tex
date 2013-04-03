@@ -254,22 +254,12 @@
 
     \Large
     \begin{enumerate}
-        \item \(\{
-                \left[\frac{ab}{a}\right],
-                \left[\frac{bb}{ab}\right],
-                \left[\frac{aa}{ba}\right],
-                \left[\frac{cc}{bc}\right],
-                \left[\frac{aa}{ca}\right],
-                \left[\frac{d}{cd}\right]
-            \}\)
-        \item \(\{
-                \left[\frac{ab}{a}\right],
-                \left[\frac{bb}{ab}\right],
-                \left[\frac{aa}{ba}\right],
-                \left[\frac{c}{bc}\right],
-                \left[\frac{aa}{ca}\right],
-                \left[\frac{d}{cd}\right]
-            \}\)
+        \item \(\{\left[\frac{ab}{a}\right], \left[\frac{bb}{ab}\right],
+                \left[\frac{aa}{ba}\right], \left[\frac{cc}{bc}\right],
+                \left[\frac{aa}{ca}\right], \left[\frac{d}{cd}\right]\}\)
+        \item \(\{\left[\frac{ab}{a}\right], \left[\frac{bb}{ab}\right],
+                \left[\frac{aa}{ba}\right], \left[\frac{c}{bc}\right],
+                \left[\frac{aa}{ca}\right], \left[\frac{d}{cd}\right]\}\)
     \end{enumerate}
     \normalsize
 
@@ -278,37 +268,57 @@
 
     One possible solution is below:
     \[
-        \left[\frac{ab}{a}\right]
-        \left[\frac{aa}{ba}\right]
-        \left[\frac{bb}{ab}\right]
-        \left[\frac{cc}{bc}\right]
-        \left[\frac{aa}{ca}\right]
-        \left[\frac{bb}{ab}\right]
-        \left[\frac{cc}{bc}\right]
-        \left[\frac{d}{cd}\right]
+        \left[\frac{ab}{a}\right] \left[\frac{cc}{bc}\right] \left[\frac{d}{cd}\right]
     \]
 
-    This is a solution because if we read across the top, we get \(abaabbccaabbccd\) and
-    if we read across the bottom we get \(abaabbccaabbccd\). Thus we have solved this
+    This is a solution because if we read across the top, we get \(abccd\) and
+    if we read across the bottom we get \(abccd\). Thus we have solved this
     given PCB problem.
     \\
 
     \textbf{Part Two}
     \\
 
-    This part is almost identical to the first part, except there is one
-    missing \(c\) on the 4th tile. In using the tiles from the bottom and not
-    including the 4th tile, there will be two \(c\)'s. Taking the 4th tile into
-    account, this is the only way to add a \(c\) to the top, except it also
-    adds a \(c\) to the bottom. Thus if \(n_1\) is the number of \(c\)s on the top
-    and \(n_2\) is the number of \(c\)'s on the bottom, then \(n_1 + 2 \leq n_2\).
-    Thus we will never be able to balance the number of \(c\)'s.
+    One possible solution is below:
+    \[
+        \left[\frac{ab}{a}\right] \left[\frac{aa}{ba}\right] \left[\frac{bb}{ab}\right] \left[\frac{c}{bc}\right]
+    \]
+
+    This is a solution because if we read across the top, we get \(abaabbc\) and
+    if we read across the bottom we get \(abaabcc\). Thus we have solved this
+    given PCB problem.
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
     Does the following PCP problem P have a solution?
+
+    \[
+        \{
+            \left[\frac{a}{ab}\right],
+            \left[\frac{b}{ccc}\right],
+            \left[\frac{c}{b}\right],
+            \left[\frac{c}{d}\right],
+            \left[\frac{dddd}{}\right],
+            \left[\frac{ddde}{e}\right],
+        \}
+    \]
+
+    Yes, it has a solution. One possible solution is below:
+
+    \[
+        \left[\frac{a}{ab}\right]
+        \left[\frac{b}{ccc}\right]
+        \left[\frac{c}{d}\right]
+        \left[\frac{c}{d}\right]
+        \left[\frac{c}{d}\right]
+        \left[\frac{ddde}{e}\right]
+    \]
+
+    This is a solution because if we read across the top, we get \(abcccddde\)
+    and if we read across the bottom we get \(abcccddde\). Thus we have solved
+    this given PCB problem.
 
     \begin{proof}
         To show that the PCP problem P has a solution, we wil show that P has a solution
