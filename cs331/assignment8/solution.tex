@@ -104,15 +104,51 @@
 
         \textbf{Part One} If \(A \leq_{L} B\), then \(A \leq_{m} B\).
         \\
-        hi
+
+        Assume \(A \leq_L B\). This means there is an oracle TM \(M^B\) that
+        can be queried once and only at the end execution.
+        \\
+
+        Let's construct a TM \(N\) that decides \(A \leq_m B\).
+        \\
+
+        \(N = \)`` On input \(w\):
+        \begin{enumerate}
+            \item Perform some computation using \(w\)
+            \item Simulate \(M^B\) on newly computed value''
+        \end{enumerate}
+
+        This equivalent to a many-one reduction using oracle TM \(M^B\) because
+        invoking \(M^B\) acts just as a computed function that maps \(A\) to
+        \(B\). Thus it is simply a computed function.
         \\
 
         \textbf{Part Two} If \(A \leq_{m} B\), then \(A \leq_{L} B\).
         \\
-        hi
+
+        Assume that \(A \leq_m B\). This means there is a computable function
+        \(f\) that reduces \(A\) to \(B\). Also this means there are two deciders, \(M_1\)
+        and \(M_2\) that decide the languages for \(A\) and \(B\) respectively.
         \\
 
-        Since we have proven each side, our proof is complete.
+        To show what we'd like to prove, we will construct a new TM \(M\) using
+        this function that operates exactly like a one-time use oracle executed
+        last.
+        \\
+
+        Let's construct a TM \(N\) that decides \(A \leq_L B\).
+        \\
+
+        \(N = \)`` On input \(w\):
+        \begin{enumerate}
+            \item Perform some computation on \(w\) using \(M_1\)
+            \item Compute \(f(w)\)
+            \item Simulate \(M_2\) on newly computed value''
+        \end{enumerate}
+
+        Since we have proven each side, we have shown that \(A \leq_{L} B\) if
+        and only if \(A \leq_{m} B\). Thus our proof is complete.
+
     \end{proof}
 \end{homeworkProblem}
 
@@ -229,16 +265,18 @@
         \begin{enumerate}
             \item Obtain using the recursion theorem, our own description, \(\langle N \rangle\).
             \item Run \(M\) on input \(\langle N \rangle\).
-            \item If \(M\) \(accepts\), then \(reject\).
-            \item If \(M\) \(rejects\), then \(accept\).''
+            \item If \(M\) \(rejects\), then \(accept\), else \(reject\).''
         \end{enumerate}
 
-        This says that
+        \textbf{TODO:} Give explanation of why it is a contradiction.
     \end{proof}
 
     \textbf{Part Two} Prove that \(\overline{SELF_{TM}}\) is not Turing-recognizable.
+    \\
 
     \begin{proof}
+    \textbf{TODO:} Meet with Professor Zhang
+
 
     \end{proof}
 \end{homeworkProblem}
