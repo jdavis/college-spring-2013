@@ -94,9 +94,25 @@
     Let \(A \leq_{L} B\) mean that \(A \leq_{T} B\) with additional condition
     that the oracle Turing machine \(M^B\) that solves \(A\) queries the oracle
     for \(B\) only once, at the very last step.
+    \\
+
+    Prove that \(A \leq_{L} B\) if and only if \(A \leq_{m} B\).
 
     \begin{proof}
+        To prove this, we will show that each side implies the other.
+        \\
 
+        \textbf{Part One} If \(A \leq_{L} B\), then \(A \leq_{m} B\).
+        \\
+        hi
+        \\
+
+        \textbf{Part Two} If \(A \leq_{m} B\), then \(A \leq_{L} B\).
+        \\
+        hi
+        \\
+
+        Since we have proven each side, our proof is complete.
     \end{proof}
 \end{homeworkProblem}
 
@@ -139,10 +155,48 @@
 \pagebreak
 
 \begin{homeworkProblem}
+    Prove that no universal corruptor exists.
 
     \begin{proof}
+        We will show that no universal corruptor exists by proof by contradiction.
+        \\
+
+        Assume that a universal corruptor does exist. Let this corruptor be the
+        function \(f\). This function when given any TM, it will construct a TM
+        that behaves differently. Formally this means \(L(M) \not= L(f(M))\).
+        \\
+
+        Given that this function exists, there should be no such TM that violates this
+        corruptability.
+        \\
+
+        Let's create a new TM, \(C\) that tries to violate this:
+        \\
+
+        \(C = \)`` On input w:
+        \begin{enumerate}
+            \item Obtain using the recursion theorem, our own description, \(\langle C \rangle\).
+            \item Compute \(f(\langle C \rangle)\) to obtain a new description of a TM, \(UNTOUCHABLE\).
+            \item Simulate \(UNTOUCHABLE\) on \(w\).''
+        \end{enumerate}
+
+        Since \(f\) is universal, there cannot exist a TM that has the same
+        language as the output of \(f\).
+        \\
+
+        Knowing this we can see that this is a contradiction for any universal
+        corruptor \(f\). If \(f\) is in fact universal, then there is no TM
+        that has the same language as the output of \(f\). Yet \(C\) and the
+        new TM \(UNTOUCHABLE\) have the same language because \(C\) simulates
+        \(UNTOUCHABLE\). This means that \(UNTOUCHABLE\) is in fact
+        uncorruptable and thus untouchable.
 
     \end{proof}
+
+    This proof follows the same idea that is presented in \textbf{Theorem 6.8}.
+    Which shows that for any such transforamtion of a TM description, there
+    exists some TM whose behavior is unchanged by the transformation.
+
 \end{homeworkProblem}
 
 \pagebreak
@@ -151,6 +205,38 @@
     Let \(SELF_{TM} = \{ \langle M \rangle : L(M) = \{\langle M \rangle \}\}\).
     Prove that neither \(SELF_{TM}\) nor \(\overline{SELF_{TM}}\) is
     Turing-recognizable.
+    \\
+
+    We will use the same idea that is presented in \textbf{Theorem 6.5} by
+    using recursion theorem to prove the unrecognizability of a language with a
+    TM.
+    \\
+
+    \textbf{Part One} Prove that \(SELF_{TM}\) is not Turing-recognizable.
+
+    \begin{proof}
+        We will show that \(SELF_{TM}\) is not Turing-recognizable by proof by contradiction.
+        \\
+
+        Assume that \(SELF_{TM}\) is Turing-recognizable. Then there is a TM,
+        \(M\) that recognizes \(SELF_{TM}\).
+        \\
+
+        We will construct the following TM, \(N\) to obtain a contradiction:
+        \\
+
+        \(N = \)`` On input w:
+        \begin{enumerate}
+            \item Obtain using the recursion theorem, our own description, \(\langle N \rangle\).
+            \item Run \(M\) on input \(\langle N \rangle\).
+            \item If \(M\) \(accepts\), then \(reject\).
+            \item If \(M\) \(rejects\), then \(accept\).''
+        \end{enumerate}
+
+        This says that
+    \end{proof}
+
+    \textbf{Part Two} Prove that \(\overline{SELF_{TM}}\) is not Turing-recognizable.
 
     \begin{proof}
 
@@ -166,12 +252,58 @@
     \textbf{Part One} Prove that \(P\) is closed under union.
 
     \begin{proof}
+        To prove that \(P\) is closed under union, we assume that there are two languages
+        \(L_1\) and \(L_2\) with \(M_1\) and \(M_2\) as TMs that decide them.
+        \\
 
+        Assume that \(M_1\) runs in polynominal time, \(O(n^x)\) as well as
+        \(M_2\), \(O(n^y)\).
+        \\
+
+        We will construct a new TM \(M\) that runs both \(M_1\) and \(M_2\) and show that it still
+        runs in polynomial time.
+        \\
+
+        \(M = \)`` On input \(w\):
+        \begin{enumerate}
+            \item Run \(M_1\) on \(w\).
+            \item Run \(M_2\) on \(w\).
+            \item If one of the TMs accepted, accept, else reject.''
+        \end{enumerate}
+
+        The runtime of \(M\) can be determined as \(O(n^x) + O(n^y)\). Asymptotically,
+        this is equal to the following: \(O(n^{z})\) where \(z = max(x, y)\).
+        \\
+
+        Thus we can see that P is closed under union.
     \end{proof}
 
     \textbf{Part Two} Prove that \(P\) is closed under complementation.
 
     \begin{proof}
+        To prove that \(P\) is closed under complementation, we assume that there is a
+        language \(L\) with a TM \(M\) that decides it.
+        \\
+
+        Assume that \(M\) runs in polynominal time, \(O(n^x)\).
+        \\
+
+        We will construct a new TM \(N\) that runs \(M\) and we will
+        show that it still runs in polynomial time.
+        \\
+
+        \(N = \)`` On input \(w\):
+        \begin{enumerate}
+            \item Run \(M\) on \(w\).
+            \item If \(M\) accepted, reject, else accept.''
+        \end{enumerate}
+
+        The construction of \(N\) is such that it decides the complement of the
+        language that \(M\) decides. This TM also runs in \(O(n^x)\), which
+        means it still runs in polynomial time.
+        \\
+
+        Thus we can see that P is closed under complementation.
 
     \end{proof}
 \end{homeworkProblem}
