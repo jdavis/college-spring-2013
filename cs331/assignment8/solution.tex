@@ -106,10 +106,34 @@
     Describe two different Turing machines, \(M_1\) and \(M_2\) such that when
     started on any input, \(M_1\) outputs \(\langle M_2 \rangle\) and \(M_2\)
     outputs \(\langle M_1 \rangle\).
+    \\
 
-    \begin{proof}
+    The two TMs are quite similar to the SELF program in that the first TM will
+    print the encoding of the second machine and leave it on the tape. The second TM will
+    then use that to compute what the first one is. We can define the two TM's like so:
+    \\
 
-    \end{proof}
+    \(M_1 = P_{\langle M_2 \rangle}\)
+    \\
+
+    \(M_2 = \)`` On input \(\langle M \rangle\) where M is a TM:
+    \begin{enumerate}
+        \item Compute \(q(\langle M \rangle)\).
+        \item Print newly computed TM and halt.''
+    \end{enumerate}
+
+    Similar to how Sipser explains the behavior for \(SELF\), we'll explain the
+    behavior for this construction.
+
+    \begin{enumerate}
+        \item First \(M_1\) runs. It prints \(\langle M_2 \rangle\) on the tape.
+        \item \(M_2\) starts. It looks at the tape and finds its own input, \(\langle M_2 \rangle\).
+        \item \(M_2\) uses the lemma 6.1 in the book to calculate \(q(\langle M_2 \rangle)\) which is equal to \(\langle M_1 \rangle\).
+        \item \(M_2\) then prints this newly computed description and halts.
+    \end{enumerate}
+
+    \textbf{Note:} This whole machine has the description of \(M_1 M_2\). This
+    works because a program is just a string and thus two can be concatenated.
 \end{homeworkProblem}
 
 \pagebreak
@@ -124,8 +148,9 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Let \(SELF_{TM} = \{ \langle M \rangle : L(M) = \{\langle M \rangle \}\}\). Prove that neither \(SELF_{TM}\)
-    nor \(\overline{SELF_{TM}}\) is Turing-recognizable.
+    Let \(SELF_{TM} = \{ \langle M \rangle : L(M) = \{\langle M \rangle \}\}\).
+    Prove that neither \(SELF_{TM}\) nor \(\overline{SELF_{TM}}\) is
+    Turing-recognizable.
 
     \begin{proof}
 
