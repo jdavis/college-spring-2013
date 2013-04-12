@@ -91,18 +91,18 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Let \(A \leq_{L} B\) mean that \(A \leq_{T} B\) with additional condition
+    Let \(A \leq_L B\) mean that \(A \leq_T B\) with additional condition
     that the oracle Turing machine \(M^B\) that solves \(A\) queries the oracle
     for \(B\) only once, at the very last step.
     \\
 
-    Prove that \(A \leq_{L} B\) if and only if \(A \leq_{m} B\).
+    Prove that \(A \leq_L B\) if and only if \(A \leq_m B\).
 
     \begin{proof}
         To prove this, we will show that each side implies the other.
         \\
 
-        \textbf{Part One} If \(A \leq_{L} B\), then \(A \leq_{m} B\).
+        \textbf{Part One} If \(A \leq_L B\), then \(A \leq_m B\).
         \\
 
         Assume \(A \leq_L B\). This means there is an oracle TM \(M^B\) that
@@ -123,7 +123,7 @@
         \(B\). Thus it is simply a computed function.
         \\
 
-        \textbf{Part Two} If \(A \leq_{m} B\), then \(A \leq_{L} B\).
+        \textbf{Part Two} If \(A \leq_m B\), then \(A \leq_L B\).
         \\
 
         Assume that \(A \leq_m B\). This means there is a computable function
@@ -146,8 +146,8 @@
             \item Simulate \(M_2\) on newly computed value''
         \end{enumerate}
 
-        Since we have proven each side, we have shown that \(A \leq_{L} B\) if
-        and only if \(A \leq_{m} B\). Thus our proof is complete.
+        Since we have proven each side, we have shown that \(A \leq_L B\) if
+        and only if \(A \leq_m B\). Thus our proof is complete.
 
     \end{proof}
 \end{homeworkProblem}
