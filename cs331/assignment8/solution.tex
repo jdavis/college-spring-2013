@@ -243,41 +243,59 @@
     Turing-recognizable.
     \\
 
-    We will use the same idea that is presented in \textbf{Theorem 6.5} by
-    using recursion theorem to prove the unrecognizability of a language with a
-    TM.
+    We will use the same idea that is presented in \textbf{Theorem 5.30} by
+    using recursion theorem to prove the unrecognizability of a language.
     \\
 
-    \textbf{Part One} Prove that \(SELF_{TM}\) is not Turing-recognizable.
-
     \begin{proof}
-        We will show that \(SELF_{TM}\) is not Turing-recognizable by proof by contradiction.
+        First we will show that \(SELF_{TM}\) is not Turing recognizable. We do
+        so by showing that \(A_{TM}\) is reducible to \(\overline{SELF_{TM}}\).
+        The reducing function \(f\) works as follows:
         \\
 
-        Assume that \(SELF_{TM}\) is Turing-recognizable. Then there is a TM,
-        \(M\) that recognizes \(SELF_{TM}\).
-        \\
-
-        We will construct the following TM, \(N\) to obtain a contradiction:
-        \\
-
-        \(N = \)`` On input w:
+        \(F = \)`` On input \(\langle M, w \rangle\) where \(M\) is a TM and \(w\) a string:
         \begin{enumerate}
-            \item Obtain using the recursion theorem, our own description, \(\langle N \rangle\).
-            \item Run \(M\) on input \(\langle N \rangle\).
-            \item If \(M\) \(rejects\), then \(accept\), else \(reject\).''
+            \item Construct a new TM, \(M'\):
+
+                \(M' = \)`` On any input:
+                \begin{enumerate}
+                    \item Retrive own description using Recursion Theorem, \(\langle M' \rangle\).
+                    \item If \(M\) accepts \(w\) and \(\langle M \rangle \not= \langle M' \rangle\), accept''
+                \end{enumerate}
+            \item Output \(\langle M' \rangle\).
         \end{enumerate}
 
-        \textbf{TODO:} Give explanation of why it is a contradiction.
-    \end{proof}
+        Here, \(M'\) accepts only when \(M\) accepts \(w\) and the two
+        encodings of \(M\) and \(M'\) are equal. Conversely, if \(M\) doesn't
+        accept, then we will never accept. Thus \(f\) reduces \(A_{TM}\) to
+        \(\overline{SELF_{TM}}\).
+        \\
 
-    \textbf{Part Two} Prove that \(\overline{SELF_{TM}}\) is not Turing-recognizable.
-    \\
+        Now to show that \(\overline{SELF_{TM}}\) is not Turing-recognizable we
+        will give a similar reduction from \(A_{TM}\) again to the complement
+        of \(\overline{SELF_{TM}}\), which is just \(SELF_{TM}\). The following
+        TM \(G\) computes the reducing function \(g\):
+        \\
 
-    \begin{proof}
-    \textbf{TODO:} Meet with Professor Zhang
+        \(G = \)`` On input \(\langle M, w \rangle\) where \(M\) is a TM and \(w\) a string:
+        \begin{enumerate}
+            \item Construct a new TM, \(M'\):
 
+                \(M' = \)`` On any input:
+                \begin{enumerate}
+                    \item Retrive own description using Recursion Theorem, \(\langle M' \rangle\).
+                    \item If \(M\) accepts \(w\) and \(\langle M \rangle = \langle M' \rangle\), accept''
+                \end{enumerate}
+            \item Output \(\langle M' \rangle\).
+        \end{enumerate}
 
+        The difference between these two functions \(f\) and \(g\) is in the if
+        statement on the inner TM. Depending on the language we are reducing
+        to, we just ensure that it is a valid reduction function by following \(w \in A \iff f(w) \in B\).
+        \\
+
+        Thus we have shown that neither \(SELF_{TM}\) nor \(\overline{SELF_{TM}}\) is
+        Turing-recognizable and conclude our proof.
     \end{proof}
 \end{homeworkProblem}
 
