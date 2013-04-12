@@ -146,6 +146,13 @@
             \item Simulate \(M_2\) on newly computed value''
         \end{enumerate}
 
+        This works because the computed function \(f\) is just a TM that
+        computes \(f\). Once we use the computed function on the input after
+        manipulation we then simulate \(M_2\) using the result of \(f(w)\).
+        This will leave whatever \(M_2\) leaves on the tape after execution.
+        This exactly how a oracle TM functions.
+        \\
+
         Since we have proven each side, we have shown that \(A \leq_L B\) if
         and only if \(A \leq_m B\). Thus our proof is complete.
 
