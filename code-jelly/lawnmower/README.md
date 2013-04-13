@@ -49,7 +49,7 @@ clarity only).
 ### Large dataset
 
     1 ≤ N, M ≤ 100.
-    1 ≤ ai,j ≤ 100.  Sample
+    1 ≤ ai,j ≤ 100.
 
 ## Sample
 
