@@ -1,26 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <semaphore.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <sys/types.h>
 
 /* Value that represents the database */
-int db;
+long db;
 
-typedef struct {
-    int tid;
-    int sem;
-} thread_info_t;
+void *reader(void *a) {
+    pthread_t tid = pthread_self();
+    pthread_mutex_t *mutex = (pthread_mutex_t *) a;
 
-void reader(thread_info_t *info) {
-    printf("Reader thread <id> enters CS\n");
-    printf("Reader thread <id> is exiting CS\n");
+    printf("Reader thread %li enters CS\n", (long) tid);
+
+    /* Read the db */
+    db;
+    sleep(1);
+
+    printf("Reader thread %li is exiting CS\n", (long) tid);
+
+    return 0;
 }
 
-void writer(thread_info_t *info) {
-    printf("Writer thread <id> enters CS\n");
-    printf("Writer thread <id> is exiting CS\n");
+void *writer(void *a) {
+    pthread_t tid = pthread_self();
+    pthread_mutex_t *mutex = (pthread_mutex_t *) a;
+
+    printf("Writer thread %li enters CS\n", (long) tid);
+
+    /* Modify the db */
+    db = (long) tid;
+    sleep(1);
+
+    printf("Writer thread %li is exiting CS\n", (long) tid);
+
+    return 0;
 }
 
 int usage() {
@@ -29,34 +44,41 @@ int usage() {
 }
 
 int main(int argc, const char *argv[]) {
-    int nThreads, interval, i, pid;
+    int nThreads, interval, i;
     int nReaders, nWriters;
-
-    pid = 0;
+    pthread_mutex_t *mutexes, *mutex;
+    pthread_t *threads, *thread;
 
     if (argc < 3) return usage();
 
     nThreads = atoi(argv[1]);
+
+    mutexes = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * nThreads);
+    threads = (pthread_t *) malloc(sizeof(pthread_t) * nThreads);
 
     if (argc != 2 + nThreads + 1) return usage();
     interval = atoi(argv[2 + nThreads]);
 
     /* Gather number of readers/writers */
     for(i = 0; i < nThreads; i++) {
+        mutex = &mutexes[i];
+        thread = &threads[i];
+
         if (strcmp("0", argv[i + 2]) == 0) {
-            reader(1);
+            pthread_create(thread, NULL, reader, (void *) mutex);
             nReaders += 1;
         } else if (strcmp("1", argv[i + 2]) == 0) {
-            writer(1);
+            pthread_create(thread, NULL, writer, (void *) mutex);
             nWriters += 1;
         } else {
             fprintf(stderr, "Invalid type of thread given\n");
             return 1;
         }
 
-        printf("Sleeping interval: %d\n", interval);
         sleep(interval);
     }
+
+    pthread_exit(NULL);
 
     return 0;
 }
