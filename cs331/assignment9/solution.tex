@@ -1,0 +1,208 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+
+\usepackage{tikz}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{}
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
+    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+    \nobreak\extramarks{#1}{}\nobreak
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{homeworkProblemCounter}
+
+\newcommand{\homeworkProblemName}{}
+\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]{
+    \stepcounter{homeworkProblemCounter}
+    \renewcommand{\homeworkProblemName}{#1}
+    \section{\homeworkProblemName}
+    \enterProblemHeader{\homeworkProblemName}
+}{
+    \exitProblemHeader{\homeworkProblemName}
+}
+
+\newcommand{\problemAnswer}[1]{
+\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}}
+}
+
+\newcommand{\homeworkSectionName}{}
+\newenvironment{homeworkSection}[1]{
+    \renewcommand{\homeworkSectionName}{#1}
+    \subsection{\homeworkSectionName}
+    \enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]}
+}{
+    \enterProblemHeader{\homeworkProblemName}
+}
+
+\newcommand{\hmwkTitle}{Homework\ \#8}
+\newcommand{\hmwkDueDate}{April 11, 2013 at 11:59pm}
+\newcommand{\hmwkClass}{CS331}
+\newcommand{\hmwkClassTime}{9:00am}
+\newcommand{\hmwkClassInstructor}{Professor Zhang}
+\newcommand{\hmwkAuthorName}{Josh Davis}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+    \textbf{Part A} Prove that \(n! \in O(n^n)\).
+    \\
+
+    \begin{proof}
+        
+    \end{proof}
+
+    \textbf{Part B} Which of the following relations is true and which is false?
+    \\
+
+    \begin{enumerate}
+        \item \(n \in O((lgn)^3)\)
+        \item \((lgn)^3 \in o(n)\)
+        \item \(n^{lgn} \in O(2^{nlgn})\)
+        \item \(n^4 \in o(100n^4)\)
+        \item \((lgn)^n \in O(\sqrt{2^n})\)
+    \end{enumerate}
+
+    \textbf{Answer}
+
+    \begin{enumerate}
+        \item True or False
+        \item True or False
+        \item True or False
+        \item True or False
+        \item True or False
+    \end{enumerate}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Prove that the class \(P\) is closed under union and complementation.
+    \\
+
+    \textbf{Part One} Prove that \(P\) is closed under union.
+
+    \begin{proof}
+        To prove that \(P\) is closed under union, we assume that there are two languages
+        \(L_1\) and \(L_2\) with \(M_1\) and \(M_2\) as TMs that decide them.
+        \\
+
+        Assume that \(M_1\) runs in polynominal time, \(O(n^x)\) as well as
+        \(M_2\), \(O(n^y)\).
+        \\
+
+        We will construct a new TM \(M\) that runs both \(M_1\) and \(M_2\) and show that it still
+        runs in polynomial time.
+        \\
+
+        \(M = \)`` On input \(w\):
+        \begin{enumerate}
+            \item Run \(M_1\) on \(w\).
+            \item Run \(M_2\) on \(w\).
+            \item If one of the TMs accepted, accept, else reject.''
+        \end{enumerate}
+
+        The runtime of \(M\) can be determined as \(O(n^x) + O(n^y)\). Asymptotically,
+        this is equal to the following: \(O(n^{z})\) where \(z = max(x, y)\).
+        \\
+
+        Thus we can see that P is closed under union.
+    \end{proof}
+
+    \textbf{Part Two} Prove that \(P\) is closed under complementation.
+
+    \begin{proof}
+        To prove that \(P\) is closed under complementation, we assume that there is a
+        language \(L\) with a TM \(M\) that decides it.
+        \\
+
+        Assume that \(M\) runs in polynominal time, \(O(n^x)\).
+        \\
+
+        We will construct a new TM \(N\) that runs \(M\) and we will
+        show that it still runs in polynomial time.
+        \\
+
+        \(N = \)`` On input \(w\):
+        \begin{enumerate}
+            \item Run \(M\) on \(w\).
+            \item If \(M\) accepted, reject, else accept.''
+        \end{enumerate}
+
+        The construction of \(N\) is such that it decides the complement of the
+        language that \(M\) decides. This TM also runs in \(O(n^x)\), which
+        means it still runs in polynomial time.
+        \\
+
+        Thus we can see that P is closed under complementation.
+
+    \end{proof}
+\end{homeworkProblem}
+
+\end{document}
