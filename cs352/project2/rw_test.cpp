@@ -5,17 +5,33 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-/* Value that represents the database */
-long db;
+typedef enum {
+    EMPTY,
+    READING,
+    WRITING,
+} state_t;
+
+typedef struct {
+    int waitingR;
+    int waitingW;
+    state_t state;
+} WritersPriority;
+
+WritersPriority systemInfo;
 
 void *reader(void *a) {
     pthread_t tid = pthread_self();
     pthread_mutex_t *mutex = (pthread_mutex_t *) a;
 
+    /* Give priority to the writers */
+    if (systemInfo.waitingW != 0);
+
+    /* Cannot access system when writer accessing */
+    else if (systemInfo.state == WRITING);
+
     printf("Reader thread %li enters CS\n", (long) tid);
 
     /* Read the db */
-    db;
     sleep(1);
 
     printf("Reader thread %li is exiting CS\n", (long) tid);
@@ -27,13 +43,20 @@ void *writer(void *a) {
     pthread_t tid = pthread_self();
     pthread_mutex_t *mutex = (pthread_mutex_t *) a;
 
+    /* Only one writer can access system */
+    if (systemInfo.state != EMPTY);
+
     printf("Writer thread %li enters CS\n", (long) tid);
 
     /* Modify the db */
-    db = (long) tid;
     sleep(1);
 
+    /* Give priority to waiting writers */
+    if (systemInfo.waitingW);
+    else if (systemInfo.waitingR);
+
     printf("Writer thread %li is exiting CS\n", (long) tid);
+
 
     return 0;
 }
