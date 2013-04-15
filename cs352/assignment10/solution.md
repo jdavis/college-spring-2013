@@ -9,14 +9,16 @@ Due: Thurs, April 18 at midnight
 
 ## Problem 2
 
-### Step 1
+Total number of page faults = 12
 
-Total number of page faults = TODO
+### Step 1
 
 Step through below:
 
 Page replacement reference string:
     1, 2, 3, 4, 5, 3, 4, 1, 6, 7, 8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
+
+Faults: 1
 
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
@@ -36,6 +38,8 @@ Page replacement reference string:
 Page replacement reference string:
     2, 3, 4, 5, 3, 4, 1, 6, 7, 8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
 
+Faults: 2
+
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
 | 0     | 1       | 1    |
@@ -53,6 +57,8 @@ Page replacement reference string:
 
 Page replacement reference string:
     3, 4, 5, 3, 4, 1, 6, 7, 8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
+
+Faults: 3
 
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
@@ -72,6 +78,8 @@ Page replacement reference string:
 Page replacement reference string:
     4, 5, 3, 4, 1, 6, 7, 8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
 
+Faults: 4
+
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
 | 0     | 1       | 1    |
@@ -89,6 +97,8 @@ Page replacement reference string:
 
 Page replacement reference string:
     5, 3, 4, 1, 6, 7, 8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
+
+Faults: 5
 
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
@@ -108,6 +118,8 @@ Page replacement reference string:
 Page replacement reference string:
     3, 4, 1, 6, 7, 8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
 
+Faults: 5
+
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
 | 0     | 1       | 1    |
@@ -125,6 +137,8 @@ Page replacement reference string:
 
 Page replacement reference string:
     4, 1, 6, 7, 8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
+
+Faults: 5
 
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
@@ -144,6 +158,8 @@ Page replacement reference string:
 Page replacement reference string:
     1, 6, 7, 8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
 
+Faults: 5
+
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
 | 0     | 1       | 8    |
@@ -161,6 +177,8 @@ Page replacement reference string:
 
 Page replacement reference string:
     6, 7, 8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
+
+Faults: 6
 
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
@@ -180,6 +198,8 @@ Page replacement reference string:
 Page replacement reference string:
     7, 8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
 
+Faults: 7
+
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
 | 0     | 1       | 8    |
@@ -197,6 +217,8 @@ Page replacement reference string:
 
 Page replacement reference string:
     8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
+
+Faults: 8
 
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
@@ -216,6 +238,8 @@ Page replacement reference string:
 Page replacement reference string:
     7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2
 
+Faults: 8
+
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
 | 0     | 1       | 8    |
@@ -233,6 +257,8 @@ Page replacement reference string:
 
 Page replacement reference string:
     8, 9, 7, 8, 9, 5, 4, 5, 4, 2
+
+Faults: 8
 
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
@@ -252,6 +278,8 @@ Page replacement reference string:
 Page replacement reference string:
     9, 7, 8, 9, 5, 4, 5, 4, 2
 
+Faults: 9
+
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
 | 0     | 1       | 8    |
@@ -269,6 +297,8 @@ Page replacement reference string:
 
 Page replacement reference string:
     7, 8, 9, 5, 4, 5, 4, 2
+
+Faults: 9
 
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
@@ -288,6 +318,8 @@ Page replacement reference string:
 Page replacement reference string:
     8, 9, 5, 4, 5, 4, 2
 
+Faults: 9
+
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
 | 0     | 1       | 8    |
@@ -305,6 +337,8 @@ Page replacement reference string:
 
 Page replacement reference string:
     9, 5, 4, 5, 4, 2
+
+Faults: 9
 
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
@@ -324,6 +358,8 @@ Page replacement reference string:
 Page replacement reference string:
     5, 4, 5, 4, 2
 
+Faults: 10
+
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
 | 0     | 5       | 18   |
@@ -341,6 +377,8 @@ Page replacement reference string:
 
 Page replacement reference string:
     4, 5, 4, 2
+
+Faults: 11
 
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
@@ -360,6 +398,8 @@ Page replacement reference string:
 Page replacement reference string:
     5, 4, 2
 
+Faults: 11
+
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
 | 0     | 5       | 20   |
@@ -378,6 +418,8 @@ Page replacement reference string:
 Page replacement reference string:
     4, 2
 
+Faults: 11
+
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
 | 0     | 5       | 20   |
@@ -395,6 +437,8 @@ Page replacement reference string:
 
 Page replacement reference string:
     2
+
+Faults: 12
 
 | Frame | Content | Last |
 |:-----:| ------- | ---- |
