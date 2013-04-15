@@ -102,11 +102,11 @@
     \\
 
     \begin{enumerate}
-        \item \(n \in O((lgn)^3)\)
-        \item \((lgn)^3 \in o(n)\)
-        \item \(n^{lgn} \in O(2^{nlgn})\)
+        \item \(n \in O((\lg n)^3)\)
+        \item \((\lg n)^3 \in o(n)\)
+        \item \(n^{\lg n} \in O(2^{n \lg n})\)
         \item \(n^4 \in o(100n^4)\)
-        \item \((lgn)^n \in O(\sqrt{2^n})\)
+        \item \((\lg n)^n \in O(\sqrt{2^n})\)
     \end{enumerate}
 
     \textbf{Answer}
@@ -124,7 +124,7 @@
 
 \begin{homeworkProblem}
     Prove that any language in \(P\) is \textbf{polynomial reducible} to any
-    language in \(P\) which is not \(\emptyset\) or \(\Sigma*\).
+    language in \(P\) which is not \(\emptyset\) or \(\Sigma^*\).
 
     \begin{proof}
         
@@ -134,7 +134,7 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Let \(L = \{0^i 1^j : i > j\}\). Show that \(L \in TIME(nlgn)\).
+    Let \(L = \{0^i 1^j : i > j\}\). Show that \(L \in TIME(n \lg n)\).
 
     \begin{proof}
         
@@ -151,7 +151,7 @@
 
      Two graphs \(G = \langle V_G, E_G \rangle\) and \(H = \langle V_H, E_H \rangle\) are isomorphic
      iff there is a bijection \(f : V_G \rightarrow V_H\) such that \(\langle v, v' \rangle \in E_G\)
-     if and only iff \(\langle f(v), f(v') \rangle \in E_H\).
+     if and only if \(\langle f(v), f(v') \rangle \in E_H\).
 \end{homeworkProblem}
 
 \pagebreak
