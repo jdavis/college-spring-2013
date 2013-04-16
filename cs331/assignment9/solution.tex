@@ -95,28 +95,60 @@
     \\
 
     \begin{proof}
-        
+        To prove that \(n! \in O(n^n)\), we will use the definition of big-O
+        which states: For two functions, \(f\) and \(g\). Say that \(f(n) =
+        O(g(n))\) if positive integers \(c\) and \(n_0\) exist such that for
+        every integer \(n \geq n_0\) that \(f(n) \leq cg(n)\).
+        \\
+
+        Thus we need to find a \(c\) and \(n_0\) to satisfy the above
+        condition.
+        \\
+
+        Let \(f(n) = n! \) and \(g(n) = n^n\). Let \(c = 1\) and \(n_0 = 1\), so for
+        all \(n \geq n_0\) we have:
+
+        \[
+            \begin{split}
+                n! &= (n)(n - 1)(n - 2)\hdots(2)(1)
+                \\
+                &\leq c(n_n)(n_{n-1})(n_{n-2})\hdots(n_{2})(n_{1})
+                \\
+                &= cn^n
+            \end{split}
+        \]
+
+        Since we have satisfied the definition of big-O, we can see that \(n!
+        \in O(n^n)\) and thus our proof is complete.
     \end{proof}
 
     \textbf{Part B} Which of the following relations is true and which is false?
-    \\
 
     \begin{enumerate}
         \item \(n \in O((\lg n)^3)\)
+            \\
+            \textbf{True | False}
+
         \item \((\lg n)^3 \in o(n)\)
+            \\
+            \textbf{True}
+            \[
+                \lim_{n \to \infty} \frac{(\lg n)^3}{n} = 0
+            \]
         \item \(n^{\lg n} \in O(2^{n \lg n})\)
+            \\
+            \textbf{True | False}
         \item \(n^4 \in o(100n^4)\)
+            \\
+            \textbf{False}
+            \[
+                    \lim_{n \to \infty} \frac{n^4}{100n^4}
+                    = \lim_{n \to \infty} \frac{1}{100}
+                    = \frac{1}{100}
+            \]
         \item \((\lg n)^n \in O(\sqrt{2^n})\)
-    \end{enumerate}
-
-    \textbf{Answer}
-
-    \begin{enumerate}
-        \item True or False
-        \item True or False
-        \item True or False
-        \item True or False
-        \item True or False
+            \\
+            \textbf{True | False}
     \end{enumerate}
 \end{homeworkProblem}
 
@@ -127,7 +159,7 @@
     language in \(P\) which is not \(\emptyset\) or \(\Sigma^*\).
 
     \begin{proof}
-        
+        Let there be two languages, \(A\) and \(B\).
     \end{proof}
 \end{homeworkProblem}
 
