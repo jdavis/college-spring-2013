@@ -127,8 +127,10 @@
     \begin{enumerate}
         \item \(n \in O((\lg n)^3)\)
             \\
-            \textbf{True | False}
+            \textbf{False}
+            \\
 
+            Linear functions outgrow polylogrithmic asymptotically.
         \item \((\lg n)^3 \in o(n)\)
             \\
             \textbf{True}
@@ -159,7 +161,34 @@
     language in \(P\) which is not \(\emptyset\) or \(\Sigma^*\).
 
     \begin{proof}
-        Let there be two languages, \(A\) and \(B\).
+        To prove that any language in \(P\) is polynomial reducible to any
+        other language in \(P\), we will do a proof by construction to
+        construct a polynomial time mapping function \(f\) that maps one
+        language to another.
+        \\
+
+        Let there be two languages \(A\) and \(B\) that are both in \(P\).
+        Since they are in \(P\) we know there are two TMs that run in
+        polynomial time. Let these TMs be \(M_1\) and \(M_2\).
+        \\
+
+        We will now construct a polynomial reducible function where \(w \in A \iff f(w) \in B\).
+        Let this function be computed by a TM \(N\) which is as follows:
+
+        \(N = \)`` On input \(\langle M, w \rangle\) where \(M\) is a TM and \(w\) a string:
+        \begin{enumerate}
+            \item Construct a new TM, \(M'\):
+                \(M' = \)`` On input \(w\):
+                \begin{enumerate}
+                    \item TODO
+                    \item Simulate \(M_2\) on newly computed value outputting what \(M_2\) does
+                \end{enumerate}
+            \item Output \(\langle M' \rangle\).''
+        \end{enumerate}
+
+        As we can see, since \(A\) and \(B\) are both in \(P\), we can use the TMs
+        that recognize the languages because 
+
     \end{proof}
 \end{homeworkProblem}
 
@@ -169,6 +198,20 @@
     Let \(L = \{0^i 1^j : i > j\}\). Show that \(L \in TIME(n \lg n)\).
 
     \begin{proof}
+        To show that \(L \in TIME(n \lg n)\), we will use a proof by construction to construct
+        a new TM \(M\) that only uses \(TIME(n \lg n)\) steps to complete.
+        \\
+
+        \(M = \)`` On input string \(w\):
+        \begin{enumerate}
+            \item Start on the left side of the word, scan left, if there is a 1 before a 0, reject
+            \item Repeat as long as there are 1s still on the tape:
+                \begin{enumerate}
+                    \item 
+                \end{enumerate}
+            \item ''
+        \end{enumerate}
+
         
     \end{proof}
 \end{homeworkProblem}
