@@ -174,10 +174,12 @@
 
         We will now construct a polynomial reducible function where \(w \in A \iff f(w) \in B\).
         Let this function be computed by a TM \(N\) which is as follows:
+        \\
 
         \(N = \)`` On input \(\langle M, w \rangle\) where \(M\) is a TM and \(w\) a string:
         \begin{enumerate}
             \item Construct a new TM, \(M'\):
+                \\
                 \(M' = \)`` On input \(w\):
                 \begin{enumerate}
                     \item TODO
@@ -219,14 +221,44 @@
 \pagebreak
 
 \begin{homeworkProblem}
-     Prove that Graph isomorphism is in \(NP\). That is
-     \[
-         GI = \{\langle G, H \rangle : G, H \mbox{are isomorphic}\} \in NP
-     \]
+    Prove that Graph isomorphism is in \(NP\). That is
+    \[
+        GI = \{\langle G, H \rangle : G, H \mbox{are isomorphic}\} \in NP
+    \]
 
-     Two graphs \(G = \langle V_G, E_G \rangle\) and \(H = \langle V_H, E_H \rangle\) are isomorphic
-     iff there is a bijection \(f : V_G \rightarrow V_H\) such that \(\langle v, v' \rangle \in E_G\)
-     if and only if \(\langle f(v), f(v') \rangle \in E_H\).
+    Two graphs \(G = \langle V_G, E_G \rangle\) and \(H = \langle V_H, E_H \rangle\) are isomorphic
+    iff there is a bijection \(f : V_G \rightarrow V_H\) such that \(\langle v, v' \rangle \in E_G\)
+    if and only if \(\langle f(v), f(v') \rangle \in E_H\).
+
+    \begin{proof}
+        To show that graph isomorphism is in \(NP\), we will construct a verifier that can
+        verify the problem in polynomial time. This proves that a language is in \(NP\) because
+        of \textbf{Theorem 7.20}.
+        \\
+
+        The verifier \(V\) that verifies that a graph is isomorphic is as follows:
+        \\
+
+        \(V = \)`` On input \(\langle \langle G, H \rangle, c \rangle\):
+        \begin{enumerate}
+            \item Check that \(c\) is a valid bijection from nodes in \(G \rightarrow H\)
+            \item For every \((v_1, v_2) \in c\):
+                \begin{enumerate}
+                    \item Check that \(v_1 \in G\)
+                    \item Check that \(v_2 \in H\)
+                \end{enumerate}
+            \item If everything passes, \(accept\), otherwise \(reject\).''
+        \end{enumerate}
+
+        We can see that given our input, \(\langle G, H \rangle\) where \(n =
+        \left\vert G \right\vert\) and \(m = \left\vert H \right\vert\), we can
+        see that the verifier's time complexity is running in \(O(m + n)\)
+        time, or \(2n = O(n)\) because the number of nodes in the graphs must
+        be equal.
+        \\
+
+        Thus we have proven that Graph Isomorphism is in \(NP\).
+    \end{proof}
 \end{homeworkProblem}
 
 \pagebreak
@@ -234,7 +266,7 @@
 \begin{homeworkProblem}
     Prove that Double Satisfaction Problem, defined as
     \[
-        SAT2 = \{ \langle \phi \rangle \phi \mbox{is a 3NF-formula with at least two solutions}
+        SAT2 = \{ \langle \phi \rangle : \phi \mbox{ is a 3NF-formula with at least two solutions}\}
     \]
 
     is \(NP\)-complete.
