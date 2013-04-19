@@ -66,8 +66,8 @@
     \enterProblemHeader{\homeworkProblemName}
 }
 
-\newcommand{\hmwkTitle}{Homework\ \#8}
-\newcommand{\hmwkDueDate}{April 11, 2013 at 11:59pm}
+\newcommand{\hmwkTitle}{Homework\ \#9}
+\newcommand{\hmwkDueDate}{April 18, 2013 at 11:59pm}
 \newcommand{\hmwkClass}{CS331}
 \newcommand{\hmwkClassTime}{9:00am}
 \newcommand{\hmwkClassInstructor}{Professor Zhang}
@@ -129,8 +129,8 @@
             \\
             \textbf{False}
             \\
-
-            Linear functions outgrow polylogrithmic asymptotically.
+            Linear functions outgrow polylogrithmic asymptotically. No such
+            \(c\) or \(n_0\) to satisfy big-O definition.
         \item \((\lg n)^3 \in o(n)\)
             \\
             \textbf{True}
@@ -139,7 +139,19 @@
             \]
         \item \(n^{\lg n} \in O(2^{n \lg n})\)
             \\
-            \textbf{True | False}
+            \textbf{True}
+            \[
+                \begin{split}
+                    n^{\lg n} &\leq c 2^{n \lg n}
+                    \\
+                    \lg n \lg n &\leq c(\lg 2)(n \lg n)
+                    \\
+                    \lg n \lg n &\leq c(n \lg n)
+                    \\
+                    \lg n &\leq cn
+                \end{split}
+            \]
+            We can pick \(c = 1\) and \(n_0 = 1\), thus it is true.
         \item \(n^4 \in o(100n^4)\)
             \\
             \textbf{False}
@@ -150,7 +162,19 @@
             \]
         \item \((\lg n)^n \in O(\sqrt{2^n})\)
             \\
-            \textbf{True | False}
+            \textbf{False}
+            \[
+                \begin{split}
+                    n(\lg n)^n &\leq c\sqrt{2^n}
+                    \\
+                    n(\lg \lg n) &\leq \frac{c}{2}\lg(2^n)
+                    \\
+                    n(\lg \lg n) &\leq \frac{c}{2}n
+                    \\
+                    (\lg \lg n) &\leq \frac{c}{2}
+                \end{split}
+            \]
+            Which is clearly false, no constant is less than any function with \(n\).
     \end{enumerate}
 \end{homeworkProblem}
 
@@ -174,25 +198,35 @@
 
         We will now construct a polynomial reducible function where \(w \in A \iff f(w) \in B\).
         Let this function be computed by a TM \(N\) which is as follows:
+        \\
 
         \(N = \)`` On input \(\langle M, w \rangle\) where \(M\) is a TM and \(w\) a string:
         \begin{enumerate}
             \item Construct a new TM, \(M'\):
+                \\
                 \(M' = \)`` On input \(w\):
                 \begin{enumerate}
-                    \item TODO
-                    \item Simulate \(M_2\) on newly computed value outputting what \(M_2\) does
+                    \item Compute \(M_1\) on input \(w\) to find a value in \(A\)
+                    \item Simulate \(M_2\) on newly computed value outputting
+                        what \(M_2\) does to find a value in \(B\)
                 \end{enumerate}
             \item Output \(\langle M' \rangle\).''
         \end{enumerate}
 
         As we can see, since \(A\) and \(B\) are both in \(P\), we can use the TMs
-        that recognize the languages because 
+        that recognize the languages to reduce \(A\) to \(B\).
+        \\
 
+        \textbf{Note:} \(\emptyset\) and \(\Sigma^*\) can't be reduced to. If
+        we have a language \(A\) that has some \(w\) that it accepts and some
+        that it rejects, trying to reduce to \(\emptyset\) is impossible
+        because since there exists a \(w \in A\), there is no way to map it to
+        \(\emptyset\) because the condition \(w \in A \iff f(w) \in B\) doesn't
+        hold. The converse is true for \(\Sigma^*\) as well. If \(w \not\in A\)
+        we can't map it to a value that isn't in \(\Sigma^*\). Thus we exclude
+        these two languages from our proof.
     \end{proof}
 \end{homeworkProblem}
-
-\pagebreak
 
 \begin{homeworkProblem}
     Let \(L = \{0^i 1^j : i > j\}\). Show that \(L \in TIME(n \lg n)\).
@@ -204,29 +238,64 @@
 
         \(M = \)`` On input string \(w\):
         \begin{enumerate}
-            \item Start on the left side of the word, scan left, if there is a 1 before a 0, reject
-            \item Repeat as long as there are 1s still on the tape:
+            \item Start on the left side of the word, scan left, if there is a 1 before a 0, \(reject\)
+            \item Repeat as long as there are 0s still on the tape:
                 \begin{enumerate}
-                    \item 
+                    \item Scan across the tape, if there are 0s left and no more 1s left, \(accept\)
+                    \item Scan again, crossing off every other 0 and every other 1
                 \end{enumerate}
-            \item ''
+            \item Since there are no more 0s, and we haven't accepted, we know \(i \leq j\), thus \(reject\).''
         \end{enumerate}
 
-        
+        Let's analyze the running time of \(M\). First observe that every stage
+        except for the last run in \(TIME(n)\). Stage 2 halfs the number of
+        characters in the input every time it repeats thus it runs in \(TIME(n)
+        * TIME(\lg n)\). The total running time is then \(TIME(n) + TIME(n \lg
+        n)\).  This gives us the final running time of \(TIME(n \lg n)\).
     \end{proof}
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
-     Prove that Graph isomorphism is in \(NP\). That is
-     \[
-         GI = \{\langle G, H \rangle : G, H \mbox{are isomorphic}\} \in NP
-     \]
+    Prove that Graph isomorphism is in \(NP\). That is
+    \[
+        GI = \{\langle G, H \rangle : G, H \mbox{are isomorphic}\} \in NP
+    \]
 
-     Two graphs \(G = \langle V_G, E_G \rangle\) and \(H = \langle V_H, E_H \rangle\) are isomorphic
-     iff there is a bijection \(f : V_G \rightarrow V_H\) such that \(\langle v, v' \rangle \in E_G\)
-     if and only if \(\langle f(v), f(v') \rangle \in E_H\).
+    Two graphs \(G = \langle V_G, E_G \rangle\) and \(H = \langle V_H, E_H \rangle\) are isomorphic
+    iff there is a bijection \(f : V_G \rightarrow V_H\) such that \(\langle v, v' \rangle \in E_G\)
+    if and only if \(\langle f(v), f(v') \rangle \in E_H\).
+
+    \begin{proof}
+        To show that graph isomorphism is in \(NP\), we will construct a verifier that can
+        verify the problem in polynomial time. This proves that a language is in \(NP\) because
+        of \textbf{Theorem 7.20}.
+        \\
+
+        The verifier \(V\) that verifies that a graph is isomorphic is as follows:
+        \\
+
+        \(V = \)`` On input \(\langle \langle G, H \rangle, c \rangle\):
+        \begin{enumerate}
+            \item Check that \(c\) is a valid bijection from nodes in \(G \rightarrow H\)
+            \item For every \((v_1, v_2) \in c\):
+                \begin{enumerate}
+                    \item Check that \(v_1 \in G\)
+                    \item Check that \(v_2 \in H\)
+                \end{enumerate}
+            \item If everything passes, \(accept\), otherwise \(reject\).''
+        \end{enumerate}
+
+        We can see that given our input, \(\langle G, H \rangle\) where \(n =
+        \left\vert G \right\vert\) and \(m = \left\vert H \right\vert\), we can
+        see that the verifier's time complexity is running in \(O(m + n)\)
+        time, or \(2n = O(n)\) because the number of nodes in the graphs must
+        be equal.
+        \\
+
+        Thus we have proven that Graph Isomorphism is in \(NP\).
+    \end{proof}
 \end{homeworkProblem}
 
 \pagebreak
@@ -234,13 +303,43 @@
 \begin{homeworkProblem}
     Prove that Double Satisfaction Problem, defined as
     \[
-        SAT2 = \{ \langle \phi \rangle \phi \mbox{is a 3NF-formula with at least two solutions}
+        SAT2 = \{ \langle \phi \rangle : \phi \mbox{ is a 3CNF-formula with at least two solutions}\}
     \]
 
     is \(NP\)-complete.
 
     \begin{proof}
-        
+        To prove that \(SAT2\) is \(NP\)-complete, we will first show that it
+        is in \(NP\) and then reduce \(3SAT\) to it. Similar to what is done in
+        \textbf{Corollary 7.42} in the textbook.
+        \\
+
+        To show that \(SAT2\) is in \(NP\), we can just create a TM that
+        guesses two assignments to all the variables and then tries them. This
+        TM would be nondeterministic but could run in polynomial time. Thus
+        \(SAT2 \in NP\).
+        \\
+
+        Given a \(\phi \in 3SAT\), we know that \(\phi\) is a 3cnf-formula that
+        is satisfiable once.  Now we can just make a dummy variable say \(j\)
+        and add it along with another variable \(x\) so that \(\phi' = \phi
+        \wedge (j \vee \overline{j} \vee x)\). Thus we can see that for any
+        assignment of \(j\), it is satisfied twice because it was already
+        satisfied once.
+        \\
+
+        This construction is very easily polynomial time. Now we need to show
+        that if \(\phi \not\in 3SAT\), using our reduction, \(\phi' \not\in
+        SAT2\).
+        \\
+
+        Given a \(\phi \not\in 3SAT\), we know that there is no such assignment
+        that satisfies it.  Thus when using our reduction, \(\phi' = \phi
+        \wedge (j \vee \overline{j} \vee x)\). This will never result in having
+        two satisfactions for it because the previous part is not satisfied.
+        \\
+
+        Thus we have shown that \(SAT2\) is \(NP\)-complete and our proof is finished.
     \end{proof}
 \end{homeworkProblem}
 

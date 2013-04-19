@@ -16,8 +16,8 @@ Percantage = 75%
 What is the maximum acceptable page-fault rate in orer to achieve an effective
 access time of no more than 200 nanoseconds?
 
-    .0002ms = (1 - p) * (.0001ms) + p * (4ms)
-            = 0.0000250006 ms
+    .0002ms = (1 - p) * (.0001ms) + p * ((10ms)*.75 + (1 - .75)(4ms))
+            = 0.0000117648442922858
 
 ## Problem 2
 
