@@ -17,7 +17,7 @@ checkResult() {
         echo Test failed.
         echo Diff Output:
         echo
-        echo $RESULT
+        echo "$RESULT"
         echo
     fi
 }
