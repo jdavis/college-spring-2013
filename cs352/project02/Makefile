@@ -1,5 +1,6 @@
 TARGETS = rw_test
 CFLAGS = -ggdb -Wall -pedantic
+CPPFLAGS = -pthread
 DEPS = pipe_sem.o
 CC = gcc
 

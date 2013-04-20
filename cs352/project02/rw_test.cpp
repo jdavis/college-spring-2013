@@ -16,7 +16,7 @@ typedef struct {
     int waitingR;
     int waitingW;
     int nReaders;
-    state_t state;
+    int writing;
 } WritersPriority;
 
 WritersPriority systemInfo;
@@ -25,80 +25,58 @@ sem_t okToWrite;
 sem_t okToRead;
 
 void *reader(void *a) {
-    pthread_t tid = pthread_self();
-    int v;
-    sem_getvalue(&okToRead, &v);
-    printf("VAlue = %d\n", v);
+    int *tid = (int *) a;
 
-    pthread_mutex_lock(&mutex);
     /* Give priority to the writers */
-    if (systemInfo.waitingW != 0) {
-        systemInfo.waitingR += 1;
-        sem_wait(&okToRead);
-        systemInfo.waitingR -= 1;
-    /* Cannot access system when writer accessing */
-    } else if (systemInfo.state == WRITING) {
+    if (systemInfo.waitingW != 0 || systemInfo.writing == 1) {
         systemInfo.waitingR += 1;
         sem_wait(&okToRead);
         systemInfo.waitingR -= 1;
     }
 
-    systemInfo.state = READING;
     systemInfo.nReaders += 1;
-    pthread_mutex_unlock(&mutex);
+    sem_post(&okToRead);
 
-    printf("Reader thread %li enters CS\n", (long) tid);
+    printf("Reader thread %li enters CS\n", *tid);
 
     /* Read the db */
     sleep(3);
 
-    pthread_mutex_lock(&mutex);
+    printf("Reader thread %li is exiting CS\n", *tid);
 
     systemInfo.nReaders -= 1;
-    if (systemInfo.waitingW) {
+    if (systemInfo.waitingW && systemInfo.nReaders == 0) {
         sem_post(&okToWrite);
-    } else if (systemInfo.nReaders == 0){
-        systemInfo.state = EMPTY;
     }
-
-    printf("Reader thread %li is exiting CS\n", (long) tid);
-    pthread_mutex_unlock(&mutex);
 
     return 0;
 }
 
 void *writer(void *a) {
-    pthread_t tid = pthread_self();
-    int v;
-    sem_getvalue(&okToRead, &v);
-    printf("VAlue = %d\n", v);
+    int *tid = (int *) a;
 
-    pthread_mutex_lock(&mutex);
     /* Only one writer can access system */
-    if (systemInfo.nReaders != 0 || systemInfo.state == WRITING) {
+    if (systemInfo.nReaders != 0 || systemInfo.writing == 1) {
         systemInfo.waitingW += 1;
-        printf("nReaders != 0! Waiting...\n");
         sem_wait(&okToWrite);
-        printf("Done waiting...\n");
         systemInfo.waitingW -= 1;
     }
 
-    printf("Writer thread %li enters CS\n", (long) tid);
-    pthread_mutex_unlock(&mutex);
+    systemInfo.writing = 1;
+    printf("Writer thread %li enters CS\n", *tid);
 
     /* Modify the db */
     sleep(3);
 
-    pthread_mutex_lock(&mutex);
+    printf("Writer thread %li is exiting CS\n", *tid);
+
+    systemInfo.writing = 0;
     /* Give priority to waiting writers */
     if (systemInfo.waitingW) {
         sem_post(&okToWrite);
-    } else if (systemInfo.waitingR) {
+    } else {
         sem_post(&okToRead);
     }
-
-    printf("Writer thread %li is exiting CS\n", (long) tid);
-    pthread_mutex_unlock(&mutex);
 
     return 0;
 }
@@ -111,6 +89,7 @@ int usage() {
 int main(int argc, const char *argv[]) {
     int nThreads, interval, i;
     int nReaders, nWriters;
+    int *tids;
 
     pthread_t *threads, *thread;
 
@@ -119,6 +98,8 @@ int main(int argc, const char *argv[]) {
     nThreads = atoi(argv[1]);
 
     threads = (pthread_t *) malloc(sizeof(pthread_t) * nThreads);
+    tids = (int *) malloc(sizeof(int) * nThreads);
+
     sem_init(&okToRead, 0, 0);
     sem_init(&okToWrite, 0, 0);
 
@@ -128,12 +109,13 @@ int main(int argc, const char *argv[]) {
     /* Gather number of readers/writers */
     for(i = 0; i < nThreads; i++) {
         thread = &threads[i];
+        tids[i] = i;
 
         if (strcmp("0", argv[i + 2]) == 0) {
-            pthread_create(thread, NULL, reader, NULL);
+            pthread_create(thread, NULL, reader, &tids[i]);
             nReaders += 1;
         } else if (strcmp("1", argv[i + 2]) == 0) {
-            pthread_create(thread, NULL, writer, NULL);
+            pthread_create(thread, NULL, writer, &tids[i]);
             nWriters += 1;
         } else {
             fprintf(stderr, "Invalid type of thread given\n");
