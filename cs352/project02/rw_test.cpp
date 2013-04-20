@@ -43,12 +43,12 @@ void *reader(void *a) {
         sem_post(&okToRead);
     }
 
-    printf("Reader thread %li enters CS\n", *tid);
+    printf("Reader thread %li enters CS.\n", *tid);
 
     /* Read the db */
     sleep(3);
 
-    printf("Reader thread %li is exiting CS\n", *tid);
+    printf("Reader thread %li is exiting CS.\n", *tid);
 
     systemInfo.nReaders -= 1;
     if (systemInfo.waitingW > 0 && systemInfo.nReaders == 0) {
@@ -73,12 +73,12 @@ void *writer(void *a) {
     }
 
     systemInfo.writing = 1;
-    printf("Writer thread %li enters CS\n", *tid);
+    printf("Writer thread %li enters CS.\n", *tid);
 
     /* Modify the db */
     sleep(3);
 
-    printf("Writer thread %li is exiting CS\n", *tid);
+    printf("Writer thread %li is exiting CS.\n", *tid);
 
     systemInfo.writing = 0;
     /* Give priority to waiting writers */
