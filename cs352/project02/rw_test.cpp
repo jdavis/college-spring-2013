@@ -28,14 +28,20 @@ void *reader(void *a) {
     int *tid = (int *) a;
 
     /* Give priority to the writers */
-    if (systemInfo.waitingW != 0 || systemInfo.writing == 1) {
+    if (systemInfo.waitingW > 0) {
+        systemInfo.waitingR += 1;
+        sem_wait(&okToRead);
+        systemInfo.waitingR -= 1;
+    } else if (systemInfo.writing == 1) {
         systemInfo.waitingR += 1;
         sem_wait(&okToRead);
         systemInfo.waitingR -= 1;
     }
 
     systemInfo.nReaders += 1;
-    sem_post(&okToRead);
+    if (systemInfo.waitingR > 0 && systemInfo.waitingW == 0) {
+        sem_post(&okToRead);
+    }
 
     printf("Reader thread %li enters CS\n", *tid);
 
@@ -45,7 +51,7 @@ void *reader(void *a) {
     printf("Reader thread %li is exiting CS\n", *tid);
 
     systemInfo.nReaders -= 1;
-    if (systemInfo.waitingW && systemInfo.nReaders == 0) {
+    if (systemInfo.waitingW > 0 && systemInfo.nReaders == 0) {
         sem_post(&okToWrite);
     }
 
@@ -56,7 +62,11 @@ void *writer(void *a) {
     int *tid = (int *) a;
 
     /* Only one writer can access system */
-    if (systemInfo.nReaders != 0 || systemInfo.writing == 1) {
+    if (systemInfo.writing == 1) {
+        systemInfo.waitingW += 1;
+        sem_wait(&okToWrite);
+        systemInfo.waitingW -= 1;
+    } else if (systemInfo.nReaders > 0) {
         systemInfo.waitingW += 1;
         sem_wait(&okToWrite);
         systemInfo.waitingW -= 1;
@@ -74,7 +84,7 @@ void *writer(void *a) {
     /* Give priority to waiting writers */
     if (systemInfo.waitingW) {
         sem_post(&okToWrite);
-    } else {
+    } else if (systemInfo.waitingR){
         sem_post(&okToRead);
     }
 
