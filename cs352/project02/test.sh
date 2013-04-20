@@ -4,7 +4,7 @@
 # Josh Davis
 #
 # Overview:
-#   A few quick and crude tests for project 2
+#   A few quick and crude tests for project 2.
 #
 # Running:
 #   To run it, make sure it has the right permissions:
@@ -22,7 +22,7 @@
 #       Running Test Five...
 #   
 #   A failed test will output the diff of what it should be and what it
-#   actually was
+#   actually was.
 #   
 
 checkResult() {
