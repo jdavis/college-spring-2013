@@ -1,14 +1,29 @@
+#!/usr/bin/env sh
 #
 # Project 2 Tests
 # Josh Davis
 #
-# Slightly crude but it works.
+# Overview:
+#   A few quick and crude tests for project 2
 #
-# To run it, make sure it has the right permissions:
-#   chmod u+x test.sh
-# Next just run it:
-#   ./test.sh
+# Running:
+#   To run it, make sure it has the right permissions:
+#     chmod u+x test.sh
+#   Next just execute it:
+#     ./test.sh
 #
+# Output:
+#   If the output matches up with the tests, you should only see the following
+#   output:
+#       Running Test One...
+#       Running Test Two...
+#       Running Test Three...
+#       Running Test Four...
+#       Running Test Five...
+#   
+#   A failed test will output the diff of what it should be and what it
+#   actually was
+#   
 
 checkResult() {
     RESULT=$(diff tempShould.txt tempActual.txt)
