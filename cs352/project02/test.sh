@@ -2,16 +2,30 @@
 # Project 2 Tests
 # Josh Davis
 #
+# Slightly crude but it works.
+#
+# To run it, make sure it has the right permissions:
+#   chmod u+x test.sh
+# Next just run it:
+#   ./test.sh
+#
 
-if [[ "$1" == "--verbose" || "$1" == "-v" ]]; then
-    VERBOSE=1
-fi
+checkResult() {
+    RESULT=$(diff tempShould.txt tempActual.txt)
+
+    if [[ "$RESULT" != "" ]]; then
+        echo Test failed.
+        echo Diff Output:
+        echo
+        echo $RESULT
+        echo
+    fi
+}
 
 # Test One
 echo Running Test One...
-./rw_test 3 0 1 0 1 > tempOutput.txt
-diff tempOutput.txt - <<- EOF
-output:
+
+cat >tempShould.txt <<- EOF
 Reader thread 0 enters CS.
 Reader thread 0 is exiting CS.
 Writer thread 1 enters CS.
@@ -19,11 +33,13 @@ Writer thread 1 is exiting CS.
 Reader thread 2 enters CS.
 Reader thread 2 is exiting CS.
 EOF
+./rw_test 3 0 1 0 1 > tempActual.txt
+checkResult
 
 # Test Two
 echo Running Test Two...
-./rw_test 3 0 0 1 1 > tempOutput.txt
-diff tempOutput.txt - <<- EOF
+
+cat >tempShould.txt <<- EOF
 Reader thread 0 enters CS.
 Reader thread 1 enters CS.
 Reader thread 0 is exiting CS.
@@ -31,11 +47,13 @@ Reader thread 1 is exiting CS.
 Writer thread 2 enters CS.
 Writer thread 2 is exiting CS.
 EOF
+./rw_test 3 0 0 1 1 > tempActual.txt
+checkResult
 
 # Test Three
 echo Running Test Three...
-./rw_test 3 1 0 0 1 > tempOutput.txt
-diff tempOutput.txt - <<- EOF
+
+cat >tempShould.txt <<- EOF
 Writer thread 0 enters CS.
 Writer thread 0 is exiting CS.
 Reader thread 1 enters CS.
@@ -43,11 +61,13 @@ Reader thread 2 enters CS.
 Reader thread 1 is exiting CS.
 Reader thread 2 is exiting CS.
 EOF
+./rw_test 3 1 0 0 1 > tempActual.txt
+checkResult
 
 # Test Four
 echo Running Test Four...
-./rw_test 5 0 0 1 1 0 1 > tempOutput.txt
-diff tempOutput.txt - <<- EOF
+
+cat >tempShould.txt <<- EOF
 Reader thread 0 enters CS.
 Reader thread 1 enters CS.
 Reader thread 0 is exiting CS.
@@ -59,11 +79,13 @@ Writer thread 3 is exiting CS.
 Reader thread 4 enters CS.
 Reader thread 4 is exiting CS.
 EOF
+./rw_test 5 0 0 1 1 0 1 > tempActual.txt
+checkResult
 
 # Test Five
 echo Running Test Five...
-./rw_test 5 0 0 1 0 1 1 > tempOutput.txt
-diff tempOutput.txt - <<- EOF
+
+cat >tempShould.txt <<- EOF
 Reader thread 0 enters CS.
 Reader thread 1 enters CS.
 Reader thread 0 is exiting CS.
@@ -75,5 +97,8 @@ Writer thread 4 is exiting CS.
 Reader thread 3 enters CS.
 Reader thread 3 is exiting CS.
 EOF
+./rw_test 5 0 0 1 0 1 1 > tempActual.txt
+checkResult
 
-rm -f tempOutput.txt
+rm -f tempActual.txt
+rm -f tempShould.txt
