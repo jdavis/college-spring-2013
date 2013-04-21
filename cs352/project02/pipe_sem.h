@@ -1,9 +1,11 @@
 #ifndef _PIPE_SEM_H
-#define PIPE_SEM_H
+#define _PIPE_SEM_H
 
 /* Pipe semaphore structure */
 typedef struct {
-
+    /* 0: reading, 1: writing */
+    int fd[2];
+    int value;
 } pipe_sem_t;
 
 /* Initalize a semaphore and set its initial value */
