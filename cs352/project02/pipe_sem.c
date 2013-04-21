@@ -13,6 +13,9 @@ void pipe_sem_init(pipe_sem_t *sem, int value) {
 /* To perform a wait operation on the semaphore */
 void pipe_sem_wait(pipe_sem_t *sem) {
     char buff[5];
+
+    if (sem->value > 0) sem->value -= 1;
+
     if (sem->value == 0) {
         read(sem->fd[0], buff, 5);
     }
@@ -20,5 +23,10 @@ void pipe_sem_wait(pipe_sem_t *sem) {
 
 /* To perform a signal operation on the semaphore */
 void pipe_sem_signal(pipe_sem_t *sem) {
-    write(sem->fd[1], "ok", 5);
+
+    if (sem->value == 0) {
+        write(sem->fd[1], "ok", 5);
+    } else {
+        sem->value += 1;
+    }
 }
