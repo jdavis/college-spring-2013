@@ -16,14 +16,19 @@
 #   If the output matches up with the tests, you should only see the following
 #   output:
 #       Running Test One...
+#       Test passed.
 #       Running Test Two...
+#       Test passed.
 #       Running Test Three...
+#       Test passed.
 #       Running Test Four...
+#       Test passed.
 #       Running Test Five...
-#   
+#       Test passed.
+#
 #   A failed test will output the diff of what it should be and what it
 #   actually was.
-#   
+#
 
 checkResult() {
     RESULT=$(diff tempShould.txt tempActual.txt)
