@@ -6,6 +6,11 @@
 #include <sys/types.h>
 #include <semaphore.h>
 
+
+extern "C" {
+    #include "pipe_sem.h"
+}
+
 typedef enum {
     EMPTY,
     READING,
@@ -21,8 +26,8 @@ typedef struct {
 
 WritersPriority systemInfo;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-sem_t okToWrite;
-sem_t okToRead;
+pipe_sem_t okToWrite;
+pipe_sem_t okToRead;
 
 void *reader(void *a) {
     int *tid = (int *) a;
@@ -30,17 +35,17 @@ void *reader(void *a) {
     /* Give priority to the writers */
     if (systemInfo.waitingW > 0) {
         systemInfo.waitingR += 1;
-        sem_wait(&okToRead);
+        pipe_sem_wait(&okToRead);
         systemInfo.waitingR -= 1;
     } else if (systemInfo.writing == 1) {
         systemInfo.waitingR += 1;
-        sem_wait(&okToRead);
+        pipe_sem_wait(&okToRead);
         systemInfo.waitingR -= 1;
     }
 
     systemInfo.nReaders += 1;
     if (systemInfo.waitingR > 0 && systemInfo.waitingW == 0) {
-        sem_post(&okToRead);
+        pipe_sem_signal(&okToRead);
     }
 
     printf("Reader thread %li enters CS.\n", *tid);
@@ -52,7 +57,7 @@ void *reader(void *a) {
 
     systemInfo.nReaders -= 1;
     if (systemInfo.waitingW > 0 && systemInfo.nReaders == 0) {
-        sem_post(&okToWrite);
+        pipe_sem_signal(&okToWrite);
     }
 
     return 0;
@@ -64,11 +69,11 @@ void *writer(void *a) {
     /* Only one writer can access system */
     if (systemInfo.writing == 1) {
         systemInfo.waitingW += 1;
-        sem_wait(&okToWrite);
+        pipe_sem_wait(&okToWrite);
         systemInfo.waitingW -= 1;
     } else if (systemInfo.nReaders > 0) {
         systemInfo.waitingW += 1;
-        sem_wait(&okToWrite);
+        pipe_sem_wait(&okToWrite);
         systemInfo.waitingW -= 1;
     }
 
@@ -83,9 +88,9 @@ void *writer(void *a) {
     systemInfo.writing = 0;
     /* Give priority to waiting writers */
     if (systemInfo.waitingW) {
-        sem_post(&okToWrite);
+        pipe_sem_signal(&okToWrite);
     } else if (systemInfo.waitingR){
-        sem_post(&okToRead);
+        pipe_sem_signal(&okToRead);
     }
 
     return 0;
@@ -110,8 +115,8 @@ int main(int argc, const char *argv[]) {
     threads = (pthread_t *) malloc(sizeof(pthread_t) * nThreads);
     tids = (int *) malloc(sizeof(int) * nThreads);
 
-    sem_init(&okToRead, 0, 0);
-    sem_init(&okToWrite, 0, 0);
+    pipe_sem_init(&okToRead, 0);
+    pipe_sem_init(&okToWrite, 0);
 
     if (argc != 2 + nThreads + 1) return usage();
     interval = atoi(argv[2 + nThreads]);
