@@ -34,8 +34,15 @@ checkResult() {
         echo
         echo "$RESULT"
         echo
+    else
+        echo Test passed.
     fi
 }
+
+if [ ! -f rw_test ]; then
+    echo Could not find ./rw_test, are you sure you have it compiled?
+    exit
+fi
 
 # Test One
 echo Running Test One...
