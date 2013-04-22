@@ -91,16 +91,39 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Prove that \(EULERIAN-PATH = \{\langle G \rangle : G \mbox{ has an Eulerian path}\}\) is in \(P\).
+    Let \(G\) be a undirected and connected graph.
+    \\
+    Prove that \(EULERIAN-PATH = \{\langle G \rangle : G \mbox{ has an Eulerian
+    path}\}\) is in \(P\).
 
     \begin{proof}
+        To prove that \(EULERIAN-PATH\) is in \(P\), we will first prove that
+        \(G\) has an Eulerian path iff every vertex in \(G\) has an even number
+        degree. Then we will use this fact to create a TM to show that
+        \(EULERIAN-PATH\) is in \(P\).
+
+        \textbf{Part One} If \(G\) has an \(EULERIAN-PATH\), then every vertex
+        has an even degree.
+        \\
+
+        \textbf{Part Two} If every vertex has an even degree, then \(G\) has an
+        \(EULERIAN-PATH\).
+        \\
+
+        Now we will show that \(EULERIAN-PATH\) is in \(P\) by constructing a
+        TM \(M\) that runs in polynomial time.
+        \\
+
+        Since we have constructed a TM that runs in polynomial time,
+        \(EULERIAN-PATH\) is in \(P\) and our proof is complete.
     \end{proof}
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
-    Let \(TSP = \{ \langle G, K \rangle : G \mbox{ has a Hamiltonian path of length less than } k\}\).
+    Let \(TSP = \{ \langle G, K \rangle : G \mbox{ has a Hamiltonian path of
+    length less than } k\}\).
     \\
 
     Prove that \(TSP\) is \(NP\)-complete.
