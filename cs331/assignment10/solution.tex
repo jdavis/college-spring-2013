@@ -172,7 +172,27 @@
     Prove that \(TSP\) is \(NP\)-complete.
 
     \begin{proof}
-        
+        To prove that \(TSP\) is \(NP\)-complete, we will show that \(HAMPATH
+        \leq_p TSP\). This will show that \(TSP\) is \(NP-complete\) based on
+        \textbf{Theorem 7.36}.
+        \\
+
+        First we will show that \(TPS \in NP\). This is easy because we can
+        easily construct a verifier that given a certificate \(c\), we just
+        start at the first node in \(c\) and iterate over it, adding up the
+        lengths until there are no more nodes in \(c\). If this is less than
+        \(k\), then we accept, else we reject. Thus since this is polynomially
+        verifiable, \(TSP \in NP\).
+        \\
+
+        Now to prove that \(TSP\) is \(NP\)-complete, we need to show that
+        a problem that is \(NP\)-complete can be polynomially reduced to it.
+        We will now show that \(HAMPATH \leq_p TSP\).
+        \\
+
+        Since \(HAMPATH \in NP\), there exists a NTM \(M\) that can solve it
+        nondeterministically.
+
     \end{proof}
 \end{homeworkProblem}
 
