@@ -129,29 +129,19 @@
         To show this, we will use a proof by induction.
         \\
 
-        \textbf{Base Case} We let the number of vertices \(\left| V \right| =
-        1\). We can see that if there is one vertex, then the number of
-        \(\left| E \right| = 0\) which is even. Thus with one vertex and 0
-        number of vertices, the Euler path starts and ends on the same vertex.
+        \textbf{Base Case} We consider the base case with three vertices
+        connected by an edge between all of them.
         \\
 
-        \textbf{Induction Step} Next we will try to show that if we have a graph \(G\)
-        with vertices \(\left| V \right| = n\), that adding another vertex still results
-        in an Eulerian path.
+        Since there are three edges and three vertices, the graph is in the
+        form of a triangle. If we count the degree for each vertex we can see
+        that the number equals two for all three vertices. Thus it holds for
+        the base case.
         \\
 
-        Let \(G\) be a graph with \(\left V \right| = n\) vertices and each
-        vertice has an even degree. We can assume the induction hypothesis in
-        that there there is an Eulerian path for \(G\).
+        \textbf{Induction Step} We now consider a graph with some number of
+        vertices and wish to show that 
         \\
-
-        Let \(s \in V\) be the starting and ending vertex. If we take a new
-        vertex, say \(t\) we can add \(t\) to our Eulerian path. To do so, we
-        can add \(t\) at the end of the path so that \(t\) has a degree of two.
-        The first edge would lead from the vertex that connected to \(s\) and
-        then the second edge would end on \(s\). Thus the \(\left| V \right| =
-        n + 1\) and the degree of \(t\) is even.
-
 
         Now we will show that \(EULERIAN-PATH\) is in \(P\) by constructing a
         TM \(M\) that runs in polynomial time.
