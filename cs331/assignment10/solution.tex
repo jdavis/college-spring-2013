@@ -272,7 +272,38 @@
     \(L_1 \in coNP\).
 
     \begin{proof}
-        
+        To prove that \(coNP\) is closed under polynomial time reductions, we will
+        construct a new disqualifier for \(L_1\) that runs in polynomial time which
+        would confirm that \(L_1 \in coNP\).
+        \\
+
+        Let there be two languages, \(L_1\) and \(L_2\). Assume that \(L_1
+        \leq_p L_2\). This means that there is a polynomial time function \(f\)
+        that reduces \(L_1\) to \(L_2\). Also assume that \(L_2 \in coNP\).
+        This means there is disqualifier \(D\) that runs in polynomial time.
+        \\
+
+        We will now construct a disqualifier \(D'\) for \(L_1\) that runs in
+        polynomial time.
+        \\
+
+        \(D' = \)`` On input \(w\)
+        \begin{enumerate}
+            \item Compute \(f(w)\).
+            \item Run \(D\) with newly computed value.
+            \item If \(D\) accepts, \(accept\).
+            \item If \(D\) rejects, \(reject\).''
+        \end{enumerate}
+
+        This works because we know that if there is a polynomial time reduction
+        for two languages, that \(w \in L_1 \iff f(w) \in L_2\). Thus if
+        the computed word is in \(L_2\), then it must be in \(L_1\) and vice
+        versa.
+        \\
+
+        Thus since we have shown that we can construct a disqualifier for
+        \(L_1\), we have shown that \(coNP\) is closed under polynomial time
+        reductions.
     \end{proof}
 
     \textbf{Part Two} Prove that if a \(coNP\)-complete language \(L\) is
