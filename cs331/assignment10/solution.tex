@@ -226,7 +226,23 @@
         \\
 
         \begin{proof}
-            
+            Suppose \(L\) is in \(coNP\). This means that its complement,
+            \(\overline{L}\) is in \(NP\).  Since \(\overline{L}\) is in
+            \(NP\), there exists a verifier \(V\) that can confirm that a given
+            instance is accepted in polynomial time. Given this verifier, we
+            can now construct a disqualifier \(D\) for \(L\) to shot that \(L
+            \in coNP\).
+            \\
+
+            \(D = \)`` On input \(w\)
+            \begin{enumerate}
+                \item Run the verifier \(V\) on input \(w\).
+                \item If \(V\) accepts, \(reject\).
+                \item If \(V\) rejects, \(accept\).''
+            \end{enumerate}
+
+            Since \(V\) already runs in polynomial time, we can just use it
+            to construct our disqualifier. Thus it has a polynomial time disqualifier.
         \end{proof}
 
         \textbf{Part Two} If a language \(L\) has a polynomial time disqualifier, then \(L \in coNP\).
