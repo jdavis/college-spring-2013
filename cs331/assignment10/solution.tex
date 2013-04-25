@@ -218,7 +218,7 @@
     Prove that a language is in \(co-NP\) iff it has a polynomial time disqualifier.
 
     \begin{proof}
-        To prove that a language in \(coNP\) iff it has a polynomial time disqualifier, we
+        To prove that a language is in \(coNP\) iff it has a polynomial time disqualifier, we
         will break it up and prove it in two parts.
         \\
 
@@ -243,13 +243,24 @@
 
             Since \(V\) already runs in polynomial time, we can just use it
             to construct our disqualifier. Thus it has a polynomial time disqualifier.
-        \end{proof}
 
-        \textbf{Part Two} If a language \(L\) has a polynomial time disqualifier, then \(L \in coNP\).
-        \\
+            \textbf{Part Two} If a language \(L\) has a polynomial time disqualifier, then \(L \in coNP\).
+            \\
 
-        \begin{proof}
-            
+            Assume there is a polynomial time disqualifier \(D\) for a language
+            \(L\). This means that we can check that an input \(w\) is
+            verifiably \(no\) for its existance in \(L\).
+            \\
+
+            Since we have a disqualifier, we can tell polynomially which problems aren't
+            in the language \(\overline{L}\). By definition, this is what \(coNP\) is. Thus
+            we can see that if we have a polynomial time disqualifier for a language \(L\),
+            then \(L \in coNP\).
+            \\
+
+            Since we have proven both sides, we have shown that a language is
+            in \(coNP\) iff it has a polynomial time disqualifier and our proof
+            is complete.
         \end{proof}
     \end{proof}
 \end{homeworkProblem}
