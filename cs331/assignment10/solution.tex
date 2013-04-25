@@ -129,19 +129,30 @@
         To show this, we will use a proof by induction.
         \\
 
-        \textbf{Base Case} We consider the base case with three vertices
-        connected by an edge between all of them.
+        \textbf{Base Case} We consider the two base cases: one graph with one
+        vertex, and one graph with three vertices.
         \\
 
-        Since there are three edges and three vertices, the graph is in the
-        form of a triangle. If we count the degree for each vertex we can see
-        that the number equals two for all three vertices. Thus it holds for
-        the base case.
+        Consider the base case with just one vertex. Since there are zero edges,
+        zero is an even number and thus a single vertex is an Eulerian path to
+        itself.
         \\
 
-        \textbf{Induction Step} We now consider a graph with some number of
-        vertices and wish to show that 
+        Next consider the base case with three vertices connected by an edge between
+        all of them. Since there are three edges and three vertices, the graph
+        is in the form of a triangle. If we count the degree for each vertex we
+        can see that the number equals two for all three vertices. Thus it
+        holds for the base case.
         \\
+
+        \textbf{Induction Step} We now consider a graph \(G\) with \(n\)
+        vertices and \(k\) edges. We wish to show that a graph with \(n\)
+        vertices and \(k + 1\) edges has an Eulerian path.
+        \\
+
+        According to the definition, \(G\) is connected and each vertex has an even
+        degree.
+
 
         Now we will show that \(EULERIAN-PATH\) is in \(P\) by constructing a
         TM \(M\) that runs in polynomial time.
@@ -169,8 +180,8 @@
 
         First we will show that \(TPS \in NP\). This is easy because we can
         easily construct a verifier that given a certificate \(c\), we just
-        start at the first node in \(c\) and iterate over it, adding up the
-        lengths until there are no more nodes in \(c\). If this is less than
+        start at the first vertex in \(c\) and iterate over it, adding up the
+        lengths until there are no more vertices in \(c\). If this is less than
         \(k\), then we accept, else we reject. Thus since this is polynomially
         verifiable, \(TSP \in NP\).
         \\
@@ -183,16 +194,6 @@
         Since \(HAMPATH \in NP\), there exists a NTM \(M\) that can solve it
         nondeterministically.
 
-    \end{proof}
-\end{homeworkProblem}
-
-\pagebreak
-
-\begin{homeworkProblem}
-    Prove that a language is in \(co-NP\) iff it has a polynomial time disqualifier.
-
-    \begin{proof}
-        
     \end{proof}
 \end{homeworkProblem}
 
