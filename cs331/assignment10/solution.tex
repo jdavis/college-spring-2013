@@ -225,44 +225,42 @@
         \textbf{Part One} If a language \(L \in coNP\), then it has a polynomial time disqualifier.
         \\
 
-        \begin{proof}
-            Suppose \(L\) is in \(coNP\). This means that its complement,
-            \(\overline{L}\) is in \(NP\).  Since \(\overline{L}\) is in
-            \(NP\), there exists a verifier \(V\) that can confirm that a given
-            instance is accepted in polynomial time. Given this verifier, we
-            can now construct a disqualifier \(D\) for \(L\) to shot that \(L
-            \in coNP\).
-            \\
+        Suppose \(L\) is in \(coNP\). This means that its complement,
+        \(\overline{L}\) is in \(NP\).  Since \(\overline{L}\) is in
+        \(NP\), there exists a verifier \(V\) that can confirm that a given
+        instance is accepted in polynomial time. Given this verifier, we
+        can now construct a disqualifier \(D\) for \(L\) to shot that \(L
+        \in coNP\).
+        \\
 
-            \(D = \)`` On input \(w\)
-            \begin{enumerate}
-                \item Run the verifier \(V\) on input \(w\).
-                \item If \(V\) accepts, \(reject\).
-                \item If \(V\) rejects, \(accept\).''
-            \end{enumerate}
+        \(D = \)`` On input \(w\)
+        \begin{enumerate}
+            \item Run the verifier \(V\) on input \(w\).
+            \item If \(V\) accepts, \(reject\).
+            \item If \(V\) rejects, \(accept\).''
+        \end{enumerate}
 
-            Since \(V\) already runs in polynomial time, we can just use it
-            to construct our disqualifier. Thus it has a polynomial time disqualifier.
-            \\
+        Since \(V\) already runs in polynomial time, we can just use it
+        to construct our disqualifier. Thus it has a polynomial time disqualifier.
+        \\
 
-            \textbf{Part Two} If a language \(L\) has a polynomial time disqualifier, then \(L \in coNP\).
-            \\
+        \textbf{Part Two} If a language \(L\) has a polynomial time disqualifier, then \(L \in coNP\).
+        \\
 
-            Assume there is a polynomial time disqualifier \(D\) for a language
-            \(L\). This means that we can check that an input \(w\) is
-            verifiably \(no\) for its existance in \(L\).
-            \\
+        Assume there is a polynomial time disqualifier \(D\) for a language
+        \(L\). This means that we can check that an input \(w\) is
+        verifiably \(no\) for its existance in \(L\).
+        \\
 
-            Since we have a disqualifier, we can tell polynomially which problems aren't
-            in the language \(\overline{L}\). By definition, this is what \(coNP\) is. Thus
-            we can see that if we have a polynomial time disqualifier for a language \(L\),
-            then \(L \in coNP\).
-            \\
+        Since we have a disqualifier, we can tell polynomially which problems aren't
+        in the language \(\overline{L}\). By definition, this is what \(coNP\) is. Thus
+        we can see that if we have a polynomial time disqualifier for a language \(L\),
+        then \(L \in coNP\).
+        \\
 
-            Since we have proven both sides, we have shown that a language is
-            in \(coNP\) iff it has a polynomial time disqualifier and our proof
-            is complete.
-        \end{proof}
+        Since we have proven both sides, we have shown that a language is
+        in \(coNP\) iff it has a polynomial time disqualifier and our proof
+        is complete.
     \end{proof}
 \end{homeworkProblem}
 
