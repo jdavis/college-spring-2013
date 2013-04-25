@@ -191,8 +191,23 @@
         We will now show that \(HAMPATH \leq_p TSP\).
         \\
 
-        Since \(HAMPATH \in NP\), there exists a NTM \(M\) that can solve it
-        nondeterministically.
+        To do the reduction, we need to have a polynomial time computable
+        function. We will construct a TM \(M\) that computes the function.
+
+
+        \(M = \)`` On input string \(\langle G, s, t \rangle\) where \(G\) is a graph and \(s\) and \(t\) are vertices:
+        \begin{enumerate}
+            \item Check that the given input is a valid encoding of a Hamilton
+                path from \(s\) to \(t\).
+            \item Start with \(k = 0\).
+            \item Iterate over the Hamilton path from \(s\) to \(t\), add one
+                to \(k\) each time.
+            \item Output \(\langle G, k \rangle\) where \(k\) is our newly
+                computed value.''
+        \end{enumerate}
+
+        This works as a reduction because we are assigning a \(k\) value based on
+        the input received from 
 
     \end{proof}
 \end{homeworkProblem}
