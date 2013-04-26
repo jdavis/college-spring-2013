@@ -310,7 +310,18 @@
     in \(NP\) then \(coNP = NP\).
 
     \begin{proof}
-        
+        Assume that \(L\) is \(coNP\)-complete as well as in \(NP\). According to the
+        definition of \(coNP\)-complete, every \(A\) in \(coNP\) is polynomial
+        time reducible to \(L\).
+        \\
+
+        This means that if a language is in \(NP\) and is \(coNP\)-complete,
+        it can be polynomially reduced to it by all other languages in \(coNP\).
+        This also means that verifying \(L\) can be done in polynomial time.
+        Since all other languages in \(coNP\) can be reduced to \(L\), then we can
+        just construct a new polynomial reduction that reduces to \(L\) and then verifies
+        it. Thus we can see that all languages in \(coNP\) would then be able to be verified
+        in polynomial time, thus \(coNP = NP\) and our proof is complete.
     \end{proof}
 \end{homeworkProblem}
 
