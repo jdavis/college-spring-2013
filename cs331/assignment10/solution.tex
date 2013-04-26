@@ -166,14 +166,14 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Let \(TSP = \{ \langle G, K \rangle : G \mbox{ has a Hamiltonian path of
+    Let \(TSP = \{ \langle G, K \rangle : G \mbox{ has a Hamiltonian cycle of
     length less than } k\}\).
     \\
 
     Prove that \(TSP\) is \(NP\)-complete.
 
     \begin{proof}
-        To prove that \(TSP\) is \(NP\)-complete, we will show that \(HAMPATH
+        To prove that \(TSP\) is \(NP\)-complete, we will show that \(HAMCYCLE
         \leq_p TSP\). This will show that \(TSP\) is \(NP-complete\) based on
         \textbf{Theorem 7.36}.
         \\
@@ -188,7 +188,7 @@
 
         Now to prove that \(TSP\) is \(NP\)-complete, we need to show that
         a problem that is \(NP\)-complete can be polynomially reduced to it.
-        We will now show that \(HAMPATH \leq_p TSP\).
+        We will now show that \(HAMCYCLE \leq_p TSP\).
         \\
 
         To do the reduction, we need to have a polynomial time computable
@@ -198,17 +198,22 @@
         \(M = \)`` On input string \(\langle G, s, t \rangle\) where \(G\) is a graph and \(s\) and \(t\) are vertices:
         \begin{enumerate}
             \item Check that the given input is a valid encoding of a Hamilton
-                path from \(s\) to \(t\).
+                cycle from \(s\) to \(t\).
             \item Start with \(k = 0\).
-            \item Iterate over the Hamilton path from \(s\) to \(t\), add one
+            \item Iterate over the Hamilton cycle from \(s\) to \(t\), add one
                 to \(k\) each time.
             \item Output \(\langle G, k \rangle\) where \(k\) is our newly
                 computed value.''
         \end{enumerate}
 
-        This works as a reduction because we are assigning a \(k\) value based on
-        the input received from 
+        This works as a reduction because we are assigning a \(k\) value based
+        on a graph that has a Hamiltonian cycle to it. Thus it is reducing
+        \(HAMILTON-CYCLE \leq_p TSP\).
+        \\
 
+        Since we know that \(HAMILTON-CYCLE\) is \(NP\)-complete, we know that
+        \(TSP\) is also \(NP\)-complete by \textbf{Theorem 7.36}. Thus our
+        proof is complete.
     \end{proof}
 \end{homeworkProblem}
 
