@@ -336,7 +336,24 @@
     complementation; that is, \(L \in P^C \iff \overline{L} \in P^C\).
 
     \begin{proof}
-        
+        Assume that \(L \in P^C\). That means that there is a polynomial time
+        oracle for \(L\). To show that \(\overline{L} \in P^C\), we can construct
+        a new polynomial time oracle TM \(M\).
+        \\
+
+        We construct \(M\) as follows:
+        \\
+
+        \(M = \)`` On input \(w\)
+        \begin{enumerate}
+            \item Run the oracle and query if \(w\) is in \(L\)
+            \item If the oracle responds yes, \(reject\)
+            \item If the oracle responds no, \(accept\).''
+        \end{enumerate}
+
+        This works because we can just query the oracle for \(L\) and just
+        do the opposite for the complement of \(L\). Thus for any class \(C\),
+        \(P^C\) is closed under complementation and we conclude our proof.
     \end{proof}
 
     \textbf{Part Two} For any language class \(C\) that is closed under
