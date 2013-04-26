@@ -384,7 +384,21 @@
     \textbf{Part Four} Prove that \(NP^P \subseteq NP\).
 
     \begin{proof}
-        
+        We will show if a language is in \(NP^P\), then that implies it is in
+        \(NP\). Which means \(NP^P \subseteq NP\).
+        \\
+
+        Assume that there exists a language \(L \in NP^P\). This means that \(L\)
+        has a nondeterministic TM \(M\) that runs in polynomial time and uses
+        an oracle for languages in \(P\).
+        \\
+
+        We can see that to prove that \(L \in NP\), we just need to prove that
+        it can be verified in polynomial time. To do so, we can just construct
+        a new verifier \(V\) that can run in polynomial time. We just take the
+        certificate and make sure it is valid and then query the oracle which
+        will show whether or not \(L in NP\). This will imiply that \(NP^P
+        \subseteq P\). Thus our proof is complete.
     \end{proof}
 \end{homeworkProblem}
 
