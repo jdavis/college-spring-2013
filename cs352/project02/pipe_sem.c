@@ -14,9 +14,9 @@ void pipe_sem_init(pipe_sem_t *sem, int value) {
 void pipe_sem_wait(pipe_sem_t *sem) {
     char buff[5];
 
-    if (sem->value > 0) sem->value -= 1;
-
-    if (sem->value == 0) {
+    if (sem->value > 0) {
+        sem->value -= 1;
+    } else {
         read(sem->fd[0], buff, 5);
     }
 }
