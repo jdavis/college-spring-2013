@@ -360,7 +360,38 @@
     complementation, \(C \subseteq coNP \iff C \subseteq NP\).
 
     \begin{proof}
-        
+        We will prove that \(C \subseteq coNP \iff C \subseteq NP\) in two
+        parts.
+        \\
+
+        \textbf{Part One} If \(C \subseteq coNP\), then \(C \subseteq NP\).
+        \\
+
+        Assume there exists a class of languages \(C \subseteq coNP\) that is
+        closed under complementation. This means there is a language \(L \in
+        C\) and also in \(coNP\).
+        \\
+
+        Since \(L \in coNP\), this means that \(\overline{L} \in NP\). But
+        since \(C\) is closed under complementation, this then means that the
+        complement of \(\overline{L}\) is in \(NP\). Since the complement of
+        \(\overline{L}\) is just \(L\), this mean that \(L \in NP\). Thus if
+        \(C\) is a class closed under complementation and \(C \subseteq coNP\),
+        then \(C \subseteq NP\) and our proof is complete.
+        \\
+
+        \textbf{Part Two} If \(C \subseteq NP\), then \(C \subseteq coNP\).
+        \\
+
+        Assume there exists a class of languages \(C \subseteq NP\) that is
+        closed under complementation. This means there is a language \(L \in
+        C\) and also in \(NP\).
+        \\
+
+        Since \(C\) is closed under complementation, this means that
+        \(\overline{L}\) is in \(NP\) as well. By definition, this means that
+        \(L \in coNP\). Thus if \(C\) is closed under complementation and \(C
+        \subseteq NP\), then \(C \subseteq coNP\) and our proof is complete.
     \end{proof}
 
     \textbf{Part Three} Prove \(P^P \subseteq P\).
