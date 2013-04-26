@@ -366,7 +366,19 @@
     \textbf{Part Three} Prove \(P^P \subseteq P\).
 
     \begin{proof}
-        
+        We will show if a language is in \(P^P\), then that implies it is in
+        \(P\). Which means \(P^P \subseteq P\).
+        \\
+
+        Assume that there exists a language \(L \in P^P\). This means that \(L\)
+        has a TM \(M\) that runs in polynomial time and uses an oracle.
+        \\
+
+        We can easily see that to prove membership in \(P\), we just need to
+        construct a new TM such that it runs in polynomial time. This is easy
+        to do since \(M\) already runs in polynomial time. We just run \(M\) in
+        our new TM which means that \(L \in P\). This implies that \(P^P
+        \subseteq P\). Thus our proof is complete.
     \end{proof}
 
     \textbf{Part Four} Prove that \(NP^P \subseteq NP\).
