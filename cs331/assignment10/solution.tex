@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsfonts}
+\usepackage{hyperref}
 
 \usepackage{tikz}
 
@@ -151,8 +152,15 @@
         \\
 
         According to the definition, \(G\) is connected and each vertex has an even
-        degree.
+        degree. TODO.
+        \\
 
+        \textbf{Proof Incomplete:} I can't for the life of me figure out how to solve this part
+        of the induction. I've found a proof here on page 2:
+        \url{http://www.cs.mcgill.ca/~ethan/TA/251/eulerian.pdf} but can't
+        understand it enough to rewrite it. I'm just including
+        this as a link to show that the proof is solvable.
+        \\
 
         Now we will show that \(EULERIAN-CYCLE\) is in \(P\) by constructing a
         TM \(M\) that runs in polynomial time.
@@ -174,7 +182,7 @@
 
     \begin{proof}
         To prove that \(TSP\) is \(NP\)-complete, we will show that \(HAMCYCLE
-        \leq_p TSP\). This will show that \(TSP\) is \(NP-complete\) based on
+        \leq_p TSP\). This will show that \(TSP\) is \(NP\)-complete based on
         \textbf{Theorem 7.36}.
         \\
 
