@@ -37,7 +37,10 @@ checkResult() {
         echo Test failed.
         echo Diff Output:
         echo
-        echo "$RESULT"
+        echo Should:
+        cat tempShould.txt
+        echo Actual:
+        cat tempActual.txt
         echo
     else
         echo Test passed.
