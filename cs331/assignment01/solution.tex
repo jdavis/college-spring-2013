@@ -1,10 +1,10 @@
 \documentclass{article}
 
-\usepackage{fancyhdr} % Required for custom headers
-\usepackage{lastpage} % Required to determine the last page for the footer
-\usepackage{extramarks} % Required for headers and footers
-\usepackage[usenames,dvipsnames]{color} % Required for custom colors
-\usepackage{courier} % Required for the courier font
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{courier}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -12,7 +12,6 @@
 
 \usetikzlibrary{automata,positioning}
 
-% Margins
 \topmargin=-0.45in
 \evensidemargin=0in
 \oddsidemargin=0in
@@ -20,77 +19,61 @@
 \textheight=9.0in
 \headsep=0.25in
 
-\linespread{1.1} % Line spacing
+\linespread{1.1}
 
-% Set up the header and footer
 \pagestyle{fancy}
-\lhead{\hmwkAuthorName} % Top left header
-\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle} % Top center head
-\rhead{\firstxmark} % Top right header
-\lfoot{\lastxmark} % Bottom left footer
-\cfoot{} % Bottom center footer
-\renewcommand\headrulewidth{0.4pt} % Size of the header rule
-\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{}
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
 
-\setlength\parindent{0pt} % Removes all indentation from paragraphs
+\setlength\parindent{0pt}
 
-%----------------------------------------------------------------------------------------
-%	DOCUMENT STRUCTURE COMMANDS
-%	Skip this unless you know what you're doing
-%----------------------------------------------------------------------------------------
-
-% Header and footer for when a page split occurs within a problem environment
 \newcommand{\enterProblemHeader}[1]{
 \nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
 \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
 }
 
-% Header and footer for when a page split occurs between problem environments
 \newcommand{\exitProblemHeader}[1]{
 \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
 \nobreak\extramarks{#1}{}\nobreak
 }
 
-\setcounter{secnumdepth}{0} % Removes default section numbers
-\newcounter{homeworkProblemCounter} % Creates a counter to keep track of the number of problems
+\setcounter{secnumdepth}{0}
+\newcounter{homeworkProblemCounter}
 
 \newcommand{\homeworkProblemName}{}
-\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]{ % Makes a new environment called homeworkProblem which takes 1 argument (custom name) but the default is "Problem #"
-\stepcounter{homeworkProblemCounter} % Increase counter for number of problems
-\renewcommand{\homeworkProblemName}{#1} % Assign \homeworkProblemName the name of the problem
-\section{\homeworkProblemName} % Make a section in the document with the custom problem count
-\enterProblemHeader{\homeworkProblemName} % Header and footer within the environment
+\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]{
+\stepcounter{homeworkProblemCounter}
+\renewcommand{\homeworkProblemName}{#1}
+\section{\homeworkProblemName}
+\enterProblemHeader{\homeworkProblemName}
 }{
-\exitProblemHeader{\homeworkProblemName} % Header and footer after the environment
+\exitProblemHeader{\homeworkProblemName}
 }
 
-\newcommand{\problemAnswer}[1]{ % Defines the problem answer command with the content as the only argument
-\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}} % Makes the box around the problem answer and puts the content inside
+\newcommand{\problemAnswer}[1]{
+\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}}
 }
 
 \newcommand{\homeworkSectionName}{}
-\newenvironment{homeworkSection}[1]{ % New environment for sections within homework problems, takes 1 argument - the name of the section
-\renewcommand{\homeworkSectionName}{#1} % Assign \homeworkSectionName to the name of the section from the environment argument
-\subsection{\homeworkSectionName} % Make a subsection with the custom name of the subsection
-\enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]} % Header and footer within the environment
+\newenvironment{homeworkSection}[1]{
+\renewcommand{\homeworkSectionName}{#1}
+\subsection{\homeworkSectionName}
+\enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]}
 }{
-\enterProblemHeader{\homeworkProblemName} % Header and footer after the environment
+\enterProblemHeader{\homeworkProblemName}
 }
 
-%----------------------------------------------------------------------------------------
-%	NAME AND CLASS SECTION
-%----------------------------------------------------------------------------------------
-
-\newcommand{\hmwkTitle}{Homework\ \#1} % Assignment title
-\newcommand{\hmwkDueDate}{February\ 1,\ 2013 at 11:59pm} % Due date
-\newcommand{\hmwkClass}{CS331} % Course/class
-\newcommand{\hmwkClassTime}{9:00am} % Class/lecture time
-\newcommand{\hmwkClassInstructor}{Professor Zhang} % Teacher/lecturer
-\newcommand{\hmwkAuthorName}{Josh Davis} % Your name
-
-%----------------------------------------------------------------------------------------
-%	TITLE PAGE
-%----------------------------------------------------------------------------------------
+\newcommand{\hmwkTitle}{Homework\ \#1}
+\newcommand{\hmwkDueDate}{February\ 1,\ 2013 at 11:59pm}
+\newcommand{\hmwkClass}{CS331}
+\newcommand{\hmwkClassTime}{9:00am}
+\newcommand{\hmwkClassInstructor}{Professor Zhang}
+\newcommand{\hmwkAuthorName}{Josh Davis}
 
 \title{
 \vspace{2in}
@@ -101,9 +84,7 @@
 }
 
 \author{\textbf{\hmwkAuthorName}}
-\date{} % Insert date here if you want it to appear below your name
-
-%----------------------------------------------------------------------------------------
+\date{}
 
 \begin{document}
 \maketitle
@@ -112,7 +93,7 @@
 
 \begin{homeworkProblem}
         Show that for any integer \(k \geq 2\), \(\sqrt[k]{2}\) is an irrational number.  \\\\\
-        
+
         \begin{proof}
                 To prove by contradiction, suppose that \(\sqrt[k]{2}\) is rational. Then
                 \[
@@ -138,7 +119,7 @@
                 Thus \(p\) is even because any number times 2 is even. Let \(p = 2j\) for \(j \in \mathbb{Z}\). Then
                 \[
                     \begin{split}
-                        2q^k &= (2j)^k \\
+                        2q^k &= {(2j)}^k \\
                         &= 2^k j^k
                     \end{split}
                 \]
@@ -150,7 +131,7 @@
                         q^k &= 2(2^{k - 2} j^k)
                     \end{split}
                 \]
-                
+
                 since \(k \geq 1\), \(q\) is even because any number multiplied by 2 is even. This is a contradiction
                 because earlier \(p\) and \(q\) were co-prime meaning there were no numbers that could be divided
                 into both of them. Thus \(p\) and \(q\) can't both be even.
@@ -171,7 +152,7 @@
 
         which is true because a tree of height 0 is a single root node.
         \\\\
-        
+
         \textbf{Induction Step} We will prove that for every \(n \geq 0\) a perfect binary tree of height \(n + 1\) has \(2^{(n+1) + 1} - 1 \) nodes.
         \\\\
 
@@ -308,7 +289,7 @@
     Let \(\Sigma = \{0, 1\}\). What language is defined by the following regular expression? Define
     it in one or two sentences.
     \begin{enumerate}
-        \item 
+        \item
             \(\Sigma^{*} 0 \Sigma^{*} 1 \Sigma^{*}\) \\
             The language is the set of all words that have at least one 0 and one 1 in them.
         \item \(0 0^{*} 1^{*}\) \\
@@ -320,13 +301,13 @@
 \end{homeworkProblem}
 
 \begin{homeworkProblem}
-    \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-        \node[state,initial] (q_0)   {$q_0$}; 
-        \node[state] (q_1) [right=of q_0] {$q_1$}; 
-        \node[state] (q_2) [right=of q_1] {$q_2$}; 
-        \node[state] (q_3) [right=of q_2] {$q_3$}; 
-        \node[state, accepting] (q_4) [right=of q_3] {$q_4$}; 
-        \path[->] 
+    \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+        \node[state,initial] (q_0)   {$q_0$};
+        \node[state] (q_1) [right=of q_0] {$q_1$};
+        \node[state] (q_2) [right=of q_1] {$q_2$};
+        \node[state] (q_3) [right=of q_2] {$q_3$};
+        \node[state, accepting] (q_4) [right=of q_3] {$q_4$};
+        \path[->]
             (q_0)
                 edge [bend right=-30] node {0, 1} (q_1)
                 edge [loop above] node {e, E, +, -} ()
@@ -359,10 +340,10 @@
 
     \begin{figure}[here]
         \centering
-        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-            \node[state, initial] (q_0)   {$q_0$}; 
-            \node[state, accepting] (q_1) [right=of q_0] {$q_1$}; 
-            \path[->] 
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+            \node[state, initial] (q_0)   {$q_0$};
+            \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+            \path[->]
                 (q_0)
                     edge node {1} (q_1)
                     edge [loop above] node {0, 1} ();
@@ -373,10 +354,10 @@
 
     \begin{figure}[here]
         \centering
-        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-            \node[state, accepting, initial] (q_0)   {$q_0$}; 
-            \node[state] (q_1) [right=of q_0] {$q_1$}; 
-            \path[->] 
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+            \node[state, accepting, initial] (q_0)   {$q_0$};
+            \node[state] (q_1) [right=of q_0] {$q_1$};
+            \path[->]
                 (q_0)
                     edge node {1} (q_1)
                     edge [loop above] node {0, 1} ();
@@ -385,12 +366,13 @@
         \label{fig:automataB}
     \end{figure}
 
-    As a counterexample, consider the automata \(A\) and \(B\) pictured in Figure ~\ref{fig:automataA}
-    and Figure ~\ref{fig:automataB} respectively.
+    As a counterexample, consider the automata \(A\) and \(B\) pictured in
+    Figure~\ref{fig:automataA} and Figure~\ref{fig:automataB} respectively.
     \\
 
-    The only difference between the two automata is that the final state set of \(B\), \(F'\) is just \(F' = Q \setminus F\)
-    where \(Q\) is the set of states in \(A\) and \(F\) is the set of final states in \(A\).
+    The only difference between the two automata is that the final state set of
+    \(B\), \(F'\) is just \(F' = Q \setminus F\) where \(Q\) is the set of
+    states in \(A\) and \(F\) is the set of final states in \(A\).
     \\
 
     This is a counterexample because the word \(\omega = 1\) is accepted by both automata.
