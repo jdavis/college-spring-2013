@@ -123,13 +123,13 @@
 
     \begin{figure}[here]
         \centering
-        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-            \node[state, initial, accepting] (q_0) {$q_0$}; 
-            \node[state] (q_1) [right=of q_0] {$q_1$}; 
-            \node[state] (q_2) [below right=of q_1] {$q_2$}; 
-            \node[state] (q_3) [below left=of q_2] {$q_3$}; 
-            \node[state, accepting] (q_4) [left=of q_3] {$q_4$}; 
-            \path[->] 
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+            \node[state, initial, accepting] (q_0) {$q_0$};
+            \node[state] (q_1) [right=of q_0] {$q_1$};
+            \node[state] (q_2) [below right=of q_1] {$q_2$};
+            \node[state] (q_3) [below left=of q_2] {$q_3$};
+            \node[state, accepting] (q_4) [left=of q_3] {$q_4$};
+            \path[->]
                 (q_0)
                     edge node {$\epsilon, \epsilon \rightarrow \$ $} (q_1)
                 (q_1)
@@ -158,7 +158,7 @@
     Prove that if \(L\) is context-free and \(L'\) is a regular languagte, then
     \(L \cap L'\) is context-free too.
     \\
-    
+
     \begin{proof}
         If \(L\) is a context-free language, and \(L'\) is a regular language, then
         let \(M\) and \(N\) be the finite automata and push down automata that
@@ -226,11 +226,11 @@
                 as follows:
                 \begin{figure}[here]
                     \centering
-                    \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-                        \node[state] (S) {$S$}; 
-                        \node[state] (a) [right=of S] {$aS$}; 
-                        \node[state] (T) [right=of a] {$T$}; 
-                        \path[->] 
+                    \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+                        \node[state] (S) {$S$};
+                        \node[state] (a) [right=of S] {$aS$};
+                        \node[state] (T) [right=of a] {$T$};
+                        \path[->]
                             (S)
                                 edge node {$a$} (a)
                             (a)
@@ -296,7 +296,7 @@
             \item \(vxy\) contains just c's. This will result in a contradiction
                 because pumping up will eventually give us \(k > j\)
                 thus \(w \notin L\).
-            \item \(vxy\) is the split between a's and b's. 
+            \item \(vxy\) is the split between a's and b's.
                 This can be divided into four more cases:
                 \begin{enumerate}
                     \item \(vxy = aab\), pumping down will lower the number of b's to be the same as
@@ -312,7 +312,7 @@
             \item \(vxy\) is the split between b's and c's. Regardless of where the subsplit is,
                 it can be pumped until eventually \(i < j\) or \(i < k\), thus \(w \notin L\).
         \end{enumerate}
-        
+
         Now that I have (hopefully) exhausted all possibilities, the proof is complete and the language,
         \(L\), is not context-free.
     \end{proof}
@@ -343,7 +343,7 @@
                 S &= aSbS = aaSbS = aabS = aab
             \end{split}
         \]
-        
+
         Thus the context free language, \(G\) is ambiguous.
     \end{proof}
 
@@ -374,7 +374,7 @@
 
     And there it can't be derived multiple ways. So unless I'm missing
     something, I think the homework is finished. YAY!
-    
+
 \end{homeworkProblem}
 
 \end{document}
