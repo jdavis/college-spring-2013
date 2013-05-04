@@ -102,13 +102,13 @@
 
     \begin{figure}[here]
         \centering
-        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-            \node[state, accepting, initial] (q_0)   {$q_0$}; 
-            \node[state] (q_1) [right=of q_0] {$q_1$}; 
-            \node[state] (q_2) [right=of q_1] {$q_2$}; 
-            \node[state] (q_3) [right=of q_2] {$q_3$}; 
-            \node[state] (q_4) [right=of q_3] {$q_4$}; 
-            \path[->] 
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+            \node[state, accepting, initial] (q_0)   {$q_0$};
+            \node[state] (q_1) [right=of q_0] {$q_1$};
+            \node[state] (q_2) [right=of q_1] {$q_2$};
+            \node[state] (q_3) [right=of q_2] {$q_3$};
+            \node[state] (q_4) [right=of q_3] {$q_4$};
+            \path[->]
                 (q_0)
                     edge [loop above] node {0} (q_0)
                     edge node {1} (q_1)
@@ -177,13 +177,13 @@
 
         \begin{figure}[here]
             \centering
-            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-                \node[state, initial] (q_1) [right=of q_0] {$q_1$}; 
-                \node[state] (q_2) [right=of q_1] {$q_2$}; 
-                \node[state] (q_dots) [right=of q_2] {$\cdots$}; 
-                \node[state] (q_{n-1}) [right=of q_dots] {$q_{n-1}$}; 
-                \node[state, accepting] (q_n) [right=of q_{n-1}] {$q_n$}; 
-                \path[->] 
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+                \node[state, initial] (q_1) [right=of q_0] {$q_1$};
+                \node[state] (q_2) [right=of q_1] {$q_2$};
+                \node[state] (q_dots) [right=of q_2] {$\cdots$};
+                \node[state] (q_{n-1}) [right=of q_dots] {$q_{n-1}$};
+                \node[state, accepting] (q_n) [right=of q_{n-1}] {$q_n$};
+                \path[->]
                     (q_1)
                         edge node {$\sigma_1$} (q_2)
                     (q_2)
@@ -202,13 +202,13 @@
 
         \begin{figure}[here]
             \centering
-            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-                \node[state, accepting] (q_1) [right=of q_0] {$q_1$}; 
-                \node[state] (q_2) [right=of q_1] {$q_2$}; 
-                \node[state] (q_dots) [right=of q_2] {$\cdots$}; 
-                \node[state] (q_{n-1}) [right=of q_dots] {$q_{n-1}$}; 
-                \node[state, initial right] (q_n) [right=of q_{n-1}] {$q_n$}; 
-                \path[->] 
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+                \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+                \node[state] (q_2) [right=of q_1] {$q_2$};
+                \node[state] (q_dots) [right=of q_2] {$\cdots$};
+                \node[state] (q_{n-1}) [right=of q_dots] {$q_{n-1}$};
+                \node[state, initial right] (q_n) [right=of q_{n-1}] {$q_n$};
+                \path[->]
                     (q_2)
                         edge node {$\sigma_1$} (q_1)
                     (q_dots)
@@ -240,13 +240,13 @@
 
     \begin{figure}[here]
         \centering
-        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-            \node[state, initial, accepting] (q_0) {$q_0$}; 
-            \node[state, accepting] (q_1) [above right=of q_0] {$q_1$}; 
-            \node[state, accepting] (q_2) [below right=of q_0] {$q_2$}; 
-            \node[state] (q_3) [right=of q_1] {$q_3$}; 
-            \node[state] (q_4) [right=of q_2] {$q_4$}; 
-            \path[->] 
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+            \node[state, initial, accepting] (q_0) {$q_0$};
+            \node[state, accepting] (q_1) [above right=of q_0] {$q_1$};
+            \node[state, accepting] (q_2) [below right=of q_0] {$q_2$};
+            \node[state] (q_3) [right=of q_1] {$q_3$};
+            \node[state] (q_4) [right=of q_2] {$q_4$};
+            \path[->]
                 (q_0)
                     edge node {0} (q_1)
                     edge node {1} (q_2)
@@ -307,7 +307,7 @@
         where
         \begin{enumerate}
             \item Two extra states to differentiate
-                between which input to expect next \(Q = Q_1 \times Q_2 \times \{A, B\}\) 
+                between which input to expect next \(Q = Q_1 \times Q_2 \times \{A, B\}\)
             \item The alphabet is the same, \(\Sigma = \Sigma\)
             \item The start is in the start state for \(N_A\) and \(N_B\) and we
             expect an input from \(A\), \(q = (q_A, q_B, A)\).
@@ -363,12 +363,12 @@
     DFA:
     \begin{figure}[here]
         \centering
-        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
-            \node[state, initial] (q_0) {$q_0$}; 
-            \node[state] (q_1) [above right=of q_0] {$q_1$}; 
-            \node[state] (q_2) [below right=of q_0] {$q_2$}; 
-            \node[state, accepting] (q_3) [above right=of q_2] {$q_3$}; 
-            \path[->] 
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+            \node[state, initial] (q_0) {$q_0$};
+            \node[state] (q_1) [above right=of q_0] {$q_1$};
+            \node[state] (q_2) [below right=of q_0] {$q_2$};
+            \node[state, accepting] (q_3) [above right=of q_2] {$q_3$};
+            \path[->]
                 (q_0)
                     edge node {0} (q_1)
                     edge node {1} (q_2)
