@@ -383,6 +383,11 @@
         means that \(BB(k)\) must also be undecidable. Thus we have shown that \(BB(k)\) is not
         a computable function and our proof is complete.
     \end{proof}
+
+    This works because since \(BB(k)\) gives us the max number of steps for a
+    \(k\) state TM, there is no way for a TM to execute more steps than
+    \(BB(k)\) unless it is looping. Thus if \(BB(k)\) is solvable, then
+    \(HALT_{TM}\) is decidable.
 \end{homeworkProblem}
 
 \end{document}
