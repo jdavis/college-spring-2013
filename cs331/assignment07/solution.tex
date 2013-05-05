@@ -346,6 +346,8 @@
 
 \end{homeworkProblem}
 
+\pagebreak
+
 \begin{homeworkProblem}
     Show that \(BB(k)\) is not a computable function.
 
@@ -356,21 +358,30 @@
 
         Assume that \(BB(k)\) is a computable function. Since \(BB(k)\) is a
         computable function, we can represent this function as a Turing
-        machine. Let's name this TM, \(M_B\).
+        machine. Let's name this TM, \(M\).
         \\
 
-        \(M_B = \)`` On input \(k\) and \(w\), where \(k\) is a natural number and \(w\) is a TM encoding:
+        According to the definition of \(BB(k)\), it is able to give us the maximum
+        number of steps for a \(k\) state TM. Using this, we can determine if a machine
+        halts. Thus we will use \(BB(k)\) to decide \(HALT_{TM}\).
+        \\
+
+        We will now construct a TM \(N\) that decides \(HALT_{TM}\).
+        \\
+
+        \(N = \)`` On input string \(\langle M, w\rangle\):
         \begin{enumerate}
-            \item If \(w\) has k states, continue, else \(reject\).
-            \item Run \(HALT_{TM}\) with input \(w\), if it accepts, accept, else reject.
+            \item Decode \(M\) and count the states, let it be \(k\)
+            \item Compute \(k\) with the Busy Beaver TM, \(M\), let this be \(n\)
+            \item Now execute \(M\) with \(w\), counting each step along the way, let this be \(m\)
+            \item If \(M\) ever rejects or accepts, then \(accept\).
+            \item If \(m\) ever exceeds \(n\), then \(reject\).
         \end{enumerate}
 
-        This works because we can reduce our problem of finding the TM that
-        runs the longest to the halting problem.
-        \\
-
-        This is clearly a contradiction because we know that \(HALT_{TM}\) is
-        undecidable thus by reduction, \(M_k\) is also undecideable
+        This is a contradiction because if we can solve \(BB(k)\), then we can
+        solve \(HALT_{TM}\). We know that \(HALT_{TM}\) is undecidable which
+        means that \(BB(k)\) must also be undecidable. Thus we have shown that \(BB(k)\) is not
+        a computable function and our proof is complete.
     \end{proof}
 \end{homeworkProblem}
 
