@@ -197,20 +197,14 @@
         \\
 
         We will now construct a polynomial reducible function where \(w \in A \iff f(w) \in B\).
-        Let this function be computed by a TM \(N\) which is as follows:
+        Let this function the TM \(N\) and constructed as follows:
         \\
 
-        \(N = \)`` On input \(\langle M, w \rangle\) where \(M\) is a TM and \(w\) a string:
+        \(N = \)`` On input string \(w\):
         \begin{enumerate}
-            \item Construct a new TM, \(M'\):
-                \\
-                \(M' = \)`` On input \(w\):
-                \begin{enumerate}
-                    \item Compute \(M_1\) on input \(w\) to find a value in \(A\)
-                    \item Simulate \(M_2\) on newly computed value outputting
-                        what \(M_2\) does to find a value in \(B\)
-                \end{enumerate}
-            \item Output \(\langle M' \rangle\).''
+            \item Run \(M_2\) on \(w\)
+            \item If \(M_2\) accepts, then output what \(M_2\) outputs and \(accept\).
+            \item If \(M_2\) rejects, then \(reject\).''
         \end{enumerate}
 
         As we can see, since \(A\) and \(B\) are both in \(P\), we can use the TMs
@@ -223,8 +217,9 @@
         because since there exists a \(w \in A\), there is no way to map it to
         \(\emptyset\) because the condition \(w \in A \iff f(w) \in B\) doesn't
         hold. The converse is true for \(\Sigma^*\) as well. If \(w \not\in A\)
-        we can't map it to a value that isn't in \(\Sigma^*\). Thus we exclude
-        these two languages from our proof.
+        we can't map it to a value that isn't in \(\Sigma^*\). Thus any langauge in P
+        besides \(\emptyset\) and \(\Sigma^*\) can be polynomial reduced to
+        another language in \(P\).
     \end{proof}
 \end{homeworkProblem}
 
