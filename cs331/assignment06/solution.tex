@@ -361,79 +361,73 @@
     Prove the following languages aren't Turing decidable.
     \\
 
-    \textbf{Part One} A TM, \(N\) will write "V" somewhere on the tape, \(L_B\).
+    \textbf{Part One} \(L_B = \{ \langle M \rangle : M \mbox{ will write ``V'' somewhere on the tape }\}\).
 
     \begin{proof}
-        We assume that \(N\) is decidable and obtain a contradiction. Suppose
-        \(N\) is a decider for \(L_B\). Then \(N\) is a TM and it will accept
-        any \(\left<M\right>\) and either accept or reject it.
+        We will use a proof by contradiction to show that \(L_B\) is not Turing-decidable.
         \\
 
-        If we order the language, \(L_B\), we can sort it by when the first occurence of "V"
-        happens on the tape and label it \(M_i\) where \(i\) is the index of
-        the occurrence. This will give us a table as below where x indicates
-        any other character:
-
-        \begin{table}[ht]
-            \centering
-            \begin{tabular}{c || c | c | c | c | c}
-                 & 1 & 2 & 3 & 4 & \(\hdots\) \\
-                \hline
-                \(\left<M_1\right>\) & V & x & x & x & x \\
-                \(\left<M_2\right>\) & x & V & x & x & x \\
-                \(\left<M_3\right>\) & x & x & V & x & x \\
-                \(\left<M_4\right>\) & x & x & x & V & x \\
-                \(\left<M_5\right>\) & x & x & x & x & V \\
-            \end{tabular}
-        \end{table}
-
-        To prove that this is a contradiction, all \(M_i\) should be decidable by \(N\).
-        However, if we use the diagonalization method, we can see that if we select a diagonal
-        through the table and change it such that the input becomes something else, it would make
-        a new input, \(y = xxxxxx\hdots\). This new input must exist somewhere along the rows but
-        as we know, it won't because at the point where this new input crosses the diagonal, it won't
-        be equal to the value located there.
+        Assume \(L_B\) is Turing-decidable. That means there is a decider,
+        \(D\), that decides \(L_B\).
         \\
 
-        Thus we have found a contradiction and \(L_B\) is not decidable.
+        Now we will use \(D\) to decide \(A_{TM}\) by constructing a TM \(M\) that
+        decides \(A_{TM}\):
+        \\
+
+        \(M = \)`` On input \(\langle M', w \rangle\):
+        \begin{enumerate}
+            \item Construct new TM, \(M'_w =\) ``On no input:
+                \begin{enumerate}
+                    \item Run \(M'\) on \(w\)
+                    \item If \(M'\) accepts, write ``V'' on the tape.''
+                \end{enumerate}
+            \item Run \(D\) on \(M'_w\)
+            \item If \(D\) accepts, \(accept\), if \(D\) rejects, \(reject\).''
+        \end{enumerate}
+
+        This is a contradiction because if we can solve \(L_B\), that means we can solve
+        \(A_{TM}\). Since \(A_{TM}\) is undecidable that must mean that \(L_B\)
+        is also undecidable. Thus our proof is complete.
     \end{proof}
 
-    \textbf{Part Two} A TM, \(N\) halts on all words except one.
+    This works because by constructing a new TM, we encapsulate \(w\) and only
+    write ``V'' on the tape if it accepts. We then run our decider \(D\) on
+    this newly constructed TM, if it accepts, then we know we have determined
+    if the input TM \(M'\) accepts \(w\), thus it decides \(A_{TM}\). The
+    converse is also true and can be trivially justified as well.
+    \\
+
+    \textbf{Part Two} \(L_U = \{ \langle M \rangle : M \mbox{ halts on all words except \textbf{one} }\}\).
 
     \begin{proof}
-        We assume that \(N\) is decidable and obtain a contradiction. Suppose
-        \(N\) is a decider for \(L_U\). Then \(N\) is a TM and it will accept
-        any \(\left<M\right>\) and either accept or reject it.
+        We will use a proof by contradiction to show that \(L_U\) is not Turing-decidable.
         \\
 
-        If we order the language, \(L_U\), we can sort it by when the word that
-        the machine happens on the tape and label it \(M_i\) where \(i\) is the
-        index of the occurrence. This will give us a table as below where x
-        indicates any other character:
-
-        \begin{table}[ht]
-            \centering
-            \begin{tabular}{c || c | c | c | c | c}
-                 & 1 & 2 & 3 & 4 & \(\hdots\) \\
-                \hline
-                \(\left<M_1\right>\) & doesn't halt & halts & halts & halts & halts \\
-                \(\left<M_2\right>\) & halts & doesn't halt & halts & halts & halts \\
-                \(\left<M_3\right>\) & halts & halts & doesn't halt & halts & halts \\
-                \(\left<M_4\right>\) & halts & halts & halts & doesn't halt & halts \\
-                \(\left<M_5\right>\) & halts & halts & halts & halts & doesn't halt \\
-            \end{tabular}
-        \end{table}
-
-        To prove that this is a contradiction, all \(M_i\) should be decidable by \(N\).
-        However, if we use the diagonalization method, we can see that if we select a diagonal
-        through the table and change it such that the input becomes the opposite, it would make
-        a new input, \(y\), that doesn't halt for all input. This new input
-        must exist somewhere along the rows but as we know, it won't because at
-        the point where this new input crosses the diagonal, it won't
-        be equal to the value located there.
+        Assume \(L_U\) is Turing-decidable. That means there is a decider,
+        \(D\), that decides \(L_U\).
         \\
 
-        Thus we have found a contradictino and \(L_U\) is not decidable.
+        Now we will use \(D\) to decide \(HALT_{TM}\) by constructing a TM \(M\) that
+        decides \(HALT_{TM}\):
+        \\
+
+        \(M = \)`` On input \(\langle M', w \rangle\):
+        \begin{enumerate}
+            \item Construct new TM, \(M'_w =\) ``On no input:
+                \begin{enumerate}
+                    \item If \(w\) equals some string, say ``V'', \(accept\)
+                    \item Run \(M'\) on \(w\)
+                    \item If \(M'\) accepts, halt.''
+                \end{enumerate}
+            \item Run \(D\) on \(M'_w\)
+            \item If \(D\) accepts, \(accept\)
+            \item If \(D\) rejects, \(reject\).''
+        \end{enumerate}
+
+        This is a contradiction because if we can solve \(L_U\), that means we can solve
+        \(HALT_{TM}\). Since \(HALT_{TM}\) is undecidable that must mean that \(L_U\)
+        is also undecidable. Thus our proof is complete.
     \end{proof}
 \end{homeworkProblem}
 
