@@ -7,7 +7,7 @@ Programming assignments and projects for CS352 at Iowa State.
 
 ### Course Details
 
-* **Professor** [Wensheng Zhang][Zhang]
+* **Professor:** [Wensheng Zhang][Zhang]
 * **Title:** COM S 352. Introduction to Operating Systems.
 * **Description:** Survey of operating system issues. Introduction to hardware
   and software components including: processors, peripherals, interrupts,
