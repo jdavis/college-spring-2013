@@ -7,7 +7,7 @@ Programming assignments and projects for CS331 at Iowa State.
 
 ### Course Details
 
-* **Professor** [Ting Zhang][Zhang]
+* **Professor:** [Ting Zhang][Zhang]
 * **Title:** COM S 331. Theory of Computing
 * **Description:** Models of computation: finite state automata, pushdown
   automata and Turing machines. Study of grammars and their relation to
