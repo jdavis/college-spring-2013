@@ -22,11 +22,9 @@ Programming assignments and projects for CS352 at Iowa State.
 
 ### Textbook Used
 
- 1. **Title**: Operating System Concepts
-
-    **Author(s)**: Abraham Silberschatz, Peter B. Galvin, Greg Gagne
-
-    **Link(s)**: [Amazon][textbook]
+**Title**: Operating System Concepts
+**Author(s)**: Abraham Silberschatz, Peter B. Galvin, Greg Gagne
+**Link(s)**: [Amazon][textbook]
 
 [Zhang]: http://www.cs.iastate.edu/~wzhang/
 [textbook]: http://amzn.com/0470128720
