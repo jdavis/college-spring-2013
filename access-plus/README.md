@@ -12,3 +12,8 @@ to stop the automatic adding of classes. It will block you out of
 unblocked.
 
 I am not responsible for any trouble you may get in while using this.
+
+[python]: http://python.org
+[firefox]: http://mozilla.org/firefox
+[driver]: http://docs.seleniumhq.org/projects/webdriver/
+[a+]: https://accessplus.iastate.edu
